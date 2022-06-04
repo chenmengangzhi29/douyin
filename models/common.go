@@ -30,3 +30,10 @@ type User struct {
 	FollowerCount int64  `json:"follower_count,omitempty"`
 	IsFollow      bool   `json:"is_follow,omitempty"`
 }
+type Users struct{
+	Id				int64`json:"id"`
+	Name 			string`json:"name"`
+	Password		 string`json:"password"`
+	FanNum   		int64`json:"fan_num"`
+	FollowNum		int64`json:"follow_num"`
+}
