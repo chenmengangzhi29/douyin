@@ -1,21 +1,21 @@
 CREATE DATABASE IF NOT EXISTS `douyin`; 
 USE `douyin`;
 DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user`
-(
+CREATE TABLE `user`(
     `id`          bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
     `name`        varchar(32)        NOT NULL DEFAULT '' COMMENT '用户名称',
     `password`    varchar(32)        NOT NULL DEFAULT '' COMMENT '密码',
     `follow_count` bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '关注总数',
     `follower_count` bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '粉丝总数',
-    PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT ='用户表';
+    `token`          varchar(64)      NOt NULL DEFAULT ''   COMMENT '用户鉴权',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB 
+  DEFAULT CHARSET = utf8mb4 COMMENT = '用户表';
 
 INSERT INTO `user`
-VALUES (1, 'Jerry', 'jerry', 0, 0),
-       (2, 'Tom', 'Tom', 1, 0),
-       (3, 'Amy', 'Amy', 0, 1);
+VALUES (1, 'Jerry', 'Jerry', 0, 0, 'JerryJerry'),
+       (2, 'Tom', 'Tom', 1, 0, 'TomTom'),
+       (3, 'Amy', 'Amy', 0, 1, 'AmyAmy');
 
 DROP TABLE IF EXISTS `video`;
 CREATE TABLE `video`
@@ -27,13 +27,14 @@ CREATE TABLE `video`
     `cover_url`   varchar(128)        NOT NULL DEFAULT '' COMMENT '封面地址',
     `favorite_count` bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '点赞总数',
     `comment_count`  bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '评论总数',
-    `create_date`    timestamp         NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `create_time`    bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '创建时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='视频表';
 
 INSERT INTO `video`
-VALUES (1, 1, 'bear', 'https://www.w3schools.com/html/movie.mp4', 'https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg', 3, 2, CURRENT_TIMESTAMP);
+VALUES (1, 1, 'bear', 'https://www.w3schools.com/html/movie.mp4', 'https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg', 3, 2, 1654605984823),
+       (2, 2, 'w', 'https://www.w3schools.com/html/mov_bbb.mp4', 'https://picjumbo.com/wp-content/uploads/lonely-alcatraz-island-in-the-middle-of-san-francisco-bay-free-photo-2210x1474.jpg', 100, 440, 1654605984821);
 
 DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite`

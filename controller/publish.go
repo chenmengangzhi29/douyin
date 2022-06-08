@@ -2,15 +2,11 @@ package controller
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"path/filepath"
-)
 
-type VideoListResponse struct {
-	Response
-	VideoList []Video `json:"video_list"`
-}
+	"github.com/gin-gonic/gin"
+)
 
 // Publish check token then save upload file to public directory
 func Publish(c *gin.Context) {
@@ -46,6 +42,11 @@ func Publish(c *gin.Context) {
 		StatusCode: 0,
 		StatusMsg:  finalName + " uploaded successfully",
 	})
+}
+
+type VideoListResponse struct {
+	Response
+	VideoList []Video `json:"video_list"`
 }
 
 // PublishList all users have same publish video list
