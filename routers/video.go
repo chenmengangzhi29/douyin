@@ -12,5 +12,5 @@ func Video(apiRouter *gin.RouterGroup) {
 	apiRouter.GET("/feed/", controller.Feed)
 	apiRouter.POST("/publish/action/", controller.Publish)
 	apiRouter.GET("/publish/list/", controller.PublishList)
-	apiRouter.GET("/public/", controller.FileServer)
+	apiRouter.GET("/public/:name", controller.FileServer)
 }
