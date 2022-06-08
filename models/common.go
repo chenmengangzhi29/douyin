@@ -32,6 +32,13 @@ type User struct {
 	IsFollow      bool   `json:"is_follow,omitempty"`
 }
 
+type Relation struct {
+	Id       int64 `json:"id,omitempty"`
+	UserID   int64 `json:"user_id,omitempty"`
+	ToUserId int64 `json:"to_user_id,omitempty"`
+	Status   byte  `json:"status,omitempty"`
+
+
 type Users struct{
 	Id				int64`json:"id"`
 	Name 			string`json:"name"`
