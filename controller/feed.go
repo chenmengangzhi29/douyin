@@ -75,8 +75,9 @@ func (UserRaw) TableName() string {
 
 type TokenDao struct {
 }
-type UserDao struct {
-}
+
+// type UserDao struct {
+// }
 
 var tokenDao *TokenDao
 var tokenOnce sync.Once

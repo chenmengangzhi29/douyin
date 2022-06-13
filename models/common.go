@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 //共享结构
 type Response struct {
 	StatusCode int32  `json:"status_code"`
@@ -37,21 +39,21 @@ type Relation struct {
 	UserID   int64 `json:"user_id,omitempty"`
 	ToUserId int64 `json:"to_user_id,omitempty"`
 	Status   byte  `json:"status,omitempty"`
+}
 
-
-type Users struct{
-	Id				int64`json:"id"`
-	Name 			string`json:"name"`
-	Password		 string`json:"password"`
-	FanNum   		int64`json:"fan_num"`
-	FollowNum		int64`json:"follow_num"`
+type Users struct {
+	Id        int64  `json:"id"`
+	Name      string `json:"name"`
+	Password  string `json:"password"`
+	FanNum    int64  `json:"fan_num"`
+	FollowNum int64  `json:"follow_num"`
 }
 type Videos struct {
-	Id            int64  `json:"id,omitempty"`
-	PlayUrl       string `json:"play_url" json:"play_url,omitempty"`
-	CoverUrl      string `json:"cover_url,omitempty"`
-	FavoriteCount int64  `json:"favorite_count,omitempty"`
-	CommentCount  int64  `json:"comment_count,omitempty"`
+	Id            int64     `json:"id,omitempty"`
+	PlayUrl       string    `json:"play_url" json:"play_url,omitempty"`
+	CoverUrl      string    `json:"cover_url,omitempty"`
+	FavoriteCount int64     `json:"favorite_count,omitempty"`
+	CommentCount  int64     `json:"comment_count,omitempty"`
 	Create_time   time.Time `json:"create___time"`
-	Title string `json:"title"`
+	Title         string    `json:"title"`
 }

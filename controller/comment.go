@@ -6,16 +6,25 @@ because comment_id is the foreign key of each video，so we don't need to add vi
 
 import (
 	"douyin/models"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"reflect"
 	"strconv"
 	"sync/atomic"
+
+	"github.com/gin-gonic/gin"
 )
 
 type CommentListResponse struct {
 	Response
 	CommentList []Comment `json:"comment_list,omitempty"`
+}
+
+type CommentRaw struct {
+	Id         int64  `gorm:"column:id"`
+	UserId     int64  `gorm:"column:user_id"`
+	VideoId    int64  `gorm:"column:video_id"`
+	Contents   string `gorm:"column:contents"`
+	CreateDate string `gorm:"column:create_date"`
 }
 
 // CommentAction no practical effect, just check if token is valid
@@ -41,11 +50,11 @@ func CommentAction(c *gin.Context) {
 	if reflect.DeepEqual(actionType, 1) {
 
 		//创建一条新的评论
-		newComment := &Comment{
-			CommentId:  commentId,
+		newComment := &CommentRaw{
+			Id:         commentId,
 			UserId:     userId,
 			VideoId:    videoId,
-			Content:    commentText,
+			Contents:   commentText,
 			CreateDate: models.GetDate(),
 		}
 		//将对应视频的评论总数加1
