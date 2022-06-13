@@ -7,7 +7,7 @@ type Response struct {
 }
 
 type Video struct {
-	Id            int64  `json:"id,omitempty"`
+	VideoId       int64  `json:"video_id,omitempty"`
 	Author        User   `json:"author"`
 	PlayUrl       string `json:"play_url" json:"play_url,omitempty"`
 	CoverUrl      string `json:"cover_url,omitempty"`
@@ -18,14 +18,15 @@ type Video struct {
 }
 
 type Comment struct {
-	Id         int64  `json:"id,omitempty"`
-	User       User   `json:"user"`
+	CommentId  int64  `json:"comment_id,omitempty"`
+	UserId     int64  `json:"user_id,omitempty"`
+	VideoId    int64  `json:"video_id,omitempty"`
 	Content    string `json:"content,omitempty"`
 	CreateDate string `json:"create_date,omitempty"`
 }
 
 type User struct {
-	Id            int64  `json:"id,omitempty"`
+	UserId        int64  `json:"user_id,omitempty"`
 	Name          string `json:"name,omitempty"`
 	FollowCount   int64  `json:"follow_count,omitempty"`
 	FollowerCount int64  `json:"follower_count,omitempty"`
@@ -37,7 +38,7 @@ type Relation struct {
 	UserID   int64 `json:"user_id,omitempty"`
 	ToUserId int64 `json:"to_user_id,omitempty"`
 	Status   byte  `json:"status,omitempty"`
-
+}
 
 type Users struct{
 	Id				int64`json:"id"`
@@ -55,3 +56,4 @@ type Videos struct {
 	Create_time   time.Time `json:"create___time"`
 	Title string `json:"title"`
 }
+
