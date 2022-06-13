@@ -13,9 +13,9 @@ CREATE TABLE `user`(
   DEFAULT CHARSET = utf8mb4 COMMENT = '用户表';
 
 INSERT INTO `user`
-VALUES (1, 'Jerry', 'Jerry', 0, 0, 'JerryJerry'),
-       (2, 'Tom', 'Tom', 1, 0, 'TomTom'),
-       (3, 'Amy', 'Amy', 0, 1, 'AmyAmy');
+VALUES (1, 'Jerry', 'Jerry123', 0, 0, 'JerryJerry123'),
+       (2, 'Tom', 'Tom123', 1, 0, 'TomTom123'),
+       (3, 'Amy', 'Amy123', 0, 1, 'AmyAmy123');
 
 DROP TABLE IF EXISTS `video`;
 CREATE TABLE `video`
@@ -82,6 +82,9 @@ CREATE TABLE `relation`
 
 INSERT INTO `relation`
 VALUES (1, 2, 3, -1);
+
+
+
 
 
 
