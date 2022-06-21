@@ -15,24 +15,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func FileServer(c *gin.Context) {
-	dir, err := os.Getwd()
-	if err != nil {
-		c.JSON(http.StatusOK, Response{
-			StatusCode: 1,
-			StatusMsg:  err.Error(),
-		})
-		return
-	}
-	fileName := c.Param("name")
-	path := dir + "public/" + fileName
-	c.File(path)
-}
-
 // Publish check token then save upload file to public directory
+//1.视频上传到本地文件夹./public
+//2.视频上传至oss
+//3.视频信息上传至mysql
 func Publish(c *gin.Context) {
+	//鉴权
 	token := c.PostForm("token")
-
 	userId, err := NewTokenDaoInstance().QueryUserIdByToken(token)
 	if err != nil {
 		c.JSON(http.StatusOK, Response{
@@ -42,6 +31,7 @@ func Publish(c *gin.Context) {
 		return
 	}
 
+	//获取视频数据
 	data, err := c.FormFile("data")
 	if err != nil {
 		c.JSON(http.StatusOK, Response{
@@ -51,9 +41,11 @@ func Publish(c *gin.Context) {
 		return
 	}
 
+	//处理视频名
 	filename := filepath.Base(data.Filename)
 	finalName := fmt.Sprintf("%d_%s", userId, filename)
 
+	//将视频保存到本地文件夹
 	saveFile := filepath.Join("./public/", finalName)
 	if err := c.SaveUploadedFile(data, saveFile); err != nil {
 		c.JSON(http.StatusOK, Response{
@@ -63,20 +55,17 @@ func Publish(c *gin.Context) {
 		return
 	}
 
+	//将本地视频上传到oss
+	object := "video/" + finalName
+	err = models.Bucket.PutObjectFromFile(object, saveFile)
+	if err != nil {
+		fmt.Println("Error:", err)
+		os.Exit(-1)
+	}
+
+	//将视频信息上传到数据库
 	title := c.PostForm("title")
-
-	// config, err := ini.Load("./models/app.ini")
-	// if err != nil {
-	// 	c.JSON(http.StatusOK, Response{
-	// 		StatusCode: 1,
-	// 		StatusMsg:  err.Error(),
-	// 	})
-	// 	return
-	// }
-
-	// ip := config.Section("mysql").Key("ip").String()
-
-	playUrl := "http://localhost:8080/douyin/" + saveFile
+	playUrl := "https://dousheng1.oss-cn-shenzhen.aliyuncs.com/" + object
 
 	video := VideoRaw{
 		Id:         time.Now().Unix(),
