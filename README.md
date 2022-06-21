@@ -1,5 +1,18 @@
 # douyin
-1.文件说明<br>
+## 一.代码运行<br>
+1.更改model/app.ini配置文件
+
+2.初始化MySql数据库
+```Shell
+mysql -u mysql -p mysql -D douyin < ./models/example.sql
+```
+
+3.启动程序
+```Shell
+go run main.go
+```
+
+## 二.文件说明<br>
 
 main.go 
 加载路由，初始化路由，将路由器连接到 http.Server并开始侦听和服务 HTTP 请求<br>
