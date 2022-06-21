@@ -19,6 +19,7 @@ public
 model/example.sql
 自动创建数据库
 mysql –u用户名 –p密码 –D数据库<【sql脚本文件路径全名】<br>
+mysql -u mysql -p mysql -D douyin < ./models/example.sql
 
 model/app.ini
 通过修改相关信息，自动打开数据库<br>
