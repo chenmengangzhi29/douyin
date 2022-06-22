@@ -72,7 +72,7 @@ func (*VideoDao) PublishVideoToOss(object string, saveFile string) error {
 	return nil
 }
 
-func PublishVideoData(videoData model.VideoRaw) error {
+func (*VideoDao) PublishVideoData(videoData model.VideoRaw) error {
 	if err := model.DB.Table("video").Create(&videoData).Error; err != nil {
 		return err
 	}

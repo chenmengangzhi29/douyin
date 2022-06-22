@@ -10,7 +10,6 @@ import (
 //该层功能包括处理传入参数，向service层获取视频信息，封装成响应信息
 type FeedResponse struct {
 	model.Response
-	// VideoData VideoData `json:"video_data,omitempty"`
 	VideoList []model.Video `json:"video_list,omitempty"`
 	NextTime  int64         `json:"next_time,omitempty"`
 }
@@ -24,9 +23,9 @@ func QueryVideoFeed(token string, latestTimeStr string) FeedResponse {
 		}
 	}
 
-	if len := len(token); len < 0 || len > 64 {
+	if len := len(token); len <= 0 || len > 64 {
 		return FeedResponse{
-			Response: model.Response{StatusCode: -1, StatusMsg: "token length out of range"},
+			Response: model.Response{StatusCode: -1, StatusMsg: "token length out of range(0,64]"},
 		}
 	}
 
@@ -41,7 +40,7 @@ func QueryVideoFeed(token string, latestTimeStr string) FeedResponse {
 	// fmt.Println(videoData)
 
 	return FeedResponse{
-		Response:  model.Response{StatusCode: 0, StatusMsg: "success"},
+		Response:  model.Response{StatusCode: 0, StatusMsg: "query video feed success"},
 		VideoList: videoList,
 		NextTime:  nextTime,
 	}

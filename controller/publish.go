@@ -2,6 +2,7 @@ package controller
 
 import (
 	"douyin/handler"
+	"douyin/model"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -12,7 +13,7 @@ func Publish(c *gin.Context) {
 	token := c.PostForm("token")
 	data, err := c.FormFile("data")
 	if err != nil {
-		c.JSON(http.StatusOK, Response{
+		c.JSON(http.StatusOK, model.Response{
 			StatusCode: 1,
 			StatusMsg:  err.Error(),
 		})

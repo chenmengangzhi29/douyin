@@ -13,9 +13,9 @@ import (
 //处理传入参数，调用service层函数查询视频列表，封装响应
 
 func PublishVideoData(token string, data *multipart.FileHeader, title string, c *gin.Context) model.Response {
-	if length := len(token); length < 0 || length > 64 {
+	if length := len(token); length <= 0 || length > 64 {
 		return model.Response{
-			StatusCode: -1, StatusMsg: "token length out of range",
+			StatusCode: -1, StatusMsg: "token length out of range(0,64]",
 		}
 	}
 
@@ -25,9 +25,9 @@ func PublishVideoData(token string, data *multipart.FileHeader, title string, c 
 		}
 	}
 
-	if length := len(title); length < 0 || length > 128 {
+	if length := len(title); length <= 0 || length > 128 {
 		return model.Response{
-			StatusCode: -1, StatusMsg: "video title out of range",
+			StatusCode: -1, StatusMsg: "video title out of range(0,128]",
 		}
 	}
 
@@ -57,9 +57,9 @@ func QueryVideoList(token string, userIdStr string) VideoListResponse {
 		}
 	}
 
-	if len := len(token); len < 0 || len > 64 {
+	if len := len(token); len <= 0 || len > 64 {
 		return VideoListResponse{
-			Response: model.Response{StatusCode: -1, StatusMsg: "token length out of range"},
+			Response: model.Response{StatusCode: -1, StatusMsg: "token length out of range(0,64]"},
 		}
 	}
 
