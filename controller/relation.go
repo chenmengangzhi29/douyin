@@ -1,13 +1,14 @@
 package controller
 
 import (
-	"douyin/models"
+	"douyin/model"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"reflect"
 	"strconv"
 	"sync"
+
+	"github.com/gin-gonic/gin"
 )
 
 type UserListResponse struct {
@@ -25,7 +26,7 @@ func (Relation) TableName() string {
 	return "relation"
 }
 
-var db = models.DB
+var db = model.DB
 
 // RelationAction no practical effect, just check if token is valid
 func RelationAction(c *gin.Context) {

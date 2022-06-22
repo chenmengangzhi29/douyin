@@ -1,8 +1,10 @@
-package models
+package model
 
 import "time"
 
 //共享结构
+
+//响应结构
 type Response struct {
 	StatusCode int32  `json:"status_code"`
 	StatusMsg  string `json:"status_msg,omitempty"`
@@ -41,6 +43,41 @@ type Relation struct {
 	Status   byte  `json:"status,omitempty"`
 }
 
+//直接从数据库取数据的结构
+type VideoRaw struct {
+	Id            int64  `gorm:"column:id"`
+	UserId        int64  `gorm:"column:user_id"`
+	Title         string `gorm:"column:title"`
+	PlayUrl       string `gorm:"column:play_url"`
+	CoverUrl      string `gorm:"column:cover_url"`
+	FavoriteCount int64  `gorm:"column:favorite_count"`
+	CommentCount  int64  `gorm:"column:comment_count"`
+	CreateTime    int64  `gorm:"column:create_time"`
+}
+
+type UserRaw struct {
+	Id            int64  `gorm:"column:id"`
+	Name          string `gorm:"column:name"`
+	Password      string `gorm:"column:password"`
+	FollowCount   int64  `gorm:"column:follow_count"`
+	FollowerCount int64  `gorm:"column:follower_count"`
+	Token         string `gorm:"column:token"`
+}
+
+type FavoriteRaw struct {
+	Id      int64 `gorm:"column:id"`
+	UserId  int64 `gorm:"column:user_id"`
+	VideoId int64 `gorm:"column:video_id"`
+}
+
+type RelationRaw struct {
+	Id       int64 `gorm:"column:id"`
+	UserId   int64 `gorm:"column:user_id"`
+	ToUserId int64 `gorm:"column:to_user_id"`
+	Status   int64 `gorm:"column:status"`
+}
+
+//其他
 type Users struct {
 	Id        int64  `json:"id"`
 	Name      string `json:"name"`

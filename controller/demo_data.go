@@ -1,16 +1,16 @@
 package controller
 
-import "douyin/models"
+import "douyin/model"
 
-type Video models.Video
-type User models.User
-type Response models.Response
-type Comment models.Comment
+type Video model.Video
+type User model.User
+type Response model.Response
+type Comment model.Comment
 
 var DemoVideos = []Video{
 	{
 		Id:            1,
-		Author:        models.User(DemoUser),
+		Author:        model.User(DemoUser),
 		PlayUrl:       "https://www.w3schools.com/html/movie.mp4",
 		CoverUrl:      "https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg",
 		FavoriteCount: 0,
@@ -22,7 +22,7 @@ var DemoVideos = []Video{
 var DemoComments = []Comment{
 	{
 		Id:         1,
-		User:       models.User(DemoUser),
+		User:       model.User(DemoUser),
 		Content:    "Test Comment",
 		CreateDate: "05-01",
 	},

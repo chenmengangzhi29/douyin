@@ -5,7 +5,7 @@ because comment_id is the foreign key of each video，so we don't need to add vi
 */
 
 import (
-	"douyin/models"
+	"douyin/model"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -55,13 +55,13 @@ func CommentAction(c *gin.Context) {
 			UserId:     userId,
 			VideoId:    videoId,
 			Contents:   commentText,
-			CreateDate: models.GetDate(),
+			CreateDate: model.GetDate(),
 		}
 		//将对应视频的评论总数加1
 		atomic.AddInt64(&commentCount, 1)
 
 		//打开数据库并传入数据
-		db := models.DB
+		db := model.DB
 		db.Create(&newComment).Where("video_id = ?", videoId)
 
 		//返回新增的评论到页面上
@@ -71,7 +71,7 @@ func CommentAction(c *gin.Context) {
 	//如果操作数为2，就删除数据库中对应的评论
 	if reflect.DeepEqual(actionType, 2) {
 
-		db := models.DB
+		db := model.DB
 		//根据comment_id来删除数据库中对应的评论。
 		db.Where("comment_id", commentId).Delete(&Comment{})
 		//并将对应视频的评论总数减1
@@ -93,7 +93,7 @@ func CommentList(c *gin.Context) {
 	}
 
 	//返回对应的数据库中的评论列表
-	db := models.DB
+	db := model.DB
 	var CommentList = make([]Comment, 0)
 	db.Where("video_id = ?", videoId).Find(&CommentList)
 	c.JSON(http.StatusOK, CommentListResponse{

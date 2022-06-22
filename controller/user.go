@@ -1,11 +1,11 @@
 package controller
 
 import (
-	"douyin/models"
-	"github.com/gin-gonic/gin"
+	"douyin/model"
 	"net/http"
 	"sync/atomic"
 
+	"github.com/gin-gonic/gin"
 	//"sync/atomic"
 )
 
@@ -21,9 +21,9 @@ var usersLoginInfo = map[string]User{
 		IsFollow:      true,
 	},
 }
-var u=models.Users{}
-var last = models.Users{}
-var userIdSequence=int64(1)
+var u = model.Users{}
+var last = model.Users{}
+var userIdSequence = int64(1)
 
 type UserLoginResponse struct {
 	Response
@@ -41,8 +41,8 @@ func Register(c *gin.Context) {
 	password := c.Query("password")
 
 	token := username + password
-	models.DB.Where("name = ?",username).First(&u)
-	if _, exist := usersLoginInfo[token]; exist||u.Name==username{
+	model.DB.Where("name = ?", username).First(&u)
+	if _, exist := usersLoginInfo[token]; exist || u.Name == username {
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 1, StatusMsg: "User already exist"},
 		})
@@ -53,9 +53,9 @@ func Register(c *gin.Context) {
 			Name: username,
 		}
 		usersLoginInfo[token] = newUser
-		models.DB.Last(&last)
-		newUsers :=models.Users{Id: last.Id+1,Name: username,Password: password,FanNum: 0,FollowNum: 0}
-		models.DB.Select("id","name","password","fan_num","follow_num").Create(&newUsers)
+		model.DB.Last(&last)
+		newUsers := model.Users{Id: last.Id + 1, Name: username, Password: password, FanNum: 0, FollowNum: 0}
+		model.DB.Select("id", "name", "password", "fan_num", "follow_num").Create(&newUsers)
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 0},
 			UserId:   userIdSequence,
@@ -84,21 +84,21 @@ func Login(c *gin.Context) {
 	password := c.Query("password")
 
 	token := username + password
-	models.DB.Where("name = ?",username).Find(&u)
+	model.DB.Where("name = ?", username).Find(&u)
 	if user, exist := usersLoginInfo[token]; exist {
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 0},
 			UserId:   user.Id,
 			Token:    token,
 		})
-	}else if username==u.Name{
-		token=u.Name+u.Password
-		usersLoginInfo[token]=User{
-			Id: u.Id,
-			Name: u.Name,
-			FollowCount: u.FollowNum,
+	} else if username == u.Name {
+		token = u.Name + u.Password
+		usersLoginInfo[token] = User{
+			Id:            u.Id,
+			Name:          u.Name,
+			FollowCount:   u.FollowNum,
 			FollowerCount: u.FanNum,
-			IsFollow: false,
+			IsFollow:      false,
 		}
 		c.JSON(http.StatusOK, UserLoginResponse{
 			Response: Response{StatusCode: 0},
@@ -136,18 +136,18 @@ func UserInfo(c *gin.Context) {
 			Response: Response{StatusCode: 0},
 			User:     user,
 		})
-	} else if token==u.Name+u.Password {
+	} else if token == u.Name+u.Password {
 		c.JSON(http.StatusOK, UserResponse{
 			Response: Response{StatusCode: 0},
-			User:     User{
-				Id: u.Id,
-				Name: u.Name,
-				FollowCount: u.FollowNum,
+			User: User{
+				Id:            u.Id,
+				Name:          u.Name,
+				FollowCount:   u.FollowNum,
 				FollowerCount: u.FanNum,
-				IsFollow: true,
+				IsFollow:      true,
 			},
 		})
-	}else {
+	} else {
 		c.JSON(http.StatusOK, UserResponse{
 			Response: Response{StatusCode: 1, StatusMsg: "User doesn't exist "},
 		})
