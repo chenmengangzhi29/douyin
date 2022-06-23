@@ -40,3 +40,39 @@ func (*FavoriteDao) QueryFavoriteByIds(currentId int64, videoIds []int64) (map[i
 	}
 	return favoriteMap, nil
 }
+
+//向favorite表添加一条记录
+func (*FavoriteDao) CreateFavorite(favorite *model.FavoriteRaw) error {
+	err := model.DB.Table("favorite").Create(favorite).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+//删除favorite表的一条记录
+func (*FavoriteDao) DeleteFavorite(currentId int64, videoId int64) error {
+	var favorite model.FavoriteRaw
+	err := model.DB.Table("favorite").Where("user_id = ? AND video_id = ?", currentId, videoId).Delete(&favorite).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+//通过一个用户id查询出该用户点赞的所有视频id号
+func (*FavoriteDao) QueryFavoriteById(userId int64) ([]int64, error) {
+	var favorites []*model.FavoriteRaw
+	err := model.DB.Table("favorite").Where("user_id = ?", userId).Find(&favorites).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, errors.New("favorite record not found")
+	}
+	if err != nil {
+		return nil, errors.New("query favorite record fail")
+	}
+	videoIds := make([]int64, 0)
+	for _, favorite := range favorites {
+		videoIds = append(videoIds, favorite.VideoId)
+	}
+	return videoIds, nil
+}

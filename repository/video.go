@@ -72,8 +72,53 @@ func (*VideoDao) PublishVideoToOss(object string, saveFile string) error {
 	return nil
 }
 
+//向video表添加一条记录
 func (*VideoDao) PublishVideoData(videoData model.VideoRaw) error {
 	if err := model.DB.Table("video").Create(&videoData).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+//更新视频的点赞数量
+func (*VideoDao) UpdateFavoriteCount(videoId int64, actionType int64) error {
+	if actionType == 1 {
+		err := model.DB.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count + ?", 1)).Error
+		if err != nil {
+			return err
+		}
+	}
+	if actionType == 2 {
+		err := model.DB.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count - ?", 1)).Error
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+//通过一系列视频id号获取一系列视频信息
+func (*VideoDao) QueryVideoByVideoIds(videoIds []int64) ([]*model.VideoRaw, error) {
+	var videos []*model.VideoRaw
+	err := model.DB.Table("video").Where("id in (?)", videoIds).Find(&videos).Error
+	if err != nil {
+		return nil, err
+	}
+	return videos, nil
+}
+
+//通过视频id增加视频的评论数
+func (*VideoDao) AddCommentCount(videoId int64) error {
+	err := model.DB.Table("video").Where("id = ?", videoId).Update("comment_count", gorm.Expr("comment_count + ?", 1)).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (*VideoDao) SubCommentCount(videoId int64) error {
+	err := model.DB.Table("video").Where("id = ?", videoId).Update("comment_count", gorm.Expr("comment_count - ?", 1)).Error
+	if err != nil {
 		return err
 	}
 	return nil

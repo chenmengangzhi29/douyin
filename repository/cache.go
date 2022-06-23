@@ -17,4 +17,4 @@ var usersLoginInfo = map[string]model.UserRaw{
 	},
 }
 
-var userIdSequence = int64(4)
+var userIdSequence = int64(10)
