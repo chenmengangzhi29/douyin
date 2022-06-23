@@ -106,3 +106,20 @@ func (*VideoDao) QueryVideoByVideoIds(videoIds []int64) ([]*model.VideoRaw, erro
 	}
 	return videos, nil
 }
+
+//通过视频id增加视频的评论数
+func (*VideoDao) AddCommentCount(videoId int64) error {
+	err := model.DB.Table("video").Where("id = ?", videoId).Update("comment_count", gorm.Expr("comment_count + ?", 1)).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (*VideoDao) SubCommentCount(videoId int64) error {
+	err := model.DB.Table("video").Where("id = ?", videoId).Update("comment_count", gorm.Expr("comment_count - ?", 1)).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}

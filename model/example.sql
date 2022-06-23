@@ -58,7 +58,7 @@ CREATE TABLE `comment`
     `user_id`     bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '用户id',
     `video_id`    bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '视频id',
     `contents`    text                NOT NULL COMMENT '评论内容',
-    `create_date` timestamp           NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `create_date` varchar(32)         NOT NULL DEFAULT "" COMMENT '创建时间',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='评论表';

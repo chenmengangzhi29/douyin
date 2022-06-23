@@ -75,6 +75,14 @@ type RelationRaw struct {
 	Status   int64 `gorm:"column:status"`
 }
 
+type CommentRaw struct {
+	Id         int64  `gorm:"column:id"`
+	UserId     int64  `gorm:"column:user_id"`
+	VideoId    int64  `gorm:"column:video_id"`
+	Contents   string `grom:"column:contents"`
+	CreateDate string `grom:"column:create_date"`
+}
+
 // //其他
 // type Users struct {
 // 	Id        int64  `json:"id"`
