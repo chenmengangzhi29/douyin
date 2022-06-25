@@ -152,7 +152,7 @@ type FavoriteListDataFlow struct {
 	VideoData   []*model.VideoRaw
 	UserMap     map[int64]*model.UserRaw
 	FavoriteMap map[int64]*model.FavoriteRaw
-	RelationMap map[int64]*model.RelationRaw
+	RelationMap map[int64]model.RelationRaw
 }
 
 func (f *FavoriteListDataFlow) Do() ([]model.Video, error) {
@@ -204,9 +204,13 @@ func (f *FavoriteListDataFlow) prepareVideoInfo() error {
 	}
 
 	//获取点赞视频的用户信息
-	userMap, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
+	users, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
 	if err != nil {
 		return err
+	}
+	userMap := make(map[int64]*model.UserRaw)
+	for _, user := range users {
+		userMap[user.Id] = &user
 	}
 	f.UserMap = userMap
 

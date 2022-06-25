@@ -2,8 +2,8 @@ package repository
 
 import (
 	"douyin/model"
-	"errors"
 	"sync"
+	"time"
 
 	"gorm.io/gorm"
 )
@@ -24,23 +24,88 @@ func NewRelationDaoInstance() *RelationDao {
 	return relationDao
 }
 
-//根据当前用户id和视频拥有者id获取关注信息
-func (*RelationDao) QueryRelationByIds(currentId int64, userIds []int64) (map[int64]*model.RelationRaw, error) {
-	var relations []*model.RelationRaw
-	err := model.DB.Where("user_id = ? AND to_user_id IN ? AND status IN ?", currentId, userIds, []int64{0, -1}).Or("user_id IN ? AND to_user_id = ? AND status = ?", userIds, currentId, 1).Find(&relations).Error
-	if err == gorm.ErrRecordNotFound {
-		return nil, errors.New("relation record not found")
-	}
+//根据当前用户id和目标用户id获取关注信息
+func (*RelationDao) QueryRelationByIds(currentId int64, userIds []int64) (map[int64]model.RelationRaw, error) {
+	var relations []model.RelationRaw
+	err := model.DB.Table("relation").Where("user_id = ? AND to_user_id IN ?", currentId, userIds).Find(&relations).Error
 	if err != nil {
-		return nil, errors.New("query relation record fail")
+		return nil, err
 	}
-	relationMap := make(map[int64]*model.RelationRaw)
+	relationMap := make(map[int64]model.RelationRaw)
 	for _, relation := range relations {
-		if relation.Status == 1 {
-			relationMap[relation.UserId] = relation
-		} else {
-			relationMap[relation.ToUserId] = relation
-		}
+		relationMap[relation.ToUserId] = relation
 	}
 	return relationMap, nil
+}
+
+//增加当前用户的关注总数，增加其他用户的粉丝总数，创建关注记录
+func (*RelationDao) Create(currentId int64, toUserId int64) error {
+	relationRaw := &model.RelationRaw{
+		Id:       time.Now().Unix(),
+		UserId:   currentId,
+		ToUserId: toUserId,
+	}
+	model.DB.Transaction(func(tx *gorm.DB) error {
+		err := tx.Table("user").Where("id = ?", currentId).Update("follow_count", gorm.Expr("follow_count + ?", 1)).Error
+		if err != nil {
+			return err
+		}
+
+		err = tx.Table("user").Where("id = ?", toUserId).Update("follower_count", gorm.Expr("follower_count + ?", 1)).Error
+		if err != nil {
+			return err
+		}
+
+		err = tx.Table("relation").Create(&relationRaw).Error
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
+	return nil
+}
+
+//减少当前用户的关注总数，减少其他用户的粉丝总数，删除关注记录
+func (*RelationDao) Delete(currentId int64, toUserId int64) error {
+	var relationRaw *model.RelationRaw
+	model.DB.Transaction(func(tx *gorm.DB) error {
+		err := tx.Table("user").Where("id = ?", currentId).Update("follow_count", gorm.Expr("follow_count - ?", 1)).Error
+		if err != nil {
+			return err
+		}
+
+		err = tx.Table("user").Where("id = ?", toUserId).Update("follower_count", gorm.Expr("follower_count - ?", 1)).Error
+		if err != nil {
+			return err
+		}
+
+		err = tx.Table("relation").Where("user_id = ? AND to_user_id = ?", currentId, toUserId).Delete(&relationRaw).Error
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	return nil
+}
+
+//通过用户id，查询该用户关注的用户，返回两者之间的关注记录
+func (*RelationDao) QueryFollowById(userId int64) ([]model.RelationRaw, error) {
+	var relations []model.RelationRaw
+	err := model.DB.Table("relation").Where("user_id = ?", userId).Find(&relations).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return relations, nil
+}
+
+//通过用户id，查询该用户的粉丝， 返回两者之间的关注记录
+func (*RelationDao) QueryFollowerById(userId int64) ([]model.RelationRaw, error) {
+	var relations []model.RelationRaw
+	err := model.DB.Table("relation").Where("to_user_id = ?", userId).Find(&relations).Error
+	if err != nil {
+		return nil, err
+	}
+	return relations, nil
 }

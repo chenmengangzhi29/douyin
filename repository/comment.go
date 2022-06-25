@@ -41,7 +41,7 @@ func (*CommentDao) DeleteComment(commentId int64) (model.CommentRaw, error) {
 //通过视频id号倒序返回一组评论信息
 func (*CommentDao) QueryCommentByVideoId(videoId int64) ([]model.CommentRaw, error) {
 	var comments []model.CommentRaw
-	err := model.DB.Order("create_date desc").Where("video_id = ?", videoId).Find(&comments).Error
+	err := model.DB.Table("comment").Order("create_date desc").Where("video_id = ?", videoId).Find(&comments).Error
 	if err != nil {
 		return nil, err
 	}

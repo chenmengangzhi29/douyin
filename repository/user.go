@@ -24,35 +24,39 @@ func NewUserDaoInstance() *UserDao {
 }
 
 //根据用户id获取用户信息
-func (*UserDao) QueryUserByIds(userIds []int64) (map[int64]*model.UserRaw, error) {
-	var users []*model.UserRaw
-	err := model.DB.Where("id in (?)", userIds).Find(&users).Error
+func (*UserDao) QueryUserByIds(userIds []int64) ([]model.UserRaw, error) {
+	var users []model.UserRaw
+	err := model.DB.Table("user").Where("id in (?)", userIds).Find(&users).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil, gorm.ErrRecordNotFound
+	}
 	if err != nil {
-		return nil, errors.New("query user fail")
+		return nil, err
 	}
-	userMap := make(map[int64]*model.UserRaw)
-	for _, user := range users {
-		userMap[user.Id] = user
-	}
-	return userMap, nil
+	return users, nil
 }
+
+// userMap := make(map[int64]*model.UserRaw)
+// for _, user := range users {
+// 	userMap[user.Id] = user
+// }
 
 //检查用户名是否不存在
 func (*UserDao) CheckUserNotExist(username string, password string) error {
 	token := username + password
 	if _, exist := usersLoginInfo[token]; exist {
-		return errors.New("user already exists")
+		return errors.New("user already exists cache")
 	}
 	var user *model.UserRaw
-	err := model.DB.Table("user").Where("name = ?", username).First(&user).Error
-	if err == nil {
-		return errors.New("user already exists")
+	err := model.DB.Table("user").Where("name = ?", username).Find(&user).Error
+	if err != nil {
+		return err
 	}
-	if err == gorm.ErrRecordNotFound {
-		return nil
+	if user.Name == username {
+		return errors.New("user already exists database")
 	}
 
-	return err
+	return nil
 }
 
 //检查用户名是否存在

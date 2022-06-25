@@ -4,7 +4,7 @@
 
 2.初始化MySql数据库
 ```Shell
-mysql -u mysql -p mysql -D douyin < ./models/example.sql
+mysql -u mysql -p mysql -D douyin < ./model/example.sql
 ```
 
 3.启动程序

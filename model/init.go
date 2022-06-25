@@ -18,7 +18,7 @@ var Config *ini.File
 //连接MySQL和OSS
 func init() {
 	//读取.ini里面的数据库配置
-	Config, iniErr := ini.Load("./models/app.ini")
+	Config, iniErr := ini.Load("./model/app.ini")
 	if iniErr != nil {
 		fmt.Printf("Fail to read file: %v", iniErr)
 		os.Exit(1)

@@ -138,7 +138,7 @@ type QueryUserVideoListFlow struct {
 	VideoData   []*model.VideoRaw
 	UserMap     map[int64]*model.UserRaw
 	FavoriteMap map[int64]*model.FavoriteRaw
-	RelationMap map[int64]*model.RelationRaw
+	RelationMap map[int64]model.RelationRaw
 }
 
 func (f *QueryUserVideoListFlow) Do() ([]model.Video, error) {
@@ -180,9 +180,13 @@ func (f *QueryUserVideoListFlow) prepareVideoInfo() error {
 		videoIds = append(videoIds, video.Id)
 	}
 
-	userMap, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
+	users, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
 	if err != nil {
 		return err
+	}
+	userMap := make(map[int64]*model.UserRaw)
+	for _, user := range users {
+		userMap[user.Id] = &user
 	}
 	f.UserMap = userMap
 

@@ -5,40 +5,33 @@ package model
 //响应结构
 type Response struct {
 	StatusCode int32  `json:"status_code"`
-	StatusMsg  string `json:"status_msg,omitempty"`
+	StatusMsg  string `json:"status_msg"`
 }
 
 type Video struct {
-	Id            int64  `json:"id,omitempty"`
+	Id            int64  `json:"id"`
 	Author        User   `json:"author"`
-	PlayUrl       string `json:"play_url" json:"play_url,omitempty"`
-	CoverUrl      string `json:"cover_url,omitempty"`
-	FavoriteCount int64  `json:"favorite_count,omitempty"`
-	CommentCount  int64  `json:"comment_count,omitempty"`
-	IsFavorite    bool   `json:"is_favorite,omitempty"`
-	Title         string `json:"title,omitempty"`
+	PlayUrl       string `json:"play_url"`
+	CoverUrl      string `json:"cover_url"`
+	FavoriteCount int64  `json:"favorite_count"`
+	CommentCount  int64  `json:"comment_count"`
+	IsFavorite    bool   `json:"is_favorite"`
+	Title         string `json:"title"`
 }
 
 type Comment struct {
-	Id         int64  `json:"id,omitempty"`
+	Id         int64  `json:"id"`
 	User       User   `json:"user"`
-	Content    string `json:"content,omitempty"`
-	CreateDate string `json:"create_date,omitempty"`
+	Content    string `json:"content"`
+	CreateDate string `json:"create_date"`
 }
 
 type User struct {
-	Id            int64  `json:"id,omitempty"`
-	Name          string `json:"name,omitempty"`
-	FollowCount   int64  `json:"follow_count,omitempty"`
-	FollowerCount int64  `json:"follower_count,omitempty"`
-	IsFollow      bool   `json:"is_follow,omitempty"`
-}
-
-type Relation struct {
-	Id       int64 `json:"id,omitempty"`
-	UserID   int64 `json:"user_id,omitempty"`
-	ToUserId int64 `json:"to_user_id,omitempty"`
-	Status   byte  `json:"status,omitempty"`
+	Id            int64  `json:"id"`
+	Name          string `json:"name"`
+	FollowCount   int64  `json:"follow_count"`
+	FollowerCount int64  `json:"follower_count"`
+	IsFollow      bool   `json:"is_follow"`
 }
 
 //直接从数据库取数据的结构
@@ -72,7 +65,6 @@ type RelationRaw struct {
 	Id       int64 `gorm:"column:id"`
 	UserId   int64 `gorm:"column:user_id"`
 	ToUserId int64 `gorm:"column:to_user_id"`
-	Status   int64 `gorm:"column:status"`
 }
 
 type CommentRaw struct {

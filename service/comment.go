@@ -93,12 +93,12 @@ func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 	//获取当前用户信息
 	go func() {
 		defer wg.Done()
-		userMap, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.CurrentId})
+		users, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.CurrentId})
 		if err != nil {
 			userErr = err
 			return
 		}
-		f.User = *userMap[f.CurrentId]
+		f.User = users[0]
 	}()
 	wg.Wait()
 	if commentErr != nil {
@@ -202,12 +202,12 @@ func (f *DeleteCommentDataFlow) prepareCommentInfo() error {
 	}()
 	//获取用户信息
 	go func() {
-		userMap, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.CurrentId})
+		users, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.CurrentId})
 		if err != nil {
 			userErr = err
 			return
 		}
-		f.UserRaw = *userMap[f.CurrentId]
+		f.UserRaw = users[0]
 	}()
 	wg.Wait()
 	if commentErr != nil {
@@ -260,7 +260,7 @@ type CommentListDataFlow struct {
 	CurrentId   int64
 	Comments    []model.CommentRaw
 	UserMap     map[int64]*model.UserRaw
-	RelationMap map[int64]*model.RelationRaw
+	RelationMap map[int64]model.RelationRaw
 }
 
 func (f *CommentListDataFlow) Do() ([]model.Comment, error) {
@@ -305,9 +305,13 @@ func (f *CommentListDataFlow) prepareCommentInfo() error {
 	}
 
 	//获取一系列用户信息
-	userMap, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
+	users, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
 	if err != nil {
 		return err
+	}
+	userMap := make(map[int64]*model.UserRaw)
+	for _, user := range users {
+		userMap[user.Id] = &user
 	}
 	f.UserMap = userMap
 
