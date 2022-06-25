@@ -23,9 +23,12 @@ func NewTokenDaoInstance() *TokenDao {
 //根据token获取用户id
 func (*TokenDao) QueryUserIdByToken(token string) (int64, error) {
 	var user model.UserRaw
-	err := model.DB.Where("token = ?", token).Find(&user).Error
+	err := model.DB.Table("user").Where("token = ?", token).Find(&user).Error
+	if user.Token != token {
+		return -1, errors.New("token not found")
+	}
 	if err != nil {
-		return -1, errors.New("check token fail")
+		return -1, err
 	}
 	return user.Id, nil
 }

@@ -67,21 +67,18 @@ INSERT INTO `comment`
 VALUES (1, 1, 1, '这视频也太模糊了！', CURRENT_TIMESTAMP),
        (2, 2, 1, '老CCTV了～', CURRENT_TIMESTAMP);
 
-
-/*关注状态 -1表示当前用户关注对方用户，0表示两者相互关注，1表示对方用户关注当前用户*/
 DROP TABLE IF EXISTS `relation`;
 CREATE TABLE `relation`
 (
     `id`          bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '关注id',
     `user_id`     bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '用户id',
     `to_user_id`  bigint(20) unsigned NOT NULL DEFAULT 0 COMMENT '对方用户id',
-    `status`      tinyint             NOT NULL DEFAULT -1 COMMENT '关注状态',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='关注表';
 
 INSERT INTO `relation`
-VALUES (1, 2, 3, -1);
+VALUES (1, 2, 3);
 
 
 

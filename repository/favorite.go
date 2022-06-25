@@ -27,7 +27,7 @@ func NewFavoriteDaoInstance() *FavoriteDao {
 //根据当前用户id和视频id获取点赞信息
 func (*FavoriteDao) QueryFavoriteByIds(currentId int64, videoIds []int64) (map[int64]*model.FavoriteRaw, error) {
 	var favorites []*model.FavoriteRaw
-	err := model.DB.Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
+	err := model.DB.Table("favorite").Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
 	if err == gorm.ErrRecordNotFound {
 		return nil, errors.New("favorite record not found")
 	}

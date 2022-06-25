@@ -32,7 +32,7 @@ func NewVideoDaoInstance() *VideoDao {
 //根据最新时间戳获取视频信息
 func (*VideoDao) QueryVideoByLatestTime(latestTime int64) ([]*model.VideoRaw, error) {
 	var videos []*model.VideoRaw
-	err := model.DB.Limit(30).Order("create_time desc").Where("create_time < ?", latestTime).Find(&videos).Error
+	err := model.DB.Table("video").Limit(30).Order("create_time desc").Where("create_time < ?", latestTime).Find(&videos).Error
 	if err == gorm.ErrRecordNotFound {
 		return nil, errors.New("do not find video")
 	}
@@ -45,7 +45,7 @@ func (*VideoDao) QueryVideoByLatestTime(latestTime int64) ([]*model.VideoRaw, er
 //新增通过用户id获取视频数据的功能
 func (*VideoDao) QueryVideoByUserId(userId int64) ([]*model.VideoRaw, error) {
 	var videos []*model.VideoRaw
-	err := model.DB.Order("create_time desc").Where("user_id = ?", userId).Find(&videos).Error
+	err := model.DB.Table("video").Order("create_time desc").Where("user_id = ?", userId).Find(&videos).Error
 	if err == gorm.ErrRecordNotFound {
 		return nil, errors.New("do not find video")
 	}

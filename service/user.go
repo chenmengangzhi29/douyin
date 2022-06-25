@@ -3,8 +3,6 @@ package service
 import (
 	"douyin/model"
 	"douyin/repository"
-
-	"gorm.io/gorm"
 )
 
 //用户注册信息流，通过repository层检查用户名是否存在，若否则上传用户数据，返回用户id和token给handler层
@@ -154,32 +152,38 @@ func (f *GetUserInfoFlow) checkToken() error {
 
 func (f *GetUserInfoFlow) prepareUserInfo() error {
 	userIds := []int64{f.UserId}
-	userMap, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
+	users, err := repository.NewUserDaoInstance().QueryUserByIds(userIds)
 	if err != nil {
 		return err
 	}
-	f.UserRaw = *userMap[f.UserId]
+	f.UserRaw = users[0]
 
-	_, err = repository.NewRelationDaoInstance().QueryRelationByIds(f.CurrentId, userIds)
-	if err == gorm.ErrRecordNotFound {
-		f.IsFollow = false
-	} else if err != nil {
-		return err
-	} else {
+	relationMap, err := repository.NewRelationDaoInstance().QueryRelationByIds(f.CurrentId, userIds)
+	// if err == gorm.ErrRecordNotFound {
+	// 	f.IsFollow = false
+	// } else if err != nil {
+	// 	return err
+	// } else {
+	// 	f.IsFollow = false
+	// }
+	_, ok := relationMap[f.UserId]
+	if ok {
 		f.IsFollow = true
+	} else {
+		f.IsFollow = false
 	}
 
 	return nil
 }
 
 func (f *GetUserInfoFlow) packUserInfo() error {
-	user := &model.User{
+	user := model.User{
 		Id:            f.UserRaw.Id,
 		Name:          f.UserRaw.Name,
 		FollowCount:   f.UserRaw.FollowCount,
 		FollowerCount: f.UserRaw.FollowerCount,
 		IsFollow:      f.IsFollow,
 	}
-	f.User = *user
+	f.User = user
 	return nil
 }
