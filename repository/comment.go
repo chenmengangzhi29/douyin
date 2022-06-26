@@ -2,6 +2,7 @@ package repository
 
 import (
 	"douyin/model"
+	"douyin/util"
 	"sync"
 )
 
@@ -23,6 +24,7 @@ func NewCommentDaoInstance() *CommentDao {
 func (*CommentDao) CreateComment(comment *model.CommentRaw) error {
 	err := model.DB.Table("comment").Create(comment).Error
 	if err != nil {
+		util.Logger.Error("create comment fail" + err.Error())
 		return err
 	}
 	return nil
@@ -33,6 +35,7 @@ func (*CommentDao) DeleteComment(commentId int64) (model.CommentRaw, error) {
 	var commentRaw model.CommentRaw
 	err := model.DB.Table("comment").Where("id = ?", commentId).Delete(&commentRaw).Error
 	if err != nil {
+		util.Logger.Error("delete comment fail" + err.Error())
 		return model.CommentRaw{}, err
 	}
 	return commentRaw, nil
@@ -43,6 +46,7 @@ func (*CommentDao) QueryCommentByVideoId(videoId int64) ([]model.CommentRaw, err
 	var comments []model.CommentRaw
 	err := model.DB.Table("comment").Order("create_date desc").Where("video_id = ?", videoId).Find(&comments).Error
 	if err != nil {
+		util.Logger.Error("query comment by video id fail " + err.Error())
 		return nil, err
 	}
 	return comments, nil

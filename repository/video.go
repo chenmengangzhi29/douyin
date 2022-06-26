@@ -2,6 +2,7 @@ package repository
 
 import (
 	"douyin/model"
+	"douyin/util"
 	"errors"
 	"mime/multipart"
 	"sync"
@@ -34,9 +35,11 @@ func (*VideoDao) QueryVideoByLatestTime(latestTime int64) ([]*model.VideoRaw, er
 	var videos []*model.VideoRaw
 	err := model.DB.Table("video").Limit(30).Order("create_time desc").Where("create_time < ?", latestTime).Find(&videos).Error
 	if err == gorm.ErrRecordNotFound {
+		util.Logger.Error("QueryVideoByLatestTime do not find video " + err.Error())
 		return nil, errors.New("do not find video")
 	}
 	if err != nil {
+		util.Logger.Error("QueryVideoByLatestTime find video error " + err.Error())
 		return nil, errors.New("find video error")
 	}
 	return videos, nil
@@ -47,9 +50,11 @@ func (*VideoDao) QueryVideoByUserId(userId int64) ([]*model.VideoRaw, error) {
 	var videos []*model.VideoRaw
 	err := model.DB.Table("video").Order("create_time desc").Where("user_id = ?", userId).Find(&videos).Error
 	if err == gorm.ErrRecordNotFound {
+		util.Logger.Error("QueryVideoByUserId do not find video " + err.Error())
 		return nil, errors.New("do not find video")
 	}
 	if err != nil {
+		util.Logger.Error("QueryVideoByUserId find video error " + err.Error())
 		return nil, errors.New("find video error")
 	}
 	return videos, nil
@@ -58,6 +63,7 @@ func (*VideoDao) QueryVideoByUserId(userId int64) ([]*model.VideoRaw, error) {
 //将视频保存到本地文件夹中
 func (*VideoDao) PublishVideoToPublic(video *multipart.FileHeader, saveFile string, c *gin.Context) error {
 	if err := c.SaveUploadedFile(video, saveFile); err != nil {
+		util.Logger.Error("PublishVideoToPublic error " + err.Error())
 		return err
 	}
 	return nil
@@ -67,6 +73,7 @@ func (*VideoDao) PublishVideoToPublic(video *multipart.FileHeader, saveFile stri
 func (*VideoDao) PublishVideoToOss(object string, saveFile string) error {
 	err := model.Bucket.PutObjectFromFile(object, saveFile)
 	if err != nil {
+		util.Logger.Error("PublishVideoToOss error " + err.Error())
 		return err
 	}
 	return nil
@@ -75,6 +82,7 @@ func (*VideoDao) PublishVideoToOss(object string, saveFile string) error {
 //向video表添加一条记录
 func (*VideoDao) PublishVideoData(videoData model.VideoRaw) error {
 	if err := model.DB.Table("video").Create(&videoData).Error; err != nil {
+		util.Logger.Error("PublishVideoData error " + err.Error())
 		return err
 	}
 	return nil
@@ -85,12 +93,14 @@ func (*VideoDao) UpdateFavoriteCount(videoId int64, actionType int64) error {
 	if actionType == 1 {
 		err := model.DB.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count + ?", 1)).Error
 		if err != nil {
+			util.Logger.Error("AddFavoriteCount error " + err.Error())
 			return err
 		}
 	}
 	if actionType == 2 {
 		err := model.DB.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count - ?", 1)).Error
 		if err != nil {
+			util.Logger.Error("SubFavoriteCount error " + err.Error())
 			return err
 		}
 	}
@@ -102,6 +112,7 @@ func (*VideoDao) QueryVideoByVideoIds(videoIds []int64) ([]*model.VideoRaw, erro
 	var videos []*model.VideoRaw
 	err := model.DB.Table("video").Where("id in (?)", videoIds).Find(&videos).Error
 	if err != nil {
+		util.Logger.Error("QueryVideoByVideoIds error " + err.Error())
 		return nil, err
 	}
 	return videos, nil
@@ -111,6 +122,7 @@ func (*VideoDao) QueryVideoByVideoIds(videoIds []int64) ([]*model.VideoRaw, erro
 func (*VideoDao) AddCommentCount(videoId int64) error {
 	err := model.DB.Table("video").Where("id = ?", videoId).Update("comment_count", gorm.Expr("comment_count + ?", 1)).Error
 	if err != nil {
+		util.Logger.Error("AddCommentCount error " + err.Error())
 		return err
 	}
 	return nil
@@ -119,6 +131,7 @@ func (*VideoDao) AddCommentCount(videoId int64) error {
 func (*VideoDao) SubCommentCount(videoId int64) error {
 	err := model.DB.Table("video").Where("id = ?", videoId).Update("comment_count", gorm.Expr("comment_count - ?", 1)).Error
 	if err != nil {
+		util.Logger.Error("SubCommentCount error " + err.Error())
 		return err
 	}
 	return nil
