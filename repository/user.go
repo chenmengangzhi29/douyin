@@ -2,11 +2,10 @@ package repository
 
 import (
 	"douyin/model"
+	"douyin/util"
 	"errors"
 	"sync"
 	"sync/atomic"
-
-	"gorm.io/gorm"
 )
 
 type UserDao struct {
@@ -27,10 +26,8 @@ func NewUserDaoInstance() *UserDao {
 func (*UserDao) QueryUserByIds(userIds []int64) ([]model.UserRaw, error) {
 	var users []model.UserRaw
 	err := model.DB.Table("user").Where("id in (?)", userIds).Find(&users).Error
-	if err == gorm.ErrRecordNotFound {
-		return nil, gorm.ErrRecordNotFound
-	}
 	if err != nil {
+		util.Logger.Error("query user by ids fail" + err.Error())
 		return nil, err
 	}
 	return users, nil
@@ -50,6 +47,7 @@ func (*UserDao) CheckUserNotExist(username string, password string) error {
 	var user *model.UserRaw
 	err := model.DB.Table("user").Where("name = ?", username).Find(&user).Error
 	if err != nil {
+		util.Logger.Error("check user not exist fail" + err.Error())
 		return err
 	}
 	if user.Name == username {
@@ -68,6 +66,7 @@ func (*UserDao) CheckUserExist(username string, password string) error {
 	var user *model.UserRaw
 	err := model.DB.Table("user").Where("token = ?", token).First(&user).Error
 	if err != nil {
+		util.Logger.Error("check user exist fail" + err.Error())
 		return err
 	}
 	return nil
@@ -88,6 +87,7 @@ func (*UserDao) UploadUserData(username string, password string) (int64, string,
 	usersLoginInfo[token] = *user
 	err := model.DB.Table("user").Create(&user).Error
 	if err != nil {
+		util.Logger.Error("upload user data fail" + err.Error())
 		return 0, "", err
 	}
 	return user.Id, user.Token, nil
@@ -102,6 +102,7 @@ func (*UserDao) QueryUserByToken(token string) (int64, string, error) {
 	var user *model.UserRaw
 	err := model.DB.Table("user").Where("token = ?", token).First(&user).Error
 	if err != nil {
+		util.Logger.Error("query user by token fail" + err.Error())
 		return 0, "", err
 	}
 	return user.Id, user.Token, nil

@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"gopkg.in/ini.v1"
@@ -16,12 +15,11 @@ var err error
 var Config *ini.File
 
 //连接MySQL和OSS
-func init() {
+func Init() error {
 	//读取.ini里面的数据库配置
 	Config, iniErr := ini.Load("./model/app.ini")
 	if iniErr != nil {
-		fmt.Printf("Fail to read file: %v", iniErr)
-		os.Exit(1)
+		return iniErr
 	}
 
 	ip := Config.Section("mysql").Key("ip").String()
@@ -38,7 +36,7 @@ func init() {
 	})
 	// DB.Debug()
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	//打开oss的Bucket
@@ -48,12 +46,11 @@ func init() {
 	bucket := Config.Section("oss").Key("bucket").String()
 	client, err := oss.New(endpoint, accesskeyid, accessKeySecret)
 	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(-1)
+		return err
 	}
 	Bucket, err = client.Bucket(bucket)
 	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(-1)
+		return err
 	}
+	return nil
 }

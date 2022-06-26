@@ -2,7 +2,7 @@ package repository
 
 import (
 	"douyin/model"
-	"errors"
+	"douyin/util"
 	"sync"
 
 	"gorm.io/gorm"
@@ -29,10 +29,12 @@ func (*FavoriteDao) QueryFavoriteByIds(currentId int64, videoIds []int64) (map[i
 	var favorites []*model.FavoriteRaw
 	err := model.DB.Table("favorite").Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
 	if err == gorm.ErrRecordNotFound {
-		return nil, errors.New("favorite record not found")
+		util.Logger.Error("found favorite record fail" + err.Error())
+		return nil, err
 	}
 	if err != nil {
-		return nil, errors.New("query favorite record fail")
+		util.Logger.Error("quert favorite record fail" + err.Error())
+		return nil, err
 	}
 	favoriteMap := make(map[int64]*model.FavoriteRaw)
 	for _, favorite := range favorites {
@@ -45,6 +47,7 @@ func (*FavoriteDao) QueryFavoriteByIds(currentId int64, videoIds []int64) (map[i
 func (*FavoriteDao) CreateFavorite(favorite *model.FavoriteRaw) error {
 	err := model.DB.Table("favorite").Create(favorite).Error
 	if err != nil {
+		util.Logger.Error("create favorite record fail" + err.Error())
 		return err
 	}
 	return nil
@@ -55,6 +58,7 @@ func (*FavoriteDao) DeleteFavorite(currentId int64, videoId int64) error {
 	var favorite model.FavoriteRaw
 	err := model.DB.Table("favorite").Where("user_id = ? AND video_id = ?", currentId, videoId).Delete(&favorite).Error
 	if err != nil {
+		util.Logger.Error("delete favorite record fail" + err.Error())
 		return err
 	}
 	return nil
@@ -65,10 +69,12 @@ func (*FavoriteDao) QueryFavoriteById(userId int64) ([]int64, error) {
 	var favorites []*model.FavoriteRaw
 	err := model.DB.Table("favorite").Where("user_id = ?", userId).Find(&favorites).Error
 	if err == gorm.ErrRecordNotFound {
-		return nil, errors.New("favorite record not found")
+		util.Logger.Error("found favorite record fail" + err.Error())
+		return nil, err
 	}
 	if err != nil {
-		return nil, errors.New("query favorite record fail")
+		util.Logger.Error("query favorite record fail" + err.Error())
+		return nil, err
 	}
 	videoIds := make([]int64, 0)
 	for _, favorite := range favorites {
