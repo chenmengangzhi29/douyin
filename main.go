@@ -9,6 +9,7 @@ import (
 
 func main() {
 	if err := Init(); err != nil {
+		util.Logger.Error("init fail")
 		os.Exit(-1)
 	}
 	// 加载多个APP的路由配置
@@ -23,9 +24,11 @@ func main() {
 
 func Init() error {
 	if err := model.Init(); err != nil {
+		util.Logger.Error("model fail")
 		return err
 	}
 	if err := util.InitLogger(); err != nil {
+		util.Logger.Error("util fail")
 		return err
 	}
 	return nil

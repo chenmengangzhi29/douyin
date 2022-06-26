@@ -17,7 +17,7 @@ var Config *ini.File
 //连接MySQL和OSS
 func Init() error {
 	//读取.ini里面的数据库配置
-	Config, iniErr := ini.Load("./model/app.ini")
+	Config, iniErr := ini.Load("./douyin/model/app.ini")
 	if iniErr != nil {
 		return iniErr
 	}
