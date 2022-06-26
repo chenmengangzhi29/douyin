@@ -131,7 +131,7 @@ func (*VideoDao) AddCommentCount(videoId int64) error {
 func (*VideoDao) SubCommentCount(videoId int64) error {
 	err := model.DB.Table("video").Where("id = ?", videoId).Update("comment_count", gorm.Expr("comment_count - ?", 1)).Error
 	if err != nil {
-		util.Logger.Error("SubCommentCount error " + err.Error())
+		util.Logger.Error("AddCommentCount error " + err.Error())
 		return err
 	}
 	return nil
