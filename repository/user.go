@@ -5,7 +5,9 @@ import (
 	"douyin/util"
 	"errors"
 	"sync"
-	"sync/atomic"
+	"time"
+
+	"gorm.io/gorm"
 )
 
 type UserDao struct {
@@ -44,16 +46,17 @@ func (*UserDao) CheckUserNotExist(username string, password string) error {
 	if _, exist := usersLoginInfo[token]; exist {
 		return errors.New("user already exists cache")
 	}
-	var user *model.UserRaw
+	user := &model.UserRaw{
+		Name: username,
+	}
 	err := model.DB.Table("user").Where("name = ?", username).Find(&user).Error
+	if err == gorm.ErrRecordNotFound {
+		return nil
+	}
 	if err != nil {
 		util.Logger.Error("check user not exist fail" + err.Error())
 		return err
 	}
-	if user.Name == username {
-		return errors.New("user already exists database")
-	}
-
 	return nil
 }
 
@@ -64,9 +67,12 @@ func (*UserDao) CheckUserExist(username string, password string) error {
 		return nil
 	}
 	var user *model.UserRaw
-	err := model.DB.Table("user").Where("token = ?", token).First(&user).Error
+	err := model.DB.Table("user").Where("token = ?", token).Find(&user).Error
+	if err == gorm.ErrRecordNotFound {
+		return errors.New("user not exist")
+	}
 	if err != nil {
-		util.Logger.Error("check user exist fail" + err.Error())
+		util.Logger.Error("check user exist fail " + err.Error())
 		return err
 	}
 	return nil
@@ -74,10 +80,9 @@ func (*UserDao) CheckUserExist(username string, password string) error {
 
 //上传用户信息到缓存的用户信息表和数据库
 func (*UserDao) UploadUserData(username string, password string) (int64, string, error) {
-	atomic.AddInt64(&userIdSequence, 1)
 	token := username + password
 	user := &model.UserRaw{
-		Id:            userIdSequence,
+		Id:            time.Now().Unix(),
 		Name:          username,
 		Password:      password,
 		FollowCount:   0,
@@ -100,7 +105,7 @@ func (*UserDao) QueryUserByToken(token string) (int64, string, error) {
 	}
 
 	var user *model.UserRaw
-	err := model.DB.Table("user").Where("token = ?", token).First(&user).Error
+	err := model.DB.Table("user").Where("token = ?", token).Find(&user).Error
 	if err != nil {
 		util.Logger.Error("query user by token fail" + err.Error())
 		return 0, "", err
