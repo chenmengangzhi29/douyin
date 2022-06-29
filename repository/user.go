@@ -2,7 +2,7 @@ package repository
 
 import (
 	"douyin/model"
-	"douyin/util"
+	"douyin/util/logger"
 	"errors"
 	"sync"
 	"time"
@@ -29,7 +29,7 @@ func (*UserDao) QueryUserByIds(userIds []int64) ([]model.UserRaw, error) {
 	var users []model.UserRaw
 	err := model.DB.Table("user").Where("id in (?)", userIds).Find(&users).Error
 	if err != nil {
-		util.Logger.Error("query user by ids fail" + err.Error())
+		logger.Error("query user by ids fail " + err.Error())
 		return nil, err
 	}
 	return users, nil
@@ -54,7 +54,7 @@ func (*UserDao) CheckUserNotExist(username string, password string) error {
 		return nil
 	}
 	if err != nil {
-		util.Logger.Error("check user not exist fail" + err.Error())
+		logger.Error("check user not exist fail " + err.Error())
 		return err
 	}
 	return nil
@@ -68,12 +68,12 @@ func (*UserDao) CheckUserExist(username string, password string) error {
 	}
 	var user *model.UserRaw
 	err := model.DB.Table("user").Where("token = ?", token).Find(&user).Error
-	if err == gorm.ErrRecordNotFound {
-		return errors.New("user not exist")
-	}
 	if err != nil {
-		util.Logger.Error("check user exist fail " + err.Error())
+		logger.Error("check user exist fail " + err.Error())
 		return err
+	}
+	if user.Token != token {
+		return errors.New("user not exist")
 	}
 	return nil
 }
@@ -92,7 +92,7 @@ func (*UserDao) UploadUserData(username string, password string) (int64, string,
 	usersLoginInfo[token] = *user
 	err := model.DB.Table("user").Create(&user).Error
 	if err != nil {
-		util.Logger.Error("upload user data fail" + err.Error())
+		logger.Error("upload user data fail " + err.Error())
 		return 0, "", err
 	}
 	return user.Id, user.Token, nil
@@ -107,7 +107,7 @@ func (*UserDao) QueryUserByToken(token string) (int64, string, error) {
 	var user *model.UserRaw
 	err := model.DB.Table("user").Where("token = ?", token).Find(&user).Error
 	if err != nil {
-		util.Logger.Error("query user by token fail" + err.Error())
+		logger.Error("query user by token fail" + err.Error())
 		return 0, "", err
 	}
 	return user.Id, user.Token, nil

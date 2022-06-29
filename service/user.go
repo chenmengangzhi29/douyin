@@ -3,6 +3,7 @@ package service
 import (
 	"douyin/model"
 	"douyin/repository"
+	"errors"
 )
 
 //用户注册信息流，通过repository层检查用户名是否存在，若否则上传用户数据，返回用户id和token给handler层
@@ -156,16 +157,12 @@ func (f *GetUserInfoFlow) prepareUserInfo() error {
 	if err != nil {
 		return err
 	}
+	if len(users) == 0 {
+		return errors.New("user not exist")
+	}
 	f.UserRaw = users[0]
 
 	relationMap, err := repository.NewRelationDaoInstance().QueryRelationByIds(f.CurrentId, userIds)
-	// if err == gorm.ErrRecordNotFound {
-	// 	f.IsFollow = false
-	// } else if err != nil {
-	// 	return err
-	// } else {
-	// 	f.IsFollow = false
-	// }
 	_, ok := relationMap[f.UserId]
 	if ok {
 		f.IsFollow = true

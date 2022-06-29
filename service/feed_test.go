@@ -2,20 +2,18 @@ package service
 
 import (
 	"douyin/model"
-	"douyin/util"
-	"fmt"
+	"douyin/util/logger"
 	"os"
 	"testing"
 	"time"
 )
 
 func TestMain(m *testing.M) {
-	if err := model.Init(); err != nil {
-		fmt.Println(err)
+	if err := logger.Init(); err != nil {
 		os.Exit(1)
 	}
-	if err := util.InitLogger(); err != nil {
-		fmt.Println(err)
+	if err := model.Init(); err != nil {
+		logger.Error("model fail")
 		os.Exit(1)
 	}
 	m.Run()
@@ -64,6 +62,7 @@ func TestQueryVideoData(t *testing.T) {
 				t.Errorf("QueryVideoData() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+			logger.Info(tt.name + " success")
 		})
 	}
 }

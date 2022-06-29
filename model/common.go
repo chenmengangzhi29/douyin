@@ -74,21 +74,3 @@ type CommentRaw struct {
 	Contents   string `grom:"column:contents"`
 	CreateDate string `grom:"column:create_date"`
 }
-
-// //其他
-// type Users struct {
-// 	Id        int64  `json:"id"`
-// 	Name      string `json:"name"`
-// 	Password  string `json:"password"`
-// 	FanNum    int64  `json:"fan_num"`
-// 	FollowNum int64  `json:"follow_num"`
-// }
-// type Videos struct {
-// 	Id            int64     `json:"id,omitempty"`
-// 	PlayUrl       string    `json:"play_url" json:"play_url,omitempty"`
-// 	CoverUrl      string    `json:"cover_url,omitempty"`
-// 	FavoriteCount int64     `json:"favorite_count,omitempty"`
-// 	CommentCount  int64     `json:"comment_count,omitempty"`
-// 	Create_time   time.Time `json:"create___time"`
-// 	Title         string    `json:"title"`
-// }

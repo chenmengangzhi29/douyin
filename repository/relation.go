@@ -2,7 +2,7 @@ package repository
 
 import (
 	"douyin/model"
-	"douyin/util"
+	"douyin/util/logger"
 	"sync"
 	"time"
 
@@ -30,7 +30,7 @@ func (*RelationDao) QueryRelationByIds(currentId int64, userIds []int64) (map[in
 	var relations []model.RelationRaw
 	err := model.DB.Table("relation").Where("user_id = ? AND to_user_id IN ?", currentId, userIds).Find(&relations).Error
 	if err != nil {
-		util.Logger.Error("query relation by ids" + err.Error())
+		logger.Error("query relation by ids " + err.Error())
 		return nil, err
 	}
 	relationMap := make(map[int64]model.RelationRaw)
@@ -50,19 +50,19 @@ func (*RelationDao) Create(currentId int64, toUserId int64) error {
 	model.DB.Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("user").Where("id = ?", currentId).Update("follow_count", gorm.Expr("follow_count + ?", 1)).Error
 		if err != nil {
-			util.Logger.Error("add user follow_count fail" + err.Error())
+			logger.Error("add user follow_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("user").Where("id = ?", toUserId).Update("follower_count", gorm.Expr("follower_count + ?", 1)).Error
 		if err != nil {
-			util.Logger.Error("add user follower_count fail" + err.Error())
+			logger.Error("add user follower_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("relation").Create(&relationRaw).Error
 		if err != nil {
-			util.Logger.Error("create relation record fail" + err.Error())
+			logger.Error("create relation record fail " + err.Error())
 			return err
 		}
 
@@ -77,19 +77,19 @@ func (*RelationDao) Delete(currentId int64, toUserId int64) error {
 	model.DB.Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("user").Where("id = ?", currentId).Update("follow_count", gorm.Expr("follow_count - ?", 1)).Error
 		if err != nil {
-			util.Logger.Error("sub user follow_count fail" + err.Error())
+			logger.Error("sub user follow_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("user").Where("id = ?", toUserId).Update("follower_count", gorm.Expr("follower_count - ?", 1)).Error
 		if err != nil {
-			util.Logger.Error("sub user follower_count fail" + err.Error())
+			logger.Error("sub user follower_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("relation").Where("user_id = ? AND to_user_id = ?", currentId, toUserId).Delete(&relationRaw).Error
 		if err != nil {
-			util.Logger.Error("delete relation record fali" + err.Error())
+			logger.Error("delete relation record fali " + err.Error())
 			return err
 		}
 		return nil
@@ -102,7 +102,7 @@ func (*RelationDao) QueryFollowById(userId int64) ([]model.RelationRaw, error) {
 	var relations []model.RelationRaw
 	err := model.DB.Table("relation").Where("user_id = ?", userId).Find(&relations).Error
 	if err != nil {
-		util.Logger.Error("query follow by id fail" + err.Error())
+		logger.Error("query follow by id fail " + err.Error())
 		return nil, err
 	}
 
@@ -114,7 +114,7 @@ func (*RelationDao) QueryFollowerById(userId int64) ([]model.RelationRaw, error)
 	var relations []model.RelationRaw
 	err := model.DB.Table("relation").Where("to_user_id = ?", userId).Find(&relations).Error
 	if err != nil {
-		util.Logger.Error("query follower by id fail" + err.Error())
+		logger.Error("query follower by id fail " + err.Error())
 		return nil, err
 	}
 	return relations, nil
