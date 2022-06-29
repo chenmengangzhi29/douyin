@@ -19,11 +19,11 @@ var Config *ini.File
 func Init() error {
 	//读取.ini里面的数据库配置
 	var iniErr error
-	Config, iniErr = ini.Load("./model/app.ini")
-	// //测试使用
-	// Config, iniErr = ini.Load("/home/xueqin/Qinxun2/src/douyin/model/app.ini")
+	// Config, iniErr = ini.Load("./model/app.ini")
+	//测试使用
+	Config, iniErr = ini.Load("../model/app.ini")
 	if iniErr != nil {
-		logger.Error("load ini config fail")
+		logger.Error("load ini config fail: ", iniErr)
 		return iniErr
 	}
 
@@ -41,7 +41,7 @@ func Init() error {
 	})
 	// DB.Debug()
 	if err != nil {
-		logger.Error("open mysql fail")
+		logger.Error("open mysql fail ", err)
 		return err
 	}
 
@@ -52,12 +52,12 @@ func Init() error {
 	bucket := Config.Section("oss").Key("bucket").String()
 	client, err := oss.New(endpoint, accesskeyid, accessKeySecret)
 	if err != nil {
-		logger.Error("create oss client fail")
+		logger.Error("create oss client fail ", err)
 		return err
 	}
 	Bucket, err = client.Bucket(bucket)
 	if err != nil {
-		logger.Error("instance bucket fail")
+		logger.Error("instance bucket fail ", err)
 		return err
 	}
 	logger.Info("open mysql and oss success")
