@@ -1,6 +1,7 @@
 package model
 
 import (
+	"douyin/util/logger"
 	"fmt"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
@@ -18,10 +19,11 @@ var Config *ini.File
 func Init() error {
 	//读取.ini里面的数据库配置
 	var iniErr error
-	// Config, iniErr = ini.Load("./douyin/model/app.ini")
-	//测试使用
-	Config, iniErr = ini.Load("/home/xueqin/Qinxun2/src/douyin/model/app.ini")
+	Config, iniErr = ini.Load("./model/app.ini")
+	// //测试使用
+	// Config, iniErr = ini.Load("/home/xueqin/Qinxun2/src/douyin/model/app.ini")
 	if iniErr != nil {
+		logger.Error("load ini config fail")
 		return iniErr
 	}
 
@@ -39,6 +41,7 @@ func Init() error {
 	})
 	// DB.Debug()
 	if err != nil {
+		logger.Error("open mysql fail")
 		return err
 	}
 
@@ -49,11 +52,14 @@ func Init() error {
 	bucket := Config.Section("oss").Key("bucket").String()
 	client, err := oss.New(endpoint, accesskeyid, accessKeySecret)
 	if err != nil {
+		logger.Error("create oss client fail")
 		return err
 	}
 	Bucket, err = client.Bucket(bucket)
 	if err != nil {
+		logger.Error("instance bucket fail")
 		return err
 	}
+	logger.Info("open mysql and oss success")
 	return nil
 }

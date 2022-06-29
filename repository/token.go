@@ -2,7 +2,7 @@ package repository
 
 import (
 	"douyin/model"
-	"douyin/util"
+	"douyin/util/logger"
 	"errors"
 	"sync"
 )
@@ -30,7 +30,7 @@ func (*TokenDao) QueryUserIdByToken(token string) (int64, error) {
 		return -1, errors.New("token not found")
 	}
 	if err != nil {
-		util.Logger.Error("query user id by token fail" + err.Error())
+		logger.Error("query user id by token fail " + err.Error())
 		return -1, err
 	}
 	return user.Id, nil

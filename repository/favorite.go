@@ -2,7 +2,7 @@ package repository
 
 import (
 	"douyin/model"
-	"douyin/util"
+	"douyin/util/logger"
 	"sync"
 
 	"gorm.io/gorm"
@@ -29,11 +29,11 @@ func (*FavoriteDao) QueryFavoriteByIds(currentId int64, videoIds []int64) (map[i
 	var favorites []*model.FavoriteRaw
 	err := model.DB.Table("favorite").Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
 	if err == gorm.ErrRecordNotFound {
-		util.Logger.Error("found favorite record fail" + err.Error())
+		logger.Error("found favorite record fail " + err.Error())
 		return nil, err
 	}
 	if err != nil {
-		util.Logger.Error("quert favorite record fail" + err.Error())
+		logger.Error("quert favorite record fail " + err.Error())
 		return nil, err
 	}
 	favoriteMap := make(map[int64]*model.FavoriteRaw)
@@ -43,24 +43,43 @@ func (*FavoriteDao) QueryFavoriteByIds(currentId int64, videoIds []int64) (map[i
 	return favoriteMap, nil
 }
 
-//向favorite表添加一条记录
-func (*FavoriteDao) CreateFavorite(favorite *model.FavoriteRaw) error {
-	err := model.DB.Table("favorite").Create(favorite).Error
-	if err != nil {
-		util.Logger.Error("create favorite record fail" + err.Error())
-		return err
-	}
+//通过事务向favorite表添加一条记录,同时添加视频点赞数
+func (*FavoriteDao) CreateFavorite(favorite *model.FavoriteRaw, videoId int64) error {
+	model.DB.Transaction(func(tx *gorm.DB) error {
+		err := tx.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count + ?", 1)).Error
+		if err != nil {
+			logger.Error("AddFavoriteCount error " + err.Error())
+			return err
+		}
+
+		err = tx.Table("favorite").Create(favorite).Error
+		if err != nil {
+			logger.Error("create favorite record fail " + err.Error())
+			return err
+		}
+
+		return nil
+	})
 	return nil
 }
 
-//删除favorite表的一条记录
+//删除favorite表的一条记录,同时减少视频点赞数
 func (*FavoriteDao) DeleteFavorite(currentId int64, videoId int64) error {
-	var favorite model.FavoriteRaw
-	err := model.DB.Table("favorite").Where("user_id = ? AND video_id = ?", currentId, videoId).Delete(&favorite).Error
-	if err != nil {
-		util.Logger.Error("delete favorite record fail" + err.Error())
-		return err
-	}
+	model.DB.Transaction(func(tx *gorm.DB) error {
+		var favorite model.FavoriteRaw
+		err := tx.Table("favorite").Where("user_id = ? AND video_id = ?", currentId, videoId).Delete(&favorite).Error
+		if err != nil {
+			logger.Error("delete favorite record fail " + err.Error())
+			return err
+		}
+
+		err = tx.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count - ?", 1)).Error
+		if err != nil {
+			logger.Error("SubFavoriteCount error " + err.Error())
+			return err
+		}
+		return nil
+	})
 	return nil
 }
 
@@ -68,12 +87,8 @@ func (*FavoriteDao) DeleteFavorite(currentId int64, videoId int64) error {
 func (*FavoriteDao) QueryFavoriteById(userId int64) ([]int64, error) {
 	var favorites []*model.FavoriteRaw
 	err := model.DB.Table("favorite").Where("user_id = ?", userId).Find(&favorites).Error
-	if err == gorm.ErrRecordNotFound {
-		util.Logger.Error("found favorite record fail" + err.Error())
-		return nil, err
-	}
 	if err != nil {
-		util.Logger.Error("query favorite record fail" + err.Error())
+		logger.Error("query favorite record fail " + err.Error())
 		return nil, err
 	}
 	videoIds := make([]int64, 0)

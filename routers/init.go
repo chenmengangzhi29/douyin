@@ -1,6 +1,8 @@
 package routers
 
 import (
+	"douyin/util/logger"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -21,5 +23,6 @@ func Init() *gin.Engine {
 	for _, opt := range options {
 		opt(apiRouter)
 	}
+	logger.Info("init router success")
 	return r
 }

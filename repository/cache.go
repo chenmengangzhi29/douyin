@@ -16,5 +16,3 @@ var usersLoginInfo = map[string]model.UserRaw{
 		Token:         "JerryJerry123",
 	},
 }
-
-var userIdSequence = int64(10)

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"douyin/util/logger"
 	"testing"
 )
 
@@ -42,6 +43,7 @@ func TestRegisterUserData(t *testing.T) {
 				t.Errorf("RegisterUserData() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+			logger.Info(tt.name + " success")
 		})
 	}
 }
@@ -68,8 +70,8 @@ func TestLoginUserData(t *testing.T) {
 		{
 			name: "测试登陆不存在的用户",
 			args: args{
-				username: "unExist",
-				password: "unExist",
+				username: "UnExist",
+				password: "UnExist",
 			},
 			wantErr: true,
 		},
@@ -82,6 +84,48 @@ func TestLoginUserData(t *testing.T) {
 				t.Errorf("LoginUserData() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+			logger.Info(tt.name + " success")
+		})
+	}
+}
+
+//测试用户信息
+func TestGetUserInfo(t *testing.T) {
+	type args struct {
+		userId int64
+		token  string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "测试获取存在用户的信息",
+			args: args{
+				userId: 1,
+				token:  "JerryJerry123",
+			},
+			wantErr: false,
+		},
+		{
+			name: "测试获取不存在用户的信息",
+			args: args{
+				userId: 99999999,
+				token:  "JerryJerry123",
+			},
+			wantErr: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			_, err := GetUserInfo(tt.args.userId, tt.args.token)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("GetUserInfo() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			logger.Info(tt.name + " success")
 		})
 	}
 }

@@ -6,7 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"sync"
-	"sync/atomic"
+	"time"
 )
 
 //点赞操作流，包括鉴权，调用repository层执行点赞操作和取消点赞操作
@@ -22,9 +22,6 @@ func NewFavoriteActionDataFlow(token string, videoId int64, actionType int64) *F
 	}
 }
 
-//生成点赞序号
-var favoriteIdSequence = int64(10)
-
 type FavoriteActionDataFlow struct {
 	Token      string
 	VideoId    int64
@@ -36,6 +33,9 @@ type FavoriteActionDataFlow struct {
 
 func (f *FavoriteActionDataFlow) Do() error {
 	if err := f.checkToken(); err != nil {
+		return err
+	}
+	if err := f.checkVideoId(); err != nil {
 		return err
 	}
 	if err := f.prepareFavoriteInfo(); err != nil {
@@ -54,72 +54,38 @@ func (f *FavoriteActionDataFlow) checkToken() error {
 	return nil
 }
 
+func (f *FavoriteActionDataFlow) checkVideoId() error {
+	videos, err := repository.NewVideoDaoInstance().QueryVideoByVideoIds([]int64{f.VideoId})
+	if err != nil {
+		return err
+	}
+	if len(videos) == 0 {
+		return errors.New("video not exist")
+	}
+	return nil
+}
+
 //若ActionType（操作类型）等于1，则向favorite表创建一条记录，同时向video表的目标video增加点赞数
 //若ActionType等于2，则向favorite表删除一条记录，同时向video表的目标video减少点赞数
 //若ActionType不等于1和2，则返回错误
 func (f *FavoriteActionDataFlow) prepareFavoriteInfo() error {
 	if f.ActionType == 1 {
-		atomic.AddInt64(&favoriteIdSequence, 1)
 		favorite := &model.FavoriteRaw{
-			Id:      favoriteIdSequence,
+			Id:      time.Now().Unix(),
 			UserId:  f.CurrentId,
 			VideoId: f.VideoId,
 		}
 		f.Favorite = favorite
 
-		var wg sync.WaitGroup
-		wg.Add(2)
-		var favoriteErr, videoErr error
-		go func() {
-			defer wg.Done()
-			err := repository.NewFavoriteDaoInstance().CreateFavorite(f.Favorite)
-			if err != nil {
-				favoriteErr = err
-				return
-			}
-		}()
-		go func() {
-			defer wg.Done()
-			err := repository.NewVideoDaoInstance().UpdateFavoriteCount(f.VideoId, f.ActionType)
-			if err != nil {
-				videoErr = err
-				return
-			}
-		}()
-		wg.Wait()
-		if favoriteErr != nil {
-			return favoriteErr
-		}
-		if videoErr != nil {
-			return videoErr
+		err := repository.NewFavoriteDaoInstance().CreateFavorite(f.Favorite, f.VideoId)
+		if err != nil {
+			return err
 		}
 	}
 	if f.ActionType == 2 {
-		var wg sync.WaitGroup
-		wg.Add(2)
-		var favoriteErr, videoErr error
-		go func() {
-			defer wg.Done()
-			err := repository.NewFavoriteDaoInstance().DeleteFavorite(f.CurrentId, f.VideoId)
-			if err != nil {
-				favoriteErr = err
-				return
-			}
-		}()
-		go func() {
-			defer wg.Done()
-			err := repository.NewVideoDaoInstance().UpdateFavoriteCount(f.VideoId, f.ActionType)
-			if err != nil {
-				videoErr = err
-				return
-			}
-		}()
-		wg.Wait()
-		if favoriteErr != nil {
-			return favoriteErr
-		}
-		if videoErr != nil {
-			return videoErr
+		err := repository.NewFavoriteDaoInstance().DeleteFavorite(f.CurrentId, f.VideoId)
+		if err != nil {
+			return err
 		}
 
 	}
@@ -159,6 +125,9 @@ func (f *FavoriteListDataFlow) Do() ([]model.Video, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
+	if err := f.checkUserId(); err != nil {
+		return nil, err
+	}
 	if err := f.prepareVideoInfo(); err != nil {
 		return nil, err
 	}
@@ -179,6 +148,17 @@ func (f *FavoriteListDataFlow) checkToken() error {
 		return err
 	}
 	f.CurrentId = currentId
+	return nil
+}
+
+func (f *FavoriteListDataFlow) checkUserId() error {
+	user, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.UserId})
+	if err != nil {
+		return err
+	}
+	if len(user) == 0 {
+		return errors.New("user not exist")
+	}
 	return nil
 }
 
