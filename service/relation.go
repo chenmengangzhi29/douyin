@@ -3,6 +3,7 @@ package service
 import (
 	"douyin/model"
 	"douyin/repository"
+	"errors"
 )
 
 //关注操作信息流
@@ -40,6 +41,9 @@ func (f *RelationActionDataFlow) Do() error {
 	if err := f.checkToken(); err != nil {
 		return err
 	}
+	if err := f.checkToUserId(); err != nil {
+		return err
+	}
 	if f.ActionType == 1 {
 		if err := f.CreateInfo(); err != nil {
 			return err
@@ -60,6 +64,17 @@ func (f *RelationActionDataFlow) checkToken() error {
 		return err
 	}
 	f.CurrentId = currentId
+	return nil
+}
+
+func (f *RelationActionDataFlow) checkToUserId() error {
+	users, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.ToUserId})
+	if err != nil {
+		return err
+	}
+	if len(users) == 0 {
+		return errors.New("toUserId not exist")
+	}
 	return nil
 }
 
@@ -107,6 +122,9 @@ func (f *FollowListDataFlow) Do() ([]model.User, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
+	if err := f.checkUserId(); err != nil {
+		return nil, err
+	}
 	if err := f.prepareFollowInfo(); err != nil {
 		return nil, err
 	}
@@ -127,6 +145,18 @@ func (f *FollowListDataFlow) checkToken() error {
 		return err
 	}
 	f.CurrentId = currentId
+	return nil
+}
+
+//检查用户是否存在
+func (f *FollowListDataFlow) checkUserId() error {
+	users, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.UserId})
+	if err != nil {
+		return err
+	}
+	if len(users) == 0 {
+		return errors.New("userId not exist")
+	}
 	return nil
 }
 
@@ -213,6 +243,9 @@ func (f *FollowerListDataFlow) Do() ([]model.User, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
+	if err := f.checkUserId(); err != nil {
+		return nil, err
+	}
 	if err := f.prepareFollowerInfo(); err != nil {
 		return nil, err
 	}
@@ -233,6 +266,18 @@ func (f *FollowerListDataFlow) checkToken() error {
 		return err
 	}
 	f.CurrentId = currentId
+	return nil
+}
+
+//检查用户id是否存在
+func (f *FollowerListDataFlow) checkUserId() error {
+	users, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.UserId})
+	if err != nil {
+		return err
+	}
+	if len(users) == 0 {
+		return errors.New("userId not exist")
+	}
 	return nil
 }
 

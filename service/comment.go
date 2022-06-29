@@ -37,7 +37,9 @@ func (f *CreateCommentDataFlow) Do() (*model.Comment, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
-
+	if err := f.checkVideoId(); err != nil {
+		return nil, err
+	}
 	if err := f.prepareCommentInfo(); err != nil {
 		return nil, err
 	}
@@ -59,6 +61,18 @@ func (f *CreateCommentDataFlow) checkToken() error {
 	return nil
 }
 
+//检查视频id是否存在
+func (f *CreateCommentDataFlow) checkVideoId() error {
+	videos, err := repository.NewVideoDaoInstance().QueryVideoByVideoIds([]int64{f.VideoId})
+	if err != nil {
+		return err
+	}
+	if len(videos) == 0 {
+		return errors.New("video not exist")
+	}
+	return nil
+}
+
 func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 	commentRaw := model.CommentRaw{
 		Id:         time.Now().Unix(),
@@ -70,23 +84,14 @@ func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 	f.CommentRaw = commentRaw
 
 	var wg sync.WaitGroup
-	wg.Add(3)
-	var commentErr, videoErr, userErr error
-	//创建评论记录
+	wg.Add(2)
+	var commentErr, userErr error
+	//创建评论记录并增加视频评论数
 	go func() {
 		defer wg.Done()
 		err := repository.NewCommentDaoInstance().CreateComment(&f.CommentRaw)
 		if err != nil {
 			commentErr = err
-			return
-		}
-	}()
-	//更改视频评论数
-	go func() {
-		defer wg.Done()
-		err := repository.NewVideoDaoInstance().AddCommentCount(f.VideoId)
-		if err != nil {
-			videoErr = err
 			return
 		}
 	}()
@@ -103,9 +108,6 @@ func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 	wg.Wait()
 	if commentErr != nil {
 		return commentErr
-	}
-	if videoErr != nil {
-		return videoErr
 	}
 	if userErr != nil {
 		return userErr
@@ -132,7 +134,7 @@ func (f *CreateCommentDataFlow) packCommentInfo() error {
 	return nil
 }
 
-//删除视频信息流，鉴权，删除评论记录，减少视频评论数，获取当前用户信息和评论信息返回
+//删除评论信息流，鉴权，删除评论记录，减少视频评论数，获取当前用户信息和评论信息返回
 func DeleteCommentData(token string, videoId int64, commentId int64) (*model.Comment, error) {
 	return NewDeleteCommentDataFlow(token, videoId, commentId).Do()
 }
@@ -160,6 +162,9 @@ func (f *DeleteCommentDataFlow) Do() (*model.Comment, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
+	if err := f.checkVideoIdAndCommentId(); err != nil {
+		return nil, err
+	}
 	if err := f.prepareCommentInfo(); err != nil {
 		return nil, err
 	}
@@ -179,12 +184,32 @@ func (f *DeleteCommentDataFlow) checkToken() error {
 	return nil
 }
 
+//检查userid和commentid是否存在
+func (f *DeleteCommentDataFlow) checkVideoIdAndCommentId() error {
+	videos, err := repository.NewVideoDaoInstance().QueryVideoByVideoIds([]int64{f.VideoId})
+	if err != nil {
+		return err
+	}
+	if len(videos) == 0 {
+		return errors.New("videoId not exist")
+	}
+	comments, err := repository.NewCommentDaoInstance().QueryCommentByCommentIds([]int64{f.CommentId})
+	if err != nil {
+		return err
+	}
+	if len(comments) == 0 {
+		return errors.New("commentId not exist")
+	}
+	return nil
+}
+
 func (f *DeleteCommentDataFlow) prepareCommentInfo() error {
 	var wg sync.WaitGroup
-	wg.Add(3)
-	var commentErr, videoErr, userErr error
-	//删除评论记录
+	wg.Add(2)
+	var commentErr, userErr error
+	//删除评论记录并减少视频评论数
 	go func() {
+		defer wg.Done()
 		commentRaw, err := repository.NewCommentDaoInstance().DeleteComment(f.CommentId)
 		if err != nil {
 			commentErr = err
@@ -192,16 +217,9 @@ func (f *DeleteCommentDataFlow) prepareCommentInfo() error {
 		}
 		f.CommentRaw = commentRaw
 	}()
-	//减少视频评论数
-	go func() {
-		err := repository.NewVideoDaoInstance().SubCommentCount(f.VideoId)
-		if err != nil {
-			videoErr = err
-			return
-		}
-	}()
 	//获取用户信息
 	go func() {
+		defer wg.Done()
 		users, err := repository.NewUserDaoInstance().QueryUserByIds([]int64{f.CurrentId})
 		if err != nil {
 			userErr = err
@@ -212,9 +230,6 @@ func (f *DeleteCommentDataFlow) prepareCommentInfo() error {
 	wg.Wait()
 	if commentErr != nil {
 		return commentErr
-	}
-	if videoErr != nil {
-		return videoErr
 	}
 	if userErr != nil {
 		return userErr
@@ -267,6 +282,9 @@ func (f *CommentListDataFlow) Do() ([]model.Comment, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
+	if err := f.checkVideoId(); err != nil {
+		return nil, err
+	}
 	if err := f.prepareCommentInfo(); err != nil {
 		return nil, err
 	}
@@ -287,6 +305,18 @@ func (f *CommentListDataFlow) checkToken() error {
 		return err
 	}
 	f.CurrentId = currentId
+	return nil
+}
+
+//检查视频id是否正确
+func (f *CommentListDataFlow) checkVideoId() error {
+	videos, err := repository.NewVideoDaoInstance().QueryVideoByVideoIds([]int64{f.VideoId})
+	if err != nil {
+		return err
+	}
+	if len(videos) == 0 {
+		return errors.New("videoId not exist")
+	}
 	return nil
 }
 

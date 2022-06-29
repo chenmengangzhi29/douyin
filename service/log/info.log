@@ -1,51 +1,33 @@
-2022-06-29T15:30:52.975+0800	INFO	logger/log.go:72	测试视频流的不存在token success
-2022-06-29T15:30:52.977+0800	INFO	logger/log.go:72	测试视频流的默认token success
-2022-06-29T15:30:52.983+0800	INFO	logger/log.go:72	测试视频流的正常token success
-2022-06-29T15:30:52.984+0800	INFO	logger/log.go:72	测试视频列表的不正确token success
-2022-06-29T15:30:52.984+0800	INFO	logger/log.go:72	[]
-2022-06-29T15:30:52.986+0800	INFO	logger/log.go:72	测试视频列表的默认token success
-2022-06-29T15:30:52.986+0800	INFO	logger/log.go:72	[{1 {1 Jerry 0 0 false} https://www.w3schools.com/html/movie.mp4 https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg 3 2 false bear}]
-2022-06-29T15:30:52.988+0800	INFO	logger/log.go:72	测试视频列表的正常token success
-2022-06-29T15:30:52.989+0800	INFO	logger/log.go:72	[{2 {2 Tom 1 0 false} https://www.w3schools.com/html/mov_bbb.mp4 https://picjumbo.com/wp-content/uploads/lonely-alcatraz-island-in-the-middle-of-san-francisco-bay-free-photo-2210x1474.jpg 100 440 false w}]
-2022-06-29T15:30:52.992+0800	INFO	logger/log.go:72	测试视频列表的不正确用户id success
-2022-06-29T15:30:52.992+0800	INFO	logger/log.go:72	[]
-2022-06-29T15:30:52.992+0800	INFO	logger/log.go:72	测试注册存在的用户 success
-2022-06-29T15:30:52.997+0800	INFO	logger/log.go:72	测试注册不存在的用户 success
-2022-06-29T15:30:52.997+0800	INFO	logger/log.go:72	测试登陆存在的用户 success
-2022-06-29T15:30:52.998+0800	INFO	logger/log.go:72	测试登陆不存在的用户 success
-2022-06-29T15:30:52.999+0800	INFO	logger/log.go:72	测试获取存在用户的信息 success
-2022-06-29T15:30:53.000+0800	INFO	logger/log.go:72	测试获取不存在用户的信息 success
-2022-06-29T15:50:43.462+0800	INFO	logger/log.go:72	测试点赞操作的actionType=1 success
-2022-06-29T15:50:43.468+0800	INFO	logger/log.go:72	测试点赞操作的actionType=2 success
-2022-06-29T15:50:43.469+0800	INFO	logger/log.go:72	测试点赞操作的actionType=3 success
-2022-06-29T16:21:33.062+0800	INFO	logger/log.go:72	测试点赞操作的actionType=1 success
-2022-06-29T16:21:33.065+0800	INFO	logger/log.go:72	测试点赞操作的actionType=2 success
-2022-06-29T16:21:33.066+0800	INFO	logger/log.go:72	测试点赞操作的actionType=3 success
-2022-06-29T16:21:33.067+0800	INFO	logger/log.go:72	测试点赞列表的不存在视频id success
-2022-06-29T16:22:14.184+0800	INFO	logger/log.go:72	测试点赞操作的actionType=1 success
-2022-06-29T16:22:14.189+0800	INFO	logger/log.go:72	测试点赞操作的actionType=2 success
-2022-06-29T16:22:14.191+0800	INFO	logger/log.go:72	测试点赞操作的actionType=3 success
-2022-06-29T16:22:14.192+0800	INFO	logger/log.go:72	测试点赞列表的不存在视频id success
-2022-06-29T16:22:14.193+0800	INFO	logger/log.go:72	测试视频流的不存在token success
-2022-06-29T16:22:14.194+0800	INFO	logger/log.go:72	测试视频流的默认token success
-2022-06-29T16:22:14.198+0800	INFO	logger/log.go:72	测试视频流的正常token success
-2022-06-29T16:22:14.198+0800	INFO	logger/log.go:72	测试视频列表的不正确token success
-2022-06-29T16:22:14.199+0800	INFO	logger/log.go:72	[]
-2022-06-29T16:22:14.199+0800	INFO	logger/log.go:72	测试视频列表的默认token success
-2022-06-29T16:22:14.200+0800	INFO	logger/log.go:72	[{1 {1 Jerry 0 0 false} https://www.w3schools.com/html/movie.mp4 https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg 3 2 false bear}]
-2022-06-29T16:22:14.202+0800	INFO	logger/log.go:72	测试视频列表的正常token success
-2022-06-29T16:22:14.202+0800	INFO	logger/log.go:72	[{2 {2 Tom 1 0 false} https://www.w3schools.com/html/mov_bbb.mp4 https://picjumbo.com/wp-content/uploads/lonely-alcatraz-island-in-the-middle-of-san-francisco-bay-free-photo-2210x1474.jpg 100 440 false w}]
-2022-06-29T16:22:14.203+0800	INFO	logger/log.go:72	测试视频列表的不正确用户id success
-2022-06-29T16:22:14.203+0800	INFO	logger/log.go:72	[]
-2022-06-29T16:22:14.203+0800	INFO	logger/log.go:72	测试注册存在的用户 success
-2022-06-29T16:22:14.206+0800	INFO	logger/log.go:72	测试注册不存在的用户 success
-2022-06-29T16:22:14.206+0800	INFO	logger/log.go:72	测试登陆存在的用户 success
-2022-06-29T16:22:14.207+0800	INFO	logger/log.go:72	测试登陆不存在的用户 success
-2022-06-29T16:22:14.209+0800	INFO	logger/log.go:72	测试获取存在用户的信息 success
-2022-06-29T16:22:14.210+0800	INFO	logger/log.go:72	测试获取不存在用户的信息 success
-2022-06-29T16:33:51.870+0800	INFO	logger/log.go:72	测试点赞列表的存在用户id success
-2022-06-29T16:33:51.870+0800	INFO	logger/log.go:72	[{1 {1 Jerry 0 0 false} https://www.w3schools.com/html/movie.mp4 https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg 3 2 true bear}]
-2022-06-29T16:39:26.543+0800	INFO	logger/log.go:72	测试点赞列表的存在用户id success
-2022-06-29T16:39:26.544+0800	INFO	logger/log.go:72	[{1 {1 Jerry 0 0 false} https://www.w3schools.com/html/movie.mp4 https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg 3 2 true bear}]
-2022-06-29T16:39:26.545+0800	INFO	logger/log.go:72	测试点赞列表的不存在用户id success
-2022-06-29T16:39:26.545+0800	INFO	logger/log.go:72	[]
+2022-06-29T21:50:08.622+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T21:50:08.625+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T21:50:08.627+0800	INFO	logger/log.go:73	测试评论列表的正常操作 success
+2022-06-29T21:50:08.627+0800	INFO	logger/log.go:73	测试评论列表的不正确视频id success
+2022-06-29T21:51:04.672+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T21:51:04.711+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T21:51:04.714+0800	INFO	logger/log.go:73	测试评论列表的正常操作 success
+2022-06-29T21:51:04.715+0800	INFO	logger/log.go:73	测试评论列表的不正确视频id success
+2022-06-29T22:01:53.370+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T22:01:53.374+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T22:01:53.387+0800	INFO	logger/log.go:73	测试关注操作的正常操作 success
+2022-06-29T22:01:53.391+0800	INFO	logger/log.go:73	测试取消关注的正常操作 success
+2022-06-29T22:14:00.046+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T22:14:00.061+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T22:14:00.071+0800	INFO	logger/log.go:73	测试关注操作的正常操作 success
+2022-06-29T22:14:00.080+0800	INFO	logger/log.go:73	测试取消关注的正常操作 success
+2022-06-29T22:14:00.081+0800	INFO	logger/log.go:73	测试关注操作的错误用户id success
+2022-06-29T22:19:17.020+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T22:19:17.026+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T22:19:17.028+0800	INFO	logger/log.go:73	测试关注列表的正常操作 success
+2022-06-29T22:19:51.029+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T22:19:51.034+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T22:19:51.038+0800	INFO	logger/log.go:73	测试关注列表的正常操作 success
+2022-06-29T22:19:51.038+0800	INFO	logger/log.go:73	测试关注列表的错误用户id success
+2022-06-29T22:24:56.892+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T22:24:56.907+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T22:24:56.911+0800	INFO	logger/log.go:73	测试粉丝列表的正常操作 success
+2022-06-29T22:24:56.913+0800	INFO	logger/log.go:73	测试粉丝列表的没有粉丝的用户 success
+2022-06-29T22:27:46.871+0800	INFO	logger/log.go:32	logger init success
+2022-06-29T22:27:46.876+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-06-29T22:27:46.880+0800	INFO	logger/log.go:73	测试粉丝列表的正常操作 success
+2022-06-29T22:27:46.882+0800	INFO	logger/log.go:73	测试粉丝列表的没有粉丝的用户 success
+2022-06-29T22:27:46.883+0800	INFO	logger/log.go:73	测试粉丝列表的错误用户id success
