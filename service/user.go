@@ -160,7 +160,7 @@ func (f *GetUserInfoFlow) prepareUserInfo() error {
 	if len(users) == 0 {
 		return errors.New("user not exist")
 	}
-	f.UserRaw = users[0]
+	f.UserRaw = *users[0]
 
 	relationMap, err := repository.NewRelationDaoInstance().QueryRelationByIds(f.CurrentId, userIds)
 	_, ok := relationMap[f.UserId]

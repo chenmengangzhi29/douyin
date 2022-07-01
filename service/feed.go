@@ -11,7 +11,7 @@ import (
 //--------------------------------service---------------------------------------
 //该层功能包括鉴权，向repository层获取视频数据，封装视频数据
 
-func QueryVideoData(latestTime int64, token string) ([]model.Video, int64, error) {
+func QueryVideoData(latestTime int64, token string) ([]*model.Video, int64, error) {
 	return NewQueryVideoDataFlow(latestTime, token).Do()
 }
 
@@ -25,7 +25,7 @@ func NewQueryVideoDataFlow(latestTime int64, token string) *QueryVideoDataFlow {
 type QueryVideoDataFlow struct {
 	LatestTime int64
 	Token      string
-	VideoList  []model.Video
+	VideoList  []*model.Video
 	NextTime   int64
 
 	CurrentId   int64
@@ -35,7 +35,7 @@ type QueryVideoDataFlow struct {
 	RelationMap map[int64]model.RelationRaw
 }
 
-func (f *QueryVideoDataFlow) Do() ([]model.Video, int64, error) {
+func (f *QueryVideoDataFlow) Do() ([]*model.Video, int64, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, 0, err
 	}
@@ -85,7 +85,7 @@ func (f *QueryVideoDataFlow) prepareVideoInfo() error {
 	}
 	userMap := make(map[int64]*model.UserRaw)
 	for _, user := range users {
-		userMap[user.Id] = &user
+		userMap[user.Id] = user
 	}
 	f.UserMap = userMap
 
@@ -129,7 +129,7 @@ func (f *QueryVideoDataFlow) prepareVideoInfo() error {
 }
 
 func (f *QueryVideoDataFlow) packVideoInfo() error {
-	videoList := make([]model.Video, 0)
+	videoList := make([]*model.Video, 0)
 	for _, video := range f.VideoData {
 		videoUser, ok := f.UserMap[video.UserId]
 		if !ok {
@@ -149,7 +149,7 @@ func (f *QueryVideoDataFlow) packVideoInfo() error {
 				isFollow = true
 			}
 		}
-		videoList = append(videoList, model.Video{
+		videoList = append(videoList, &model.Video{
 			Id: video.Id,
 			Author: model.User{
 				Id:            videoUser.Id,

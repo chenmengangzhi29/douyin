@@ -26,7 +26,7 @@ func (*TokenDao) QueryUserIdByToken(token string) (int64, error) {
 	var user model.UserRaw
 	err := model.DB.Table("user").Where("token = ?", token).Find(&user).Error
 	if user.Token != token {
-		// util.Logger.Error("token not found" + err.Error())
+		logger.Error("QueryUserIdByToken token not found " + err.Error())
 		return -1, errors.New("token not found")
 	}
 	if err != nil {

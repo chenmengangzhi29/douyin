@@ -103,7 +103,7 @@ func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 			userErr = err
 			return
 		}
-		f.User = users[0]
+		f.User = *users[0]
 	}()
 	wg.Wait()
 	if commentErr != nil {
@@ -225,7 +225,7 @@ func (f *DeleteCommentDataFlow) prepareCommentInfo() error {
 			userErr = err
 			return
 		}
-		f.UserRaw = users[0]
+		f.UserRaw = *users[0]
 	}()
 	wg.Wait()
 	if commentErr != nil {
@@ -341,7 +341,7 @@ func (f *CommentListDataFlow) prepareCommentInfo() error {
 	}
 	userMap := make(map[int64]*model.UserRaw)
 	for _, user := range users {
-		userMap[user.Id] = &user
+		userMap[user.Id] = user
 	}
 	f.UserMap = userMap
 

@@ -8,6 +8,14 @@ type Response struct {
 	StatusMsg  string `json:"status_msg"`
 }
 
+type FeedResponse struct {
+	StatusCode int32  `json:"status_code"`
+	StatusMsg  string `json:"status_msg"`
+	// VideoList  []Video `json:"video_list,omitempty"`
+	VideoList interface{} `json:"video_list,omitempty"`
+	NextTime  int64       `json:"next_time,omitempty"`
+}
+
 type Video struct {
 	Id            int64  `json:"id"`
 	Author        User   `json:"author"`

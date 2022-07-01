@@ -19,9 +19,9 @@ var Config *ini.File
 func Init() error {
 	//读取.ini里面的数据库配置
 	var iniErr error
-	// Config, iniErr = ini.Load("./model/app.ini")
+	Config, iniErr = ini.Load("./model/app.ini")
 	//测试使用
-	Config, iniErr = ini.Load("../model/app.ini")
+	// Config, iniErr = ini.Load("../model/app.ini")
 	if iniErr != nil {
 		logger.Error("load ini config fail: ", iniErr)
 		return iniErr
