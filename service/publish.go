@@ -189,7 +189,7 @@ func (f *QueryUserVideoListFlow) prepareVideoInfo() error {
 	}
 	userMap := make(map[int64]*model.UserRaw)
 	for _, user := range users {
-		userMap[user.Id] = &user
+		userMap[user.Id] = user
 	}
 	f.UserMap = userMap
 

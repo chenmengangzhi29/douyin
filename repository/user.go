@@ -25,8 +25,8 @@ func NewUserDaoInstance() *UserDao {
 }
 
 //根据用户id获取用户信息
-func (*UserDao) QueryUserByIds(userIds []int64) ([]model.UserRaw, error) {
-	var users []model.UserRaw
+func (*UserDao) QueryUserByIds(userIds []int64) ([]*model.UserRaw, error) {
+	var users []*model.UserRaw
 	err := model.DB.Table("user").Where("id in (?)", userIds).Find(&users).Error
 	if err != nil {
 		logger.Error("query user by ids fail " + err.Error())

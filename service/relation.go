@@ -114,7 +114,7 @@ type FollowListDataFlow struct {
 	UserList []model.User
 
 	CurrentId   int64
-	Users       []model.UserRaw
+	Users       []*model.UserRaw
 	RelationMap map[int64]model.RelationRaw
 }
 
@@ -235,7 +235,7 @@ type FollowerListDataFlow struct {
 	UserList []model.User
 
 	CurrentId   int64
-	Users       []model.UserRaw
+	Users       []*model.UserRaw
 	RelationMap map[int64]model.RelationRaw
 }
 

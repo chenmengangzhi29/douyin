@@ -33,8 +33,8 @@ CREATE TABLE `video`
   DEFAULT CHARSET = utf8mb4 COMMENT ='视频表';
 
 INSERT INTO `video`
-VALUES (1, 1, 'bear', 'https://www.w3schools.com/html/movie.mp4', 'https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg', 3, 2, 1654605984823),
-       (2, 2, 'w', 'https://www.w3schools.com/html/mov_bbb.mp4', 'https://picjumbo.com/wp-content/uploads/lonely-alcatraz-island-in-the-middle-of-san-francisco-bay-free-photo-2210x1474.jpg', 100, 440, 1654605984821);
+VALUES (1, 1, 'bear', 'https://www.w3schools.com/html/movie.mp4', 'https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg', 3, 2, 1656682895),
+       (2, 2, 'w', 'https://www.w3schools.com/html/mov_bbb.mp4', 'https://picjumbo.com/wp-content/uploads/lonely-alcatraz-island-in-the-middle-of-san-francisco-bay-free-photo-2210x1474.jpg', 100, 440, 1656682896);
 
 DROP TABLE IF EXISTS `favorite`;
 CREATE TABLE `favorite`
