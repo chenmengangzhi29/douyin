@@ -8,14 +8,27 @@ import (
 	"time"
 )
 
+var File *os.File
+
 func TestMain(m *testing.M) {
 	if err := logger.Init(); err != nil {
 		os.Exit(1)
 	}
+
 	if err := model.Init(); err != nil {
 		logger.Error("model fail")
 		os.Exit(1)
 	}
+
+	path := "../public/girl.mp4"
+	file, err := os.Open(path)
+	if err != nil {
+		logger.Errorf("open local file %v fail", path)
+		os.Exit(1)
+	}
+	defer file.Close()
+	File = file
+
 	m.Run()
 }
 

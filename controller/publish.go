@@ -12,7 +12,9 @@ import (
 //获取传入参数，通过handler层上传视频数据
 func Publish(c *gin.Context) {
 	token := c.PostForm("token")
-	data, err := c.FormFile("data")
+	title := c.PostForm("title")
+
+	data, _, err := c.Request.FormFile("data")
 	if err != nil {
 		c.JSON(http.StatusOK, &model.Response{
 			StatusCode: -1,
@@ -20,10 +22,10 @@ func Publish(c *gin.Context) {
 		})
 		return
 	}
-	title := c.PostForm("title")
+	defer data.Close()
 
 	logger.Info("publish video")
-	publishVideoResponse := handler.PublishVideoData(token, data, title, c)
+	publishVideoResponse := handler.PublishVideoData(token, data, title)
 
 	logger.Info(&publishVideoResponse)
 	c.JSON(http.StatusOK, publishVideoResponse)

@@ -1,38 +1,37 @@
 package service
 
 import (
+	"bytes"
 	"douyin/model"
 	"douyin/repository"
 	"errors"
 	"fmt"
+	"io"
 	"mime/multipart"
-	"path/filepath"
+	"strconv"
+	"strings"
 	"sync"
 	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
 //--------------------service-----------------------------------
 //上传视频数据流，包括获取当前用户id，处理视频名，确定视频保存的文件夹路径，处理Oss上的object路径，处理好要上传到mysql的视频结构
-func PublishUserVideoData(token string, data *multipart.FileHeader, title string, c *gin.Context) error {
-	return NewPublishUserVideoDataFlow(token, data, title, c).Do()
+func PublishUserVideoData(token string, data multipart.File, title string) error {
+	return NewPublishUserVideoDataFlow(token, data, title).Do()
 }
 
-func NewPublishUserVideoDataFlow(token string, data *multipart.FileHeader, title string, c *gin.Context) *PublishUserVideoDataFlow {
+func NewPublishUserVideoDataFlow(token string, data multipart.File, title string) *PublishUserVideoDataFlow {
 	return &PublishUserVideoDataFlow{
 		Token: token,
 		Video: data,
 		Title: title,
-		Gin:   c,
 	}
 }
 
 type PublishUserVideoDataFlow struct {
 	Token string
-	Video *multipart.FileHeader
+	Video multipart.File
 	Title string
-	Gin   *gin.Context
 
 	CurrentId int64
 	VideoData *model.VideoRaw
@@ -62,56 +61,52 @@ func (f *PublishUserVideoDataFlow) checkToken() error {
 }
 
 func (f *PublishUserVideoDataFlow) publishVideo() error {
-	//处理视频名
-	filename := filepath.Base(f.Video.Filename)
-	finalName := fmt.Sprintf("%d_%s", f.CurrentId, filename)
+	//处理视频数据
+	buf := bytes.NewBuffer(nil)
+	if _, err := io.Copy(buf, f.Video); err != nil {
+		return err
+	}
+	video := bytes.NewReader(buf.Bytes())
 
-	//将视频保存到本地文件夹
-	saveFile := filepath.Join("./public/", finalName)
-	err := repository.NewVideoDaoInstance().PublishVideoToPublic(f.Video, saveFile, f.Gin)
+	// //处理视频名
+	// filename := filepath.Base(f.Video.Filename)
+	// finalName := fmt.Sprintf("%d_%s", f.CurrentId, filename)
+
+	// //将视频保存到本地文件夹
+	// saveFile := filepath.Join("./public/", finalName)
+	// err := repository.NewVideoDaoInstance().PublishVideoToPublic(f.Video, saveFile, f.Gin)
+	// if err != nil {
+	// 	return err
+	// }
+
+	//将视频流上传到oss
+	id := time.Now().Unix()
+	objectKey := "video/" + strconv.Itoa(int(id)) + ".mp4"
+	err := repository.NewVideoDaoInstance().PublishVideoToOss(objectKey, video)
 	if err != nil {
 		return err
 	}
 
-	//将本地视频上传到oss同时将视频信息上传到mysql
-	object := "video/" + finalName
-
-	video := &model.VideoRaw{
-		Id:         time.Now().Unix(),
-		UserId:     f.CurrentId,
-		Title:      f.Title,
-		PlayUrl:    "https://dousheng1.oss-cn-shenzhen.aliyuncs.com/" + object,
-		CreateTime: time.Now().Unix(),
+	//获取视频播放地址
+	signedURL, err := repository.NewVideoDaoInstance().QueryOssVideoURL(objectKey)
+	if err != nil {
+		return err
 	}
-	f.VideoData = video
+	url := strings.Split(signedURL, "?")[0]
 
-	var wg sync.WaitGroup
-	wg.Add(2)
-	var OssErr, MysqlErr error
-
-	go func() {
-		defer wg.Done()
-		err = repository.NewVideoDaoInstance().PublishVideoToOss(object, saveFile)
-		if err != nil {
-			OssErr = err
-			return
-		}
-	}()
-	go func() {
-		defer wg.Done()
-		err = repository.NewVideoDaoInstance().PublishVideoData(f.VideoData)
-		if err != nil {
-			MysqlErr = err
-			return
-		}
-	}()
-
-	wg.Wait()
-	if OssErr != nil {
-		return OssErr
+	//将视频信息上传到mysql
+	videoRaw := &model.VideoRaw{
+		Id:     id,
+		UserId: f.CurrentId,
+		Title:  f.Title,
+		// PlayUrl:    "https://dousheng1.oss-cn-shenzhen.aliyuncs.com/" + object,
+		PlayUrl:    url,
+		CreateTime: id,
 	}
-	if MysqlErr != nil {
-		return MysqlErr
+	f.VideoData = videoRaw
+	err = repository.NewVideoDaoInstance().PublishVideoData(f.VideoData)
+	if err != nil {
+		return err
 	}
 
 	return nil

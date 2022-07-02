@@ -1,13 +1,13 @@
 package repository
 
 import (
+	"bytes"
 	"douyin/model"
 	"douyin/util/logger"
 	"errors"
-	"mime/multipart"
 	"sync"
 
-	"github.com/gin-gonic/gin"
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"gorm.io/gorm"
 )
 
@@ -56,23 +56,33 @@ func (*VideoDao) QueryVideoByUserId(userId int64) ([]*model.VideoRaw, error) {
 	return videos, nil
 }
 
-//将视频保存到本地文件夹中
-func (*VideoDao) PublishVideoToPublic(video *multipart.FileHeader, saveFile string, c *gin.Context) error {
-	if err := c.SaveUploadedFile(video, saveFile); err != nil {
-		logger.Error("PublishVideoToPublic error " + err.Error())
-		return err
-	}
-	return nil
-}
+// //将视频保存到本地文件夹中
+// func (*VideoDao) PublishVideoToPublic(video *multipart.FileHeader, saveFile string, c *gin.Context) error {
+// 	if err := c.SaveUploadedFile(video, saveFile); err != nil {
+// 		logger.Error("PublishVideoToPublic error " + err.Error())
+// 		return err
+// 	}
+// 	return nil
+// }
 
-//将本地文件夹中的视频上传到Oss
-func (*VideoDao) PublishVideoToOss(object string, saveFile string) error {
-	err := model.Bucket.PutObjectFromFile(object, saveFile)
+//将视频上传到Oss
+func (*VideoDao) PublishVideoToOss(objectKey string, video *bytes.Reader) error {
+	err := model.Bucket.PutObject(objectKey, video)
 	if err != nil {
 		logger.Error("PublishVideoToOss error " + err.Error())
 		return err
 	}
 	return nil
+}
+
+//从oss上获取播放地址
+func (*VideoDao) QueryOssVideoURL(objectKey string) (string, error) {
+	signedURL, err := model.Bucket.SignURL(objectKey, oss.HTTPPut, 60)
+	if err != nil {
+		logger.Errorf("Query %v URL fail, %v", objectKey, err.Error())
+		return "", err
+	}
+	return signedURL, nil
 }
 
 //向video表添加一条记录

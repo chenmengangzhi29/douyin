@@ -5,14 +5,12 @@ import (
 	"douyin/service"
 	"mime/multipart"
 	"strconv"
-
-	"github.com/gin-gonic/gin"
 )
 
 //---------------------handler--------------------------------
 //处理传入参数，调用service层函数查询视频列表，封装响应
 
-func PublishVideoData(token string, data *multipart.FileHeader, title string, c *gin.Context) *model.Response {
+func PublishVideoData(token string, data multipart.File, title string) *model.Response {
 	if length := len(token); length <= 0 || length > 64 {
 		return &model.Response{
 			StatusCode: -1, StatusMsg: "token length out of range(0,64]",
@@ -31,7 +29,7 @@ func PublishVideoData(token string, data *multipart.FileHeader, title string, c 
 		}
 	}
 
-	err := service.PublishUserVideoData(token, data, title, c)
+	err := service.PublishUserVideoData(token, data, title)
 	if err != nil {
 		return &model.Response{
 			StatusCode: -1, StatusMsg: err.Error(),
