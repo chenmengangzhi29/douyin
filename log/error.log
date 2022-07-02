@@ -1,5 +1,3 @@
-2022-07-02T23:22:07.741+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775327.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775327.mp4: no such file or directory
-2022-07-02T23:22:11.972+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775331.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775331.mp4: no such file or directory
-2022-07-02T23:22:14.411+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775334.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775334.mp4: no such file or directory
-2022-07-02T23:22:16.939+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775336.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775336.mp4: no such file or directory
-2022-07-02T23:22:19.849+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775339.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775339.mp4: no such file or directory
+2022-07-03T00:45:33.186+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-03T00:59:16.728+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-03T01:18:53.584+0800	ERROR	logger/log.go:93	actionType = 1 not equal 1 and 2

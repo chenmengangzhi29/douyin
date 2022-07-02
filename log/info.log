@@ -1,74 +1,66 @@
-
-2022-07-02T22:46:12.283+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:46:12.285+0800	INFO	logger/log.go:73	0xc000010218
-2022-07-02T22:46:19.742+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:46:19.745+0800	INFO	logger/log.go:73	0xc000010410
-2022-07-02T22:46:20.003+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:46:20.005+0800	INFO	logger/log.go:73	0xc0000a2f40
-2022-07-02T22:46:39.591+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:46:39.595+0800	INFO	logger/log.go:73	0xc0000104e8
-2022-07-02T22:47:50.556+0800	INFO	logger/log.go:32	logger init success
-2022-07-02T22:47:50.558+0800	INFO	logger/log.go:73	open mysql and oss success
-2022-07-02T22:47:50.559+0800	INFO	logger/log.go:73	init router success
-2022-07-02T22:48:01.630+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:48:01.634+0800	INFO	logger/log.go:73	0xc000010e88
-2022-07-02T22:48:01.925+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:48:01.930+0800	INFO	logger/log.go:73	0xc0000110b8
-2022-07-02T22:48:04.823+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:48:04.827+0800	INFO	logger/log.go:73	0xc000190398
-2022-07-02T22:48:06.604+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:48:06.606+0800	INFO	logger/log.go:73	0xc000011198
-2022-07-02T22:48:22.606+0800	INFO	logger/log.go:73	publish video
-2022-07-02T22:48:23.093+0800	INFO	logger/log.go:73	0xc000190028
-2022-07-02T22:49:43.792+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:49:43.795+0800	INFO	logger/log.go:73	0xc0001a7eb0
-2022-07-02T22:49:45.896+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:49:45.899+0800	INFO	logger/log.go:73	0xc000306280
-2022-07-02T22:49:58.421+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:49:58.424+0800	INFO	logger/log.go:73	0xc000586178
-2022-07-02T22:50:00.087+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:50:00.089+0800	INFO	logger/log.go:73	0xc000586298
-2022-07-02T22:51:09.540+0800	INFO	logger/log.go:73	publish video
-2022-07-02T22:51:28.981+0800	INFO	logger/log.go:73	0xc000306010
-2022-07-02T22:51:41.989+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:51:41.994+0800	INFO	logger/log.go:73	0xc0003f3c78
-2022-07-02T22:53:12.798+0800	INFO	logger/log.go:32	logger init success
-2022-07-02T22:53:12.800+0800	INFO	logger/log.go:73	open mysql and oss success
-2022-07-02T22:53:12.800+0800	INFO	logger/log.go:73	init router success
-2022-07-02T22:53:28.791+0800	INFO	logger/log.go:73	publish video
-2022-07-02T22:53:48.176+0800	INFO	logger/log.go:73	0xc00009a030
-2022-07-02T22:55:01.184+0800	INFO	logger/log.go:32	logger init success
-2022-07-02T22:55:01.188+0800	INFO	logger/log.go:73	open mysql and oss success
-2022-07-02T22:55:01.190+0800	INFO	logger/log.go:73	init router success
-2022-07-02T22:55:12.889+0800	INFO	logger/log.go:73	publish video
-2022-07-02T22:55:32.296+0800	INFO	logger/log.go:73	0xc0000a2018
-2022-07-02T22:55:32.793+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:55:32.795+0800	INFO	logger/log.go:73	0xc00031c570
-2022-07-02T22:56:02.005+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T22:56:02.010+0800	INFO	logger/log.go:73	0xc00031c610
-2022-07-02T23:00:14.336+0800	INFO	logger/log.go:73	publish video
-2022-07-02T23:00:14.757+0800	INFO	logger/log.go:73	0xc00031c010
-2022-07-02T23:19:27.716+0800	INFO	logger/log.go:32	logger init success
-2022-07-02T23:19:27.718+0800	INFO	logger/log.go:73	open mysql and oss success
-2022-07-02T23:19:27.722+0800	INFO	logger/log.go:73	init router success
-2022-07-02T23:20:34.822+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T23:20:34.825+0800	INFO	logger/log.go:73	0xc00010e410
-2022-07-02T23:20:35.100+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T23:20:35.102+0800	INFO	logger/log.go:73	0xc000010d58
-2022-07-02T23:20:45.989+0800	INFO	logger/log.go:73	/feed/
-2022-07-02T23:20:45.991+0800	INFO	logger/log.go:73	0xc00010e6d8
-2022-07-02T23:22:07.736+0800	INFO	logger/log.go:73	publish video
-2022-07-02T23:22:07.741+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775327.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775327.mp4: no such file or directory
-2022-07-02T23:22:07.742+0800	INFO	logger/log.go:73	0xc000010038
-2022-07-02T23:22:11.969+0800	INFO	logger/log.go:73	publish video
-2022-07-02T23:22:11.972+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775331.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775331.mp4: no such file or directory
-2022-07-02T23:22:11.972+0800	INFO	logger/log.go:73	0xc0000100a8
-2022-07-02T23:22:14.408+0800	INFO	logger/log.go:73	publish video
-2022-07-02T23:22:14.411+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775334.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775334.mp4: no such file or directory
-2022-07-02T23:22:14.411+0800	INFO	logger/log.go:73	0xc000010050
-2022-07-02T23:22:16.936+0800	INFO	logger/log.go:73	publish video
-2022-07-02T23:22:16.939+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775336.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775336.mp4: no such file or directory
-2022-07-02T23:22:16.939+0800	INFO	logger/log.go:73	0xc000010060
-2022-07-02T23:22:19.846+0800	INFO	logger/log.go:73	publish video
-2022-07-02T23:22:19.849+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775339.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775339.mp4: no such file or directory
-2022-07-02T23:22:19.849+0800	INFO	logger/log.go:73	0xc000010058
+2022-07-02T23:31:36.602+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:31:36.603+0800	INFO	logger/log.go:73	0xc0001e1d60
+2022-07-02T23:32:13.836+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:32:13.838+0800	INFO	logger/log.go:73	0xc0001e1e00
+2022-07-02T23:32:34.652+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:32:34.654+0800	INFO	logger/log.go:73	0xc0001e1f08
+2022-07-02T23:32:41.565+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:32:41.566+0800	INFO	logger/log.go:73	0xc000160300
+2022-07-02T23:33:43.538+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:33:43.989+0800	INFO	logger/log.go:73	0xc0001e1ae8
+2022-07-02T23:34:23.346+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:34:24.814+0800	INFO	logger/log.go:73	0xc000160020
+2022-07-02T23:34:39.918+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:34:39.920+0800	INFO	logger/log.go:73	0xc0001e1b88
+2022-07-02T23:35:12.674+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:35:12.676+0800	INFO	logger/log.go:73	0xc0001e1d38
+2022-07-02T23:35:18.789+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:35:18.791+0800	INFO	logger/log.go:73	0xc0001e1da8
+2022-07-02T23:37:09.620+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:37:24.685+0800	INFO	logger/log.go:73	0xc0001e1ae8
+2022-07-02T23:37:34.270+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:37:34.889+0800	INFO	logger/log.go:73	0xc0001e1fe0
+2022-07-02T23:37:48.581+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:37:48.583+0800	INFO	logger/log.go:73	0xc000cf82a8
+2022-07-02T23:37:50.325+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:37:50.333+0800	INFO	logger/log.go:73	0xc000160570
+2022-07-02T23:56:41.905+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:56:41.906+0800	INFO	logger/log.go:73	0xc000cf8138
+2022-07-02T23:56:52.504+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:56:52.508+0800	INFO	logger/log.go:73	0xc000160288
+2022-07-03T00:07:29.183+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T00:07:29.196+0800	INFO	logger/log.go:73	0xc000cf80e0
+2022-07-03T00:07:31.384+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T00:07:31.387+0800	INFO	logger/log.go:73	0xc000cf8148
+2022-07-03T00:08:32.035+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T00:08:32.038+0800	INFO	logger/log.go:73	0xc0001600b8
+2022-07-03T00:08:33.772+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T00:08:33.775+0800	INFO	logger/log.go:73	0xc000160178
+2022-07-03T00:45:33.186+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-03T00:59:16.728+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-03T01:16:41.961+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T01:16:41.980+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T01:16:41.980+0800	INFO	logger/log.go:73	init router success
+2022-07-03T01:18:49.839+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T01:18:49.852+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T01:18:49.852+0800	INFO	logger/log.go:73	init router success
+2022-07-03T01:18:53.584+0800	ERROR	logger/log.go:93	actionType = 1 not equal 1 and 2
+2022-07-03T01:20:36.132+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T01:20:36.149+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T01:20:36.150+0800	INFO	logger/log.go:73	init router success
+2022-07-03T01:35:44.853+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T01:35:44.870+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T01:35:44.872+0800	INFO	logger/log.go:73	init router success
+2022-07-03T01:36:22.269+0800	INFO	logger/log.go:77	delete comment &{0 0 0  }
+2022-07-03T01:42:45.769+0800	INFO	logger/log.go:77	delete comment &{0 0 0  }
+2022-07-03T01:45:20.433+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T01:45:20.459+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T01:45:20.461+0800	INFO	logger/log.go:73	init router success
+2022-07-03T01:46:14.503+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T01:46:14.537+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T01:46:14.542+0800	INFO	logger/log.go:73	init router success
+2022-07-03T01:46:19.010+0800	INFO	logger/log.go:77	delete comment &{0 0 0  }
+2022-07-03T01:53:38.529+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T01:53:38.555+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T01:53:38.555+0800	INFO	logger/log.go:73	init router success
+2022-07-03T01:54:00.729+0800	INFO	logger/log.go:77	delete comment &{1656784424 1 1 棕熊 07-07}
