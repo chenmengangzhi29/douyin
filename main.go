@@ -25,7 +25,13 @@ func Init() error {
 	if err := logger.Init(); err != nil {
 		return err
 	}
-	if err := model.Init(); err != nil {
+	if err := model.ConfigInit(); err != nil {
+		return err
+	}
+	if err := model.MysqlInit(); err != nil {
+		return err
+	}
+	if err := model.OssInit(); err != nil {
 		return err
 	}
 	return nil
