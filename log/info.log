@@ -48,3 +48,27 @@
 2022-07-02T22:56:02.010+0800	INFO	logger/log.go:73	0xc00031c610
 2022-07-02T23:00:14.336+0800	INFO	logger/log.go:73	publish video
 2022-07-02T23:00:14.757+0800	INFO	logger/log.go:73	0xc00031c010
+2022-07-02T23:19:27.716+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T23:19:27.718+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T23:19:27.722+0800	INFO	logger/log.go:73	init router success
+2022-07-02T23:20:34.822+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:20:34.825+0800	INFO	logger/log.go:73	0xc00010e410
+2022-07-02T23:20:35.100+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:20:35.102+0800	INFO	logger/log.go:73	0xc000010d58
+2022-07-02T23:20:45.989+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T23:20:45.991+0800	INFO	logger/log.go:73	0xc00010e6d8
+2022-07-02T23:22:07.736+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:22:07.741+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775327.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775327.mp4: no such file or directory
+2022-07-02T23:22:07.742+0800	INFO	logger/log.go:73	0xc000010038
+2022-07-02T23:22:11.969+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:22:11.972+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775331.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775331.mp4: no such file or directory
+2022-07-02T23:22:11.972+0800	INFO	logger/log.go:73	0xc0000100a8
+2022-07-02T23:22:14.408+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:22:14.411+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775334.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775334.mp4: no such file or directory
+2022-07-02T23:22:14.411+0800	INFO	logger/log.go:73	0xc000010050
+2022-07-02T23:22:16.936+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:22:16.939+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775336.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775336.mp4: no such file or directory
+2022-07-02T23:22:16.939+0800	INFO	logger/log.go:73	0xc000010060
+2022-07-02T23:22:19.846+0800	INFO	logger/log.go:73	publish video
+2022-07-02T23:22:19.849+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/public/1656775339.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/public/1656775339.mp4: no such file or directory
+2022-07-02T23:22:19.849+0800	INFO	logger/log.go:73	0xc000010058
