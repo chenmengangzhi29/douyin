@@ -27,9 +27,9 @@ func ConfigInit() error {
 		logger.Error("Getwd error, %v", err.Error())
 		return errors.New("Getwd")
 	}
-	Path = strings.Split(dir, "/douyin")[0]
+	Path = strings.Split(dir, "/service")[0]
 	//读取.ini里面的数据库配置
-	Config, err = ini.Load(Path + "/douyin/model/app.ini")
+	Config, err = ini.Load(Path + "/model/app.ini")
 	if err != nil {
 		panic(err.Error())
 		// logger.Error("load ini config fail: ", err)
