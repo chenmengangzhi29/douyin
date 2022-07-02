@@ -17,7 +17,7 @@ func TestMain(m *testing.M) {
 
 	if err := model.ConfigInit(); err != nil {
 		logger.Error("config init fail")
-		os.Exit(2)
+		os.Exit(5)
 	}
 
 	if err := model.MysqlInit(); err != nil {
