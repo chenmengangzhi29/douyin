@@ -36,4 +36,5 @@ mysql –u用户名 –p密码 –D数据库<【sql脚本文件路径全名】<b
 model/app.ini
 通过修改相关信息，自动打开数据库<br>
 
-## 三、单元测试<br>
+## 三、接口文档<br>
+https://www.apifox.cn/apidoc/shared-2a880467-5d93-4621-b152-a27bc722058c

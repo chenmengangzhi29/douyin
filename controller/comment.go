@@ -3,8 +3,8 @@ package controller
 import (
 	"douyin/handler"
 	"douyin/model"
+	"douyin/util/logger"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -18,18 +18,20 @@ func CommentAction(c *gin.Context) {
 
 	actionType, err := strconv.ParseInt(actionTypeStr, 10, 64)
 	if err != nil {
+		logger.Errorf("parse %v to int fail, %v", actionTypeStr, err.Error())
 		c.JSON(http.StatusOK, &model.Response{StatusCode: -1, StatusMsg: err.Error()})
 	}
 
-	if reflect.DeepEqual(actionType, 1) {
+	if actionType == 1 {
 		commentText := c.Query("comment_text")
 		commentActionResponse := handler.CreateComment(token, videoIdStr, commentText)
 		c.JSON(http.StatusOK, commentActionResponse)
-	} else if reflect.DeepEqual(actionType, 2) {
+	} else if actionType == 2 {
 		commentIdStr := c.Query("comment_id")
 		commentActionResponse := handler.DeleteComment(token, videoIdStr, commentIdStr)
 		c.JSON(http.StatusOK, commentActionResponse)
 	} else {
+		logger.Errorf("actionType = %v not equal 1 and 2", actionType)
 		c.JSON(http.StatusOK, &model.Response{StatusCode: -1, StatusMsg: "action type error"})
 	}
 }
