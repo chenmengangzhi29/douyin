@@ -37,4 +37,3 @@ model/app.ini
 通过修改相关信息，自动打开数据库<br>
 
 ## 三、单元测试<br>
-测试前先更改./model/init.go中ini.Load加载的路径为绝对路径

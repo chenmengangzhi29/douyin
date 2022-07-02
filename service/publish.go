@@ -15,7 +15,7 @@ import (
 )
 
 //--------------------service-----------------------------------
-//上传视频数据流，包括获取当前用户id，处理视频名，确定视频保存的文件夹路径，处理Oss上的object路径，处理好要上传到mysql的视频结构
+//上传视频数据流，包括鉴权，处理视频数据，将视频保存到本地文件夹，分片将视频流上传到oss，获取视频播放地址，将视频信息上传到mysql
 func PublishUserVideoData(token string, data multipart.File, title string) error {
 	return NewPublishUserVideoDataFlow(token, data, title).Do()
 }
@@ -66,23 +66,21 @@ func (f *PublishUserVideoDataFlow) publishVideo() error {
 	if _, err := io.Copy(buf, f.Video); err != nil {
 		return err
 	}
-	video := bytes.NewReader(buf.Bytes())
+	video := buf.Bytes()
 
-	// //处理视频名
-	// filename := filepath.Base(f.Video.Filename)
-	// finalName := fmt.Sprintf("%d_%s", f.CurrentId, filename)
-
-	// //将视频保存到本地文件夹
-	// saveFile := filepath.Join("./public/", finalName)
-	// err := repository.NewVideoDaoInstance().PublishVideoToPublic(f.Video, saveFile, f.Gin)
-	// if err != nil {
-	// 	return err
-	// }
-
-	//将视频流上传到oss
 	id := time.Now().Unix()
-	objectKey := "video/" + strconv.Itoa(int(id)) + ".mp4"
-	err := repository.NewVideoDaoInstance().PublishVideoToOss(objectKey, video)
+	fileName := strconv.Itoa(int(id)) + ".mp4"
+
+	//将视频保存到本地文件夹
+	filePath := model.Path + "/douyin/public/" + fileName
+	err := repository.NewVideoDaoInstance().PublishVideoToPublic(video, filePath)
+	if err != nil {
+		return err
+	}
+
+	//分片将视频流上传到oss
+	objectKey := "video/" + fileName
+	err = repository.NewVideoDaoInstance().PublishVideoToOss(objectKey, filePath)
 	if err != nil {
 		return err
 	}
@@ -96,10 +94,9 @@ func (f *PublishUserVideoDataFlow) publishVideo() error {
 
 	//将视频信息上传到mysql
 	videoRaw := &model.VideoRaw{
-		Id:     id,
-		UserId: f.CurrentId,
-		Title:  f.Title,
-		// PlayUrl:    "https://dousheng1.oss-cn-shenzhen.aliyuncs.com/" + object,
+		Id:         id,
+		UserId:     f.CurrentId,
+		Title:      f.Title,
 		PlayUrl:    url,
 		CreateTime: id,
 	}
