@@ -89,7 +89,6 @@ func TestDeleteCommentData(t *testing.T) {
 			wantErr: true,
 		},
 	}
-
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			_, err := DeleteCommentData(tt.args.token, tt.args.videoId, tt.args.commentId)
