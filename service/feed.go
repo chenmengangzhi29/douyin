@@ -32,7 +32,7 @@ type QueryVideoDataFlow struct {
 	VideoData   []*model.VideoRaw
 	UserMap     map[int64]*model.UserRaw
 	FavoriteMap map[int64]*model.FavoriteRaw
-	RelationMap map[int64]model.RelationRaw
+	RelationMap map[int64]*model.RelationRaw
 }
 
 func (f *QueryVideoDataFlow) Do() ([]*model.Video, int64, error) {
@@ -151,7 +151,7 @@ func (f *QueryVideoDataFlow) packVideoInfo() error {
 		}
 		videoList = append(videoList, &model.Video{
 			Id: video.Id,
-			Author: model.User{
+			Author: &model.User{
 				Id:            videoUser.Id,
 				Name:          videoUser.Name,
 				FollowCount:   videoUser.FollowCount,

@@ -118,11 +118,11 @@ func NewGetUserInfoFlow(userId int64, token string) *GetUserInfoFlow {
 type GetUserInfoFlow struct {
 	UserId int64
 	Token  string
-	User   model.User
+	User   *model.User
 
 	IsFollow  bool
 	CurrentId int64
-	UserRaw   model.UserRaw
+	UserRaw   *model.UserRaw
 }
 
 func (f *GetUserInfoFlow) Do() (*model.User, error) {
@@ -135,7 +135,7 @@ func (f *GetUserInfoFlow) Do() (*model.User, error) {
 	if err := f.packUserInfo(); err != nil {
 		return nil, err
 	}
-	return &f.User, nil
+	return f.User, nil
 }
 
 func (f *GetUserInfoFlow) checkToken() error {
@@ -160,7 +160,7 @@ func (f *GetUserInfoFlow) prepareUserInfo() error {
 	if len(users) == 0 {
 		return errors.New("user not exist")
 	}
-	f.UserRaw = *users[0]
+	f.UserRaw = users[0]
 
 	relationMap, err := repository.NewRelationDaoInstance().QueryRelationByIds(f.CurrentId, userIds)
 	_, ok := relationMap[f.UserId]
@@ -174,7 +174,7 @@ func (f *GetUserInfoFlow) prepareUserInfo() error {
 }
 
 func (f *GetUserInfoFlow) packUserInfo() error {
-	user := model.User{
+	user := &model.User{
 		Id:            f.UserRaw.Id,
 		Name:          f.UserRaw.Name,
 		FollowCount:   f.UserRaw.FollowCount,

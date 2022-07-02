@@ -67,13 +67,14 @@ func (*UserDao) CheckUserExist(username string, password string) error {
 		return nil
 	}
 	var user *model.UserRaw
-	err := model.DB.Table("user").Where("token = ?", token).Find(&user).Error
+	err := model.DB.Table("user").Where("token = ?", token).First(&user).Error
+	if err == gorm.ErrRecordNotFound {
+		logger.Info("user not exist " + err.Error())
+		return errors.New("user not exist")
+	}
 	if err != nil {
 		logger.Error("check user exist fail " + err.Error())
 		return err
-	}
-	if user.Token != token {
-		return errors.New("user not exist")
 	}
 	return nil
 }
@@ -89,7 +90,7 @@ func (*UserDao) UploadUserData(username string, password string) (int64, string,
 		FollowerCount: 0,
 		Token:         token,
 	}
-	usersLoginInfo[token] = *user
+	usersLoginInfo[token] = user
 	err := model.DB.Table("user").Create(&user).Error
 	if err != nil {
 		logger.Error("upload user data fail " + err.Error())

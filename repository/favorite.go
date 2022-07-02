@@ -66,7 +66,7 @@ func (*FavoriteDao) CreateFavorite(favorite *model.FavoriteRaw, videoId int64) e
 //删除favorite表的一条记录,同时减少视频点赞数
 func (*FavoriteDao) DeleteFavorite(currentId int64, videoId int64) error {
 	model.DB.Transaction(func(tx *gorm.DB) error {
-		var favorite model.FavoriteRaw
+		var favorite *model.FavoriteRaw
 		err := tx.Table("favorite").Where("user_id = ? AND video_id = ?", currentId, videoId).Delete(&favorite).Error
 		if err != nil {
 			logger.Error("delete favorite record fail " + err.Error())

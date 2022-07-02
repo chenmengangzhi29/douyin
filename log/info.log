@@ -1,0 +1,23 @@
+
+2022-07-02T04:49:59.146+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T04:49:59.163+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T04:49:59.164+0800	INFO	logger/log.go:73	init router success
+2022-07-02T04:53:43.920+0800	INFO	logger/log.go:73	publish video
+2022-07-02T04:53:43.920+0800	INFO	logger/log.go:73	0xc000126010
+2022-07-02T04:54:20.910+0800	INFO	logger/log.go:73	publish video
+2022-07-02T04:54:20.910+0800	INFO	logger/log.go:73	0xc000010040
+2022-07-02T04:54:33.505+0800	INFO	logger/log.go:73	publish video
+2022-07-02T04:54:33.505+0800	INFO	logger/log.go:73	0xc000010050
+2022-07-02T04:55:29.089+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T04:55:29.103+0800	INFO	logger/log.go:73	0xc000126030
+2022-07-02T04:55:32.208+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T04:55:32.209+0800	INFO	logger/log.go:73	0xc000010350
+2022-07-02T04:56:31.733+0800	INFO	logger/log.go:73	publish video
+2022-07-02T04:56:46.260+0800	INFO	logger/log.go:73	0xc000010040
+2022-07-02T04:57:13.267+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T04:57:13.270+0800	INFO	logger/log.go:73	0xc00027fb60
+2022-07-02T04:57:59.351+0800	INFO	logger/log.go:73	/feed/
+2022-07-02T04:57:59.353+0800	INFO	logger/log.go:73	0xc000010348
+2022-07-02T13:15:49.200+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T13:15:49.230+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T13:15:49.231+0800	INFO	logger/log.go:73	init router success

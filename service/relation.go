@@ -97,7 +97,7 @@ func (f *RelationActionDataFlow) DeleteInfo() error {
 }
 
 //关注列表信息流，包括鉴权，获取目标用户关注的用户id号，获取用户id号对应的用户信息，获取当前用户和这些用户的关注信息
-func FollowListData(token string, userId int64) ([]model.User, error) {
+func FollowListData(token string, userId int64) ([]*model.User, error) {
 	return NewFollowListDataFlow(token, userId).Do()
 }
 
@@ -111,14 +111,14 @@ func NewFollowListDataFlow(token string, userId int64) *FollowListDataFlow {
 type FollowListDataFlow struct {
 	Token    string
 	UserId   int64
-	UserList []model.User
+	UserList []*model.User
 
 	CurrentId   int64
 	Users       []*model.UserRaw
-	RelationMap map[int64]model.RelationRaw
+	RelationMap map[int64]*model.RelationRaw
 }
 
-func (f *FollowListDataFlow) Do() ([]model.User, error) {
+func (f *FollowListDataFlow) Do() ([]*model.User, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
@@ -194,7 +194,7 @@ func (f *FollowListDataFlow) prepareFollowInfo() error {
 
 //打包从repository层获取的数据，返回
 func (f *FollowListDataFlow) packFollowInfo() error {
-	userList := make([]model.User, 0)
+	userList := make([]*model.User, 0)
 	for _, user := range f.Users {
 		var isFollow bool = false
 
@@ -204,7 +204,7 @@ func (f *FollowListDataFlow) packFollowInfo() error {
 				isFollow = true
 			}
 		}
-		userList = append(userList, model.User{
+		userList = append(userList, &model.User{
 			Id:            user.Id,
 			Name:          user.Name,
 			FollowCount:   user.FollowCount,
@@ -218,7 +218,7 @@ func (f *FollowListDataFlow) packFollowInfo() error {
 }
 
 //粉丝列表信息流，包括鉴权，查询目标用户的被关注记录，获取这些记录的关注方id， 获取关注方的信息，获取当前用户与关注方的关注记录
-func FollowerListData(token string, userId int64) ([]model.User, error) {
+func FollowerListData(token string, userId int64) ([]*model.User, error) {
 	return NewFollowerListDataFlow(token, userId).Do()
 }
 
@@ -232,14 +232,14 @@ func NewFollowerListDataFlow(token string, userId int64) *FollowerListDataFlow {
 type FollowerListDataFlow struct {
 	Token    string
 	UserId   int64
-	UserList []model.User
+	UserList []*model.User
 
 	CurrentId   int64
 	Users       []*model.UserRaw
-	RelationMap map[int64]model.RelationRaw
+	RelationMap map[int64]*model.RelationRaw
 }
 
-func (f *FollowerListDataFlow) Do() ([]model.User, error) {
+func (f *FollowerListDataFlow) Do() ([]*model.User, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
@@ -319,7 +319,7 @@ func (f *FollowerListDataFlow) prepareFollowerInfo() error {
 
 //打包repository层返回的数据，返回
 func (f *FollowerListDataFlow) packFollowerInfo() error {
-	userList := make([]model.User, 0)
+	userList := make([]*model.User, 0)
 	for _, user := range f.Users {
 		var isFollow bool = false
 
@@ -329,7 +329,7 @@ func (f *FollowerListDataFlow) packFollowerInfo() error {
 				isFollow = true
 			}
 		}
-		userList = append(userList, model.User{
+		userList = append(userList, &model.User{
 			Id:            user.Id,
 			Name:          user.Name,
 			FollowCount:   user.FollowCount,

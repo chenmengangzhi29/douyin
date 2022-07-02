@@ -3,6 +3,7 @@ package controller
 import (
 	"douyin/handler"
 	"douyin/model"
+	"douyin/util/logger"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,16 +14,18 @@ func Publish(c *gin.Context) {
 	token := c.PostForm("token")
 	data, err := c.FormFile("data")
 	if err != nil {
-		c.JSON(http.StatusOK, model.Response{
-			StatusCode: 1,
+		c.JSON(http.StatusOK, &model.Response{
+			StatusCode: -1,
 			StatusMsg:  err.Error(),
 		})
 		return
 	}
 	title := c.PostForm("title")
 
+	logger.Info("publish video")
 	publishVideoResponse := handler.PublishVideoData(token, data, title, c)
 
+	logger.Info(&publishVideoResponse)
 	c.JSON(http.StatusOK, publishVideoResponse)
 }
 

@@ -1,43 +1,168 @@
-
-2022-07-01T23:30:44.918+0800	INFO	logger/log.go:32	logger init success
-2022-07-01T23:30:44.935+0800	INFO	logger/log.go:73	open mysql and oss success
-2022-07-01T23:30:44.946+0800	INFO	logger/log.go:73	测试创建评论的正常操作 success
-2022-07-01T23:30:44.947+0800	INFO	logger/log.go:73	测试创建评论的不正确视频id success
-2022-07-01T23:30:44.949+0800	INFO	logger/log.go:73	测试删除评论的正常操作 success
-2022-07-01T23:30:44.949+0800	INFO	logger/log.go:73	测试删除评论的不正确视频id success
-2022-07-01T23:30:44.953+0800	INFO	logger/log.go:73	测试删除评论的不正确评论id success
-2022-07-01T23:30:44.958+0800	INFO	logger/log.go:73	测试评论列表的正常操作 success
-2022-07-01T23:30:44.959+0800	INFO	logger/log.go:73	测试评论列表的不正确视频id success
-2022-07-01T23:30:44.962+0800	INFO	logger/log.go:73	测试点赞操作的actionType=1 success
-2022-07-01T23:30:44.965+0800	INFO	logger/log.go:73	测试点赞操作的actionType=2 success
-2022-07-01T23:30:44.966+0800	INFO	logger/log.go:73	测试点赞操作的actionType=3 success
-2022-07-01T23:30:44.967+0800	INFO	logger/log.go:73	测试点赞列表的不存在视频id success
-2022-07-01T23:30:44.969+0800	INFO	logger/log.go:73	测试点赞列表的存在用户id success
-2022-07-01T23:30:44.969+0800	INFO	logger/log.go:73	[{1 {1 Jerry 0 0 false} https://www.w3schools.com/html/movie.mp4 https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg 3 3 true bear}]
-2022-07-01T23:30:44.970+0800	INFO	logger/log.go:73	测试点赞列表的不存在用户id success
-2022-07-01T23:30:44.970+0800	INFO	logger/log.go:73	[]
-2022-07-01T23:30:44.970+0800	INFO	logger/log.go:73	测试视频流的不存在token success
-2022-07-01T23:30:44.971+0800	INFO	logger/log.go:73	测试视频流的默认token success
-2022-07-01T23:30:44.972+0800	INFO	logger/log.go:73	测试视频流的正常token success
-2022-07-01T23:30:44.973+0800	INFO	logger/log.go:73	测试视频列表的不正确token success
-2022-07-01T23:30:44.973+0800	INFO	logger/log.go:73	[]
-2022-07-01T23:30:44.976+0800	INFO	logger/log.go:73	测试视频列表的默认token success
-2022-07-01T23:30:44.976+0800	INFO	logger/log.go:73	[{1 {1 Jerry 0 0 false} https://www.w3schools.com/html/movie.mp4 https://cdn.pixabay.com/photo/2016/03/27/18/10/bear-1283347_1280.jpg 3 3 false bear}]
-2022-07-01T23:30:44.978+0800	INFO	logger/log.go:73	测试视频列表的正常token success
-2022-07-01T23:30:44.978+0800	INFO	logger/log.go:73	[{2 {2 Tom 1 0 false} https://www.w3schools.com/html/mov_bbb.mp4 https://picjumbo.com/wp-content/uploads/lonely-alcatraz-island-in-the-middle-of-san-francisco-bay-free-photo-2210x1474.jpg 100 440 false w}]
-2022-07-01T23:30:44.979+0800	INFO	logger/log.go:73	测试视频列表的不正确用户id success
-2022-07-01T23:30:44.979+0800	INFO	logger/log.go:73	[]
-2022-07-01T23:30:44.982+0800	INFO	logger/log.go:73	测试关注操作的正常操作 success
-2022-07-01T23:30:44.984+0800	INFO	logger/log.go:73	测试取消关注的正常操作 success
-2022-07-01T23:30:44.984+0800	INFO	logger/log.go:73	测试关注操作的错误用户id success
-2022-07-01T23:30:44.986+0800	INFO	logger/log.go:73	测试关注列表的正常操作 success
-2022-07-01T23:30:44.986+0800	INFO	logger/log.go:73	测试关注列表的错误用户id success
-2022-07-01T23:30:44.993+0800	INFO	logger/log.go:73	测试粉丝列表的正常操作 success
-2022-07-01T23:30:44.994+0800	INFO	logger/log.go:73	测试粉丝列表的没有粉丝的用户 success
-2022-07-01T23:30:44.995+0800	INFO	logger/log.go:73	测试粉丝列表的错误用户id success
-2022-07-01T23:30:44.995+0800	INFO	logger/log.go:73	测试注册存在的用户 success
-2022-07-01T23:30:44.998+0800	INFO	logger/log.go:73	测试注册不存在的用户 success
-2022-07-01T23:30:44.998+0800	INFO	logger/log.go:73	测试登陆存在的用户 success
-2022-07-01T23:30:44.999+0800	INFO	logger/log.go:73	测试登陆不存在的用户 success
-2022-07-01T23:30:44.999+0800	INFO	logger/log.go:73	测试获取存在用户的信息 success
-2022-07-01T23:30:45.000+0800	INFO	logger/log.go:73	测试获取不存在用户的信息 success
+2022-07-02T03:01:22.838+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:01:22.864+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:01:22.867+0800	INFO	logger/log.go:73	&{0   0 0 } 0xc000010070
+2022-07-02T03:01:22.876+0800	INFO	logger/log.go:73	测试视频流的默认token success
+2022-07-02T03:01:22.876+0800	INFO	logger/log.go:73	&{1 Jerry Jerry123 0 0 JerryJerry123} 0xc0000a5050
+2022-07-02T03:01:22.878+0800	INFO	logger/log.go:73	测试视频流的正常token success
+2022-07-02T03:05:45.850+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:05:45.881+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:05:45.886+0800	INFO	logger/log.go:73	{0   0 0 } &{0   0 0 }
+2022-07-02T03:05:55.134+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:05:55.153+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:05:55.159+0800	INFO	logger/log.go:73	{0   0 0 } &{0   0 0 }
+2022-07-02T03:07:16.113+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:07:16.143+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:07:16.149+0800	INFO	logger/log.go:73	{0   0 0 } &{0   0 0 }
+2022-07-02T03:07:25.445+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:07:25.479+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:07:25.483+0800	INFO	logger/log.go:73	{0   0 0 } &{0   0 0 }
+2022-07-02T03:11:15.317+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:11:15.338+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:11:15.342+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T03:11:15.342+0800	INFO	logger/log.go:73	测试视频流的不存在token success
+2022-07-02T03:11:15.348+0800	INFO	logger/log.go:73	测试视频流的默认token success
+2022-07-02T03:11:15.349+0800	INFO	logger/log.go:73	{1 Jerry Jerry123 0 0 JerryJerry123} &{1 Jerry Jerry123 0 0 JerryJerry123}
+2022-07-02T03:11:15.353+0800	INFO	logger/log.go:73	测试视频流的正常token success
+2022-07-02T03:12:57.250+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:12:57.276+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:12:57.284+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T03:12:57.284+0800	INFO	logger/log.go:73	测试视频流的不存在token success
+2022-07-02T03:12:57.286+0800	INFO	logger/log.go:73	测试视频流的默认token success
+2022-07-02T03:12:57.291+0800	INFO	logger/log.go:73	测试视频流的正常token success
+2022-07-02T03:13:35.841+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:13:35.871+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:13:35.885+0800	INFO	logger/log.go:73	测试创建评论的正常操作 success
+2022-07-02T03:13:35.886+0800	INFO	logger/log.go:73	测试创建评论的不正确视频id success
+2022-07-02T03:13:35.887+0800	INFO	logger/log.go:73	测试删除评论的不正确视频id success
+2022-07-02T03:13:35.888+0800	INFO	logger/log.go:73	测试删除评论的不正确评论id success
+2022-07-02T03:13:35.889+0800	INFO	logger/log.go:73	测试评论列表的正常操作 success
+2022-07-02T03:13:35.890+0800	INFO	logger/log.go:73	测试评论列表的不正确视频id success
+2022-07-02T03:13:35.892+0800	INFO	logger/log.go:73	测试点赞操作的actionType=1 success
+2022-07-02T03:13:35.895+0800	INFO	logger/log.go:73	测试点赞操作的actionType=2 success
+2022-07-02T03:13:35.895+0800	INFO	logger/log.go:73	测试点赞操作的actionType=3 success
+2022-07-02T03:13:35.896+0800	INFO	logger/log.go:73	测试点赞列表的不存在视频id success
+2022-07-02T03:13:35.898+0800	INFO	logger/log.go:73	测试点赞列表的存在用户id success
+2022-07-02T03:13:35.898+0800	INFO	logger/log.go:73	[0xc000104f60]
+2022-07-02T03:13:35.898+0800	INFO	logger/log.go:73	测试点赞列表的不存在用户id success
+2022-07-02T03:13:35.898+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:13:35.899+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T03:13:35.900+0800	INFO	logger/log.go:73	测试视频流的不存在token success
+2022-07-02T03:13:35.900+0800	INFO	logger/log.go:73	测试视频流的默认token success
+2022-07-02T03:13:35.902+0800	INFO	logger/log.go:73	测试视频流的正常token success
+2022-07-02T03:13:35.902+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T03:13:35.902+0800	INFO	logger/log.go:73	测试视频列表的不正确token success
+2022-07-02T03:13:35.902+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:13:35.903+0800	INFO	logger/log.go:73	测试视频列表的默认token success
+2022-07-02T03:13:35.903+0800	INFO	logger/log.go:73	[0xc000489f20]
+2022-07-02T03:13:35.904+0800	INFO	logger/log.go:73	测试视频列表的正常token success
+2022-07-02T03:13:35.904+0800	INFO	logger/log.go:73	[0xc000422840]
+2022-07-02T03:13:35.905+0800	INFO	logger/log.go:73	测试视频列表的不正确用户id success
+2022-07-02T03:13:35.905+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:13:35.906+0800	INFO	logger/log.go:73	测试关注操作的正常操作 success
+2022-07-02T03:13:35.910+0800	INFO	logger/log.go:73	测试取消关注的正常操作 success
+2022-07-02T03:13:35.910+0800	INFO	logger/log.go:73	测试关注操作的错误用户id success
+2022-07-02T03:13:35.912+0800	INFO	logger/log.go:73	测试关注列表的正常操作 success
+2022-07-02T03:13:35.912+0800	INFO	logger/log.go:73	测试关注列表的错误用户id success
+2022-07-02T03:13:35.914+0800	INFO	logger/log.go:73	测试粉丝列表的正常操作 success
+2022-07-02T03:13:35.916+0800	INFO	logger/log.go:73	测试粉丝列表的没有粉丝的用户 success
+2022-07-02T03:13:35.917+0800	INFO	logger/log.go:73	测试粉丝列表的错误用户id success
+2022-07-02T03:13:35.917+0800	INFO	logger/log.go:73	测试注册存在的用户 success
+2022-07-02T03:13:35.919+0800	INFO	logger/log.go:73	测试注册不存在的用户 success
+2022-07-02T03:13:35.919+0800	INFO	logger/log.go:73	测试登陆存在的用户 success
+2022-07-02T03:13:35.920+0800	INFO	logger/log.go:73	测试获取存在用户的信息 success
+2022-07-02T03:13:35.921+0800	INFO	logger/log.go:73	测试获取不存在用户的信息 success
+2022-07-02T03:18:54.070+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:18:54.114+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:18:54.128+0800	INFO	logger/log.go:73	测试创建评论的正常操作 success
+2022-07-02T03:18:54.129+0800	INFO	logger/log.go:73	测试创建评论的不正确视频id success
+2022-07-02T03:19:25.385+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:19:25.426+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:19:25.447+0800	INFO	logger/log.go:73	测试删除评论的正常操作 success
+2022-07-02T03:19:25.448+0800	INFO	logger/log.go:73	测试删除评论的不正确视频id success
+2022-07-02T03:19:25.450+0800	INFO	logger/log.go:73	测试删除评论的不正确评论id success
+2022-07-02T03:19:40.838+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:19:40.859+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:19:40.869+0800	INFO	logger/log.go:73	测试评论列表的正常操作 success
+2022-07-02T03:19:40.869+0800	INFO	logger/log.go:73	测试评论列表的不正确视频id success
+2022-07-02T03:20:00.057+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:20:00.091+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:20:00.104+0800	INFO	logger/log.go:73	测试点赞操作的actionType=1 success
+2022-07-02T03:20:00.109+0800	INFO	logger/log.go:73	测试点赞操作的actionType=2 success
+2022-07-02T03:20:00.111+0800	INFO	logger/log.go:73	测试点赞操作的actionType=3 success
+2022-07-02T03:20:00.115+0800	INFO	logger/log.go:73	测试点赞列表的不存在视频id success
+2022-07-02T03:20:15.226+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:20:15.258+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:20:15.269+0800	INFO	logger/log.go:73	测试点赞列表的存在用户id success
+2022-07-02T03:20:15.269+0800	INFO	logger/log.go:73	[0xc0000a9440]
+2022-07-02T03:20:15.270+0800	INFO	logger/log.go:73	测试点赞列表的不存在用户id success
+2022-07-02T03:20:15.271+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:21:04.795+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:21:04.813+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:21:04.828+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T03:21:04.828+0800	INFO	logger/log.go:73	测试视频列表的不正确token success
+2022-07-02T03:21:04.829+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:21:04.831+0800	INFO	logger/log.go:73	测试视频列表的默认token success
+2022-07-02T03:21:04.831+0800	INFO	logger/log.go:73	[0xc000021260]
+2022-07-02T03:21:04.833+0800	INFO	logger/log.go:73	测试视频列表的正常token success
+2022-07-02T03:21:04.834+0800	INFO	logger/log.go:73	[0xc000021c80]
+2022-07-02T03:21:04.834+0800	INFO	logger/log.go:73	测试视频列表的不正确用户id success
+2022-07-02T03:21:04.834+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:21:12.917+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:21:12.930+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:21:12.938+0800	INFO	logger/log.go:73	测试关注操作的正常操作 success
+2022-07-02T03:21:12.943+0800	INFO	logger/log.go:73	测试取消关注的正常操作 success
+2022-07-02T03:21:12.943+0800	INFO	logger/log.go:73	测试关注操作的错误用户id success
+2022-07-02T03:21:17.547+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:21:17.560+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:21:17.564+0800	INFO	logger/log.go:73	测试关注列表的正常操作 success
+2022-07-02T03:21:17.566+0800	INFO	logger/log.go:73	测试关注列表的错误用户id success
+2022-07-02T03:21:22.070+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:21:22.085+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:21:22.088+0800	INFO	logger/log.go:73	测试粉丝列表的正常操作 success
+2022-07-02T03:21:22.091+0800	INFO	logger/log.go:73	测试粉丝列表的没有粉丝的用户 success
+2022-07-02T03:21:22.092+0800	INFO	logger/log.go:73	测试粉丝列表的错误用户id success
+2022-07-02T03:21:55.183+0800	INFO	logger/log.go:32	logger init success
+2022-07-02T03:21:55.196+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-02T03:21:55.204+0800	INFO	logger/log.go:73	测试创建评论的正常操作 success
+2022-07-02T03:21:55.205+0800	INFO	logger/log.go:73	测试创建评论的不正确视频id success
+2022-07-02T03:21:55.207+0800	INFO	logger/log.go:73	测试删除评论的正常操作 success
+2022-07-02T03:21:55.208+0800	INFO	logger/log.go:73	测试删除评论的不正确视频id success
+2022-07-02T03:21:55.209+0800	INFO	logger/log.go:73	测试删除评论的不正确评论id success
+2022-07-02T03:21:55.210+0800	INFO	logger/log.go:73	测试评论列表的正常操作 success
+2022-07-02T03:21:55.211+0800	INFO	logger/log.go:73	测试评论列表的不正确视频id success
+2022-07-02T03:21:55.213+0800	INFO	logger/log.go:73	测试点赞操作的actionType=1 success
+2022-07-02T03:21:55.215+0800	INFO	logger/log.go:73	测试点赞操作的actionType=2 success
+2022-07-02T03:21:55.215+0800	INFO	logger/log.go:73	测试点赞操作的actionType=3 success
+2022-07-02T03:21:55.216+0800	INFO	logger/log.go:73	测试点赞列表的不存在视频id success
+2022-07-02T03:21:55.218+0800	INFO	logger/log.go:73	测试点赞列表的存在用户id success
+2022-07-02T03:21:55.218+0800	INFO	logger/log.go:73	[0xc0001b72c0]
+2022-07-02T03:21:55.218+0800	INFO	logger/log.go:73	测试点赞列表的不存在用户id success
+2022-07-02T03:21:55.218+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:21:55.219+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T03:21:55.219+0800	INFO	logger/log.go:73	测试视频流的不存在token success
+2022-07-02T03:21:55.219+0800	INFO	logger/log.go:73	测试视频流的默认token success
+2022-07-02T03:21:55.221+0800	INFO	logger/log.go:73	测试视频流的正常token success
+2022-07-02T03:21:55.221+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T03:21:55.221+0800	INFO	logger/log.go:73	测试视频列表的不正确token success
+2022-07-02T03:21:55.221+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:21:55.222+0800	INFO	logger/log.go:73	测试视频列表的默认token success
+2022-07-02T03:21:55.222+0800	INFO	logger/log.go:73	[0xc0001dd260]
+2022-07-02T03:21:55.223+0800	INFO	logger/log.go:73	测试视频列表的正常token success
+2022-07-02T03:21:55.223+0800	INFO	logger/log.go:73	[0xc0001ddb00]
+2022-07-02T03:21:55.223+0800	INFO	logger/log.go:73	测试视频列表的不正确用户id success
+2022-07-02T03:21:55.223+0800	INFO	logger/log.go:73	[]
+2022-07-02T03:21:55.227+0800	INFO	logger/log.go:73	测试关注操作的正常操作 success
+2022-07-02T03:21:55.229+0800	INFO	logger/log.go:73	测试取消关注的正常操作 success
+2022-07-02T03:21:55.230+0800	INFO	logger/log.go:73	测试关注操作的错误用户id success
+2022-07-02T03:21:55.231+0800	INFO	logger/log.go:73	测试关注列表的正常操作 success
+2022-07-02T03:21:55.232+0800	INFO	logger/log.go:73	测试关注列表的错误用户id success
+2022-07-02T03:21:55.233+0800	INFO	logger/log.go:73	测试粉丝列表的正常操作 success
+2022-07-02T03:21:55.234+0800	INFO	logger/log.go:73	测试粉丝列表的没有粉丝的用户 success
+2022-07-02T03:21:55.234+0800	INFO	logger/log.go:73	测试粉丝列表的错误用户id success
+2022-07-02T03:21:55.234+0800	INFO	logger/log.go:73	测试注册存在的用户 success
+2022-07-02T03:21:55.236+0800	INFO	logger/log.go:73	测试注册不存在的用户 success
+2022-07-02T03:21:55.236+0800	INFO	logger/log.go:73	测试登陆存在的用户 success
+2022-07-02T03:21:55.236+0800	INFO	logger/log.go:73	user not exist record not found
+2022-07-02T03:21:55.236+0800	INFO	logger/log.go:73	测试登陆不存在的用户 success
+2022-07-02T03:21:55.237+0800	INFO	logger/log.go:73	测试获取存在用户的信息 success
+2022-07-02T03:21:55.237+0800	INFO	logger/log.go:73	测试获取不存在用户的信息 success
