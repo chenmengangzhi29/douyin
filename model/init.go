@@ -2,6 +2,7 @@ package model
 
 import (
 	"douyin/util/logger"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -23,18 +24,19 @@ func ConfigInit() error {
 	//算出绝对路径，防止service层测试时路径错误
 	dir, err := os.Getwd()
 	if err != nil {
-		logger.Errorf("Getwd error, %v", err.Error())
-		return err
+		logger.Error("Getwd error, %v", err.Error())
+		return errors.New("Getwd")
 	}
 	Path = strings.Split(dir, "/douyin")[0]
 	//读取.ini里面的数据库配置
 	Config, err = ini.Load(Path + "/douyin/model/app.ini")
 	if err != nil {
 		logger.Error("load ini config fail: ", err)
-		return err
+		return errors.New("ini")
 	}
 	return nil
 }
+
 func MysqlInit() error {
 
 	ip := Config.Section("mysql").Key("ip").String()

@@ -17,7 +17,13 @@ func TestMain(m *testing.M) {
 
 	if err := model.ConfigInit(); err != nil {
 		logger.Error("config init fail")
-		os.Exit(5)
+		if err.Error() == "Getwd" {
+			os.Exit(9)
+		}
+		if err.Error() == "ini" {
+			os.Exit(10)
+		}
+
 	}
 
 	if err := model.MysqlInit(); err != nil {
