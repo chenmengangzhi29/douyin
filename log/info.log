@@ -64,3 +64,37 @@
 2022-07-03T01:53:38.555+0800	INFO	logger/log.go:73	open mysql and oss success
 2022-07-03T01:53:38.555+0800	INFO	logger/log.go:73	init router success
 2022-07-03T01:54:00.729+0800	INFO	logger/log.go:77	delete comment &{1656784424 1 1 棕熊 07-07}
+2022-07-03T02:29:57.920+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T02:29:57.945+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T02:29:57.945+0800	INFO	logger/log.go:73	init router success
+2022-07-03T02:30:09.616+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:30:09.618+0800	INFO	logger/log.go:73	0xc000010f10
+2022-07-03T02:31:06.063+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:31:06.064+0800	INFO	logger/log.go:73	0xc0000100f8
+2022-07-03T02:41:52.424+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:41:52.429+0800	INFO	logger/log.go:73	0xc00009a188
+2022-07-03T02:42:10.981+0800	INFO	logger/log.go:73	publish video
+2022-07-03T02:42:12.404+0800	INFO	logger/log.go:73	0xc000010058
+2022-07-03T02:42:40.977+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:42:40.980+0800	INFO	logger/log.go:73	0xc00027c0d0
+2022-07-03T02:43:59.108+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:43:59.109+0800	INFO	logger/log.go:73	0xc000151e28
+2022-07-03T02:44:24.696+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:44:24.697+0800	INFO	logger/log.go:73	0xc00027c078
+2022-07-03T02:49:02.528+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:49:02.530+0800	INFO	logger/log.go:73	0xc00027c048
+2022-07-03T02:49:49.239+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:49:49.241+0800	INFO	logger/log.go:73	0xc000151e88
+2022-07-03T02:50:24.094+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:50:24.095+0800	INFO	logger/log.go:73	0xc00027c490
+2022-07-03T02:52:24.819+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T02:52:24.833+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T02:52:24.834+0800	INFO	logger/log.go:73	init router success
+2022-07-03T02:52:39.837+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:52:39.860+0800	INFO	logger/log.go:73	0xc000010e70
+2022-07-03T02:53:02.597+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:53:02.606+0800	INFO	logger/log.go:73	0xc00010c378
+2022-07-03T02:54:36.874+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:54:36.876+0800	INFO	logger/log.go:73	0xc0000101d8
+2022-07-03T02:54:44.606+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T02:54:44.608+0800	INFO	logger/log.go:73	0xc000010230
