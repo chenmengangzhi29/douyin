@@ -1,3 +1,0 @@
-2022-07-03T00:45:33.186+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
-2022-07-03T00:59:16.728+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
-2022-07-03T01:18:53.584+0800	ERROR	logger/log.go:93	actionType = 1 not equal 1 and 2
