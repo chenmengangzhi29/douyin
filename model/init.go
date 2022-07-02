@@ -31,8 +31,9 @@ func ConfigInit() error {
 	//读取.ini里面的数据库配置
 	Config, err = ini.Load(Path + "/douyin/model/app.ini")
 	if err != nil {
-		logger.Error("load ini config fail: ", err)
-		return errors.New("ini")
+		panic(Path)
+		// logger.Error("load ini config fail: ", err)
+		// return errors.New("ini")
 	}
 	return nil
 }
