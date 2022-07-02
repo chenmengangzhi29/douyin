@@ -98,7 +98,7 @@ func (f *FavoriteActionDataFlow) prepareFavoriteInfo() error {
 //点赞列表流，包括鉴权，
 //通过repository层准备需要的数据，包括视频数据、用户数据、点赞数据和关注数据
 //打包所有数据到videoList
-func FavoriteListData(userId int64, token string) ([]model.Video, error) {
+func FavoriteListData(userId int64, token string) ([]*model.Video, error) {
 	return NewFavoriteListDataFlow(userId, token).Do()
 }
 
@@ -112,16 +112,16 @@ func NewFavoriteListDataFlow(userId int64, token string) *FavoriteListDataFlow {
 type FavoriteListDataFlow struct {
 	UserId    int64
 	Token     string
-	VideoList []model.Video
+	VideoList []*model.Video
 
 	CurrentId   int64
 	VideoData   []*model.VideoRaw
 	UserMap     map[int64]*model.UserRaw
 	FavoriteMap map[int64]*model.FavoriteRaw
-	RelationMap map[int64]model.RelationRaw
+	RelationMap map[int64]*model.RelationRaw
 }
 
-func (f *FavoriteListDataFlow) Do() ([]model.Video, error) {
+func (f *FavoriteListDataFlow) Do() ([]*model.Video, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (f *FavoriteListDataFlow) prepareVideoInfo() error {
 
 //打包所有数据到videoList
 func (f *FavoriteListDataFlow) packVideoInfo() error {
-	videoList := make([]model.Video, 0)
+	videoList := make([]*model.Video, 0)
 	for _, video := range f.VideoData {
 		videoUser, ok := f.UserMap[video.UserId]
 		if !ok {
@@ -257,9 +257,9 @@ func (f *FavoriteListDataFlow) packVideoInfo() error {
 			}
 		}
 
-		videoList = append(videoList, model.Video{
+		videoList = append(videoList, &model.Video{
 			Id: video.Id,
-			Author: model.User{
+			Author: &model.User{
 				Id:            videoUser.Id,
 				Name:          videoUser.Name,
 				FollowCount:   videoUser.FollowCount,

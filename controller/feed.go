@@ -24,7 +24,7 @@ func Feed(c *gin.Context) {
 	//获取视频
 	feedResponse := handler.QueryVideoFeed(token, latestTimeStr)
 
-	logger.Info(feedResponse)
+	logger.Info(&feedResponse)
 	c.JSON(http.StatusOK, feedResponse)
 
 }

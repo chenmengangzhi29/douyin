@@ -76,7 +76,7 @@ func (*VideoDao) PublishVideoToOss(object string, saveFile string) error {
 }
 
 //向video表添加一条记录
-func (*VideoDao) PublishVideoData(videoData model.VideoRaw) error {
+func (*VideoDao) PublishVideoData(videoData *model.VideoRaw) error {
 	if err := model.DB.Table("video").Create(&videoData).Error; err != nil {
 		logger.Error("PublishVideoData error " + err.Error())
 		return err

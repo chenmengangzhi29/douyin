@@ -26,14 +26,14 @@ func NewRelationDaoInstance() *RelationDao {
 }
 
 //根据当前用户id和目标用户id获取关注信息
-func (*RelationDao) QueryRelationByIds(currentId int64, userIds []int64) (map[int64]model.RelationRaw, error) {
-	var relations []model.RelationRaw
+func (*RelationDao) QueryRelationByIds(currentId int64, userIds []int64) (map[int64]*model.RelationRaw, error) {
+	var relations []*model.RelationRaw
 	err := model.DB.Table("relation").Where("user_id = ? AND to_user_id IN ?", currentId, userIds).Find(&relations).Error
 	if err != nil {
 		logger.Error("query relation by ids " + err.Error())
 		return nil, err
 	}
-	relationMap := make(map[int64]model.RelationRaw)
+	relationMap := make(map[int64]*model.RelationRaw)
 	for _, relation := range relations {
 		relationMap[relation.ToUserId] = relation
 	}
@@ -98,8 +98,8 @@ func (*RelationDao) Delete(currentId int64, toUserId int64) error {
 }
 
 //通过用户id，查询该用户关注的用户，返回两者之间的关注记录
-func (*RelationDao) QueryFollowById(userId int64) ([]model.RelationRaw, error) {
-	var relations []model.RelationRaw
+func (*RelationDao) QueryFollowById(userId int64) ([]*model.RelationRaw, error) {
+	var relations []*model.RelationRaw
 	err := model.DB.Table("relation").Where("user_id = ?", userId).Find(&relations).Error
 	if err != nil {
 		logger.Error("query follow by id fail " + err.Error())
@@ -110,8 +110,8 @@ func (*RelationDao) QueryFollowById(userId int64) ([]model.RelationRaw, error) {
 }
 
 //通过用户id，查询该用户的粉丝， 返回两者之间的关注记录
-func (*RelationDao) QueryFollowerById(userId int64) ([]model.RelationRaw, error) {
-	var relations []model.RelationRaw
+func (*RelationDao) QueryFollowerById(userId int64) ([]*model.RelationRaw, error) {
+	var relations []*model.RelationRaw
 	err := model.DB.Table("relation").Where("to_user_id = ?", userId).Find(&relations).Error
 	if err != nil {
 		logger.Error("query follower by id fail " + err.Error())

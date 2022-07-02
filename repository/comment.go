@@ -41,8 +41,8 @@ func (*CommentDao) CreateComment(comment *model.CommentRaw) error {
 }
 
 //通过评论id号删除一条评论并减少视频评论数，返回该评论
-func (*CommentDao) DeleteComment(commentId int64) (model.CommentRaw, error) {
-	var commentRaw model.CommentRaw
+func (*CommentDao) DeleteComment(commentId int64) (*model.CommentRaw, error) {
+	var commentRaw *model.CommentRaw
 	model.DB.Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("comment").Where("id = ?", commentId).Delete(&commentRaw).Error
 		if err != nil {
@@ -60,8 +60,8 @@ func (*CommentDao) DeleteComment(commentId int64) (model.CommentRaw, error) {
 }
 
 //通过视频id号倒序返回一组评论信息
-func (*CommentDao) QueryCommentByVideoId(videoId int64) ([]model.CommentRaw, error) {
-	var comments []model.CommentRaw
+func (*CommentDao) QueryCommentByVideoId(videoId int64) ([]*model.CommentRaw, error) {
+	var comments []*model.CommentRaw
 	err := model.DB.Table("comment").Order("create_date desc").Where("video_id = ?", videoId).Find(&comments).Error
 	if err != nil {
 		logger.Error("query comment by video id fail " + err.Error())
@@ -71,8 +71,8 @@ func (*CommentDao) QueryCommentByVideoId(videoId int64) ([]model.CommentRaw, err
 }
 
 //通过评论id查询一组评论信息
-func (*CommentDao) QueryCommentByCommentIds(commentIds []int64) ([]model.CommentRaw, error) {
-	var comments []model.CommentRaw
+func (*CommentDao) QueryCommentByCommentIds(commentIds []int64) ([]*model.CommentRaw, error) {
+	var comments []*model.CommentRaw
 	err := model.DB.Table("comment").Where("id In ?", commentIds).Find(&comments).Error
 	if err != nil {
 		logger.Error("query comment by comment id fail " + err.Error())

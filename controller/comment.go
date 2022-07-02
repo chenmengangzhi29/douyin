@@ -18,7 +18,7 @@ func CommentAction(c *gin.Context) {
 
 	actionType, err := strconv.ParseInt(actionTypeStr, 10, 64)
 	if err != nil {
-		c.JSON(http.StatusOK, model.Response{StatusCode: -1, StatusMsg: err.Error()})
+		c.JSON(http.StatusOK, &model.Response{StatusCode: -1, StatusMsg: err.Error()})
 	}
 
 	if reflect.DeepEqual(actionType, 1) {
@@ -30,7 +30,7 @@ func CommentAction(c *gin.Context) {
 		commentActionResponse := handler.DeleteComment(token, videoIdStr, commentIdStr)
 		c.JSON(http.StatusOK, commentActionResponse)
 	} else {
-		c.JSON(http.StatusOK, model.Response{StatusCode: -1, StatusMsg: "action type error"})
+		c.JSON(http.StatusOK, &model.Response{StatusCode: -1, StatusMsg: "action type error"})
 	}
 }
 

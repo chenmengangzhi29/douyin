@@ -26,11 +26,11 @@ type CreateCommentDataFlow struct {
 	Token       string
 	VideoId     int64
 	CommentText string
-	Comment     model.Comment
+	Comment     *model.Comment
 
 	CurrentId  int64
-	CommentRaw model.CommentRaw
-	User       model.UserRaw
+	CommentRaw *model.CommentRaw
+	User       *model.UserRaw
 }
 
 func (f *CreateCommentDataFlow) Do() (*model.Comment, error) {
@@ -48,7 +48,7 @@ func (f *CreateCommentDataFlow) Do() (*model.Comment, error) {
 		return nil, err
 	}
 
-	return &f.Comment, nil
+	return f.Comment, nil
 }
 
 //鉴权
@@ -74,7 +74,7 @@ func (f *CreateCommentDataFlow) checkVideoId() error {
 }
 
 func (f *CreateCommentDataFlow) prepareCommentInfo() error {
-	commentRaw := model.CommentRaw{
+	commentRaw := &model.CommentRaw{
 		Id:         time.Now().Unix(),
 		UserId:     f.CurrentId,
 		VideoId:    f.VideoId,
@@ -89,7 +89,7 @@ func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 	//创建评论记录并增加视频评论数
 	go func() {
 		defer wg.Done()
-		err := repository.NewCommentDaoInstance().CreateComment(&f.CommentRaw)
+		err := repository.NewCommentDaoInstance().CreateComment(f.CommentRaw)
 		if err != nil {
 			commentErr = err
 			return
@@ -103,7 +103,7 @@ func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 			userErr = err
 			return
 		}
-		f.User = *users[0]
+		f.User = users[0]
 	}()
 	wg.Wait()
 	if commentErr != nil {
@@ -118,9 +118,9 @@ func (f *CreateCommentDataFlow) prepareCommentInfo() error {
 
 //打包成可以直接返回的评论信息
 func (f *CreateCommentDataFlow) packCommentInfo() error {
-	comment := model.Comment{
+	comment := &model.Comment{
 		Id: f.CommentRaw.Id,
-		User: model.User{
+		User: &model.User{
 			Id:            f.User.Id,
 			Name:          f.User.Name,
 			FollowCount:   f.User.FollowCount,
@@ -151,11 +151,11 @@ type DeleteCommentDataFlow struct {
 	Token     string
 	VideoId   int64
 	CommentId int64
-	Comment   model.Comment
+	Comment   *model.Comment
 
 	CurrentId  int64
-	CommentRaw model.CommentRaw
-	UserRaw    model.UserRaw
+	CommentRaw *model.CommentRaw
+	UserRaw    *model.UserRaw
 }
 
 func (f *DeleteCommentDataFlow) Do() (*model.Comment, error) {
@@ -171,7 +171,7 @@ func (f *DeleteCommentDataFlow) Do() (*model.Comment, error) {
 	if err := f.packCommentInfo(); err != nil {
 		return nil, err
 	}
-	return &f.Comment, nil
+	return f.Comment, nil
 }
 
 //鉴权
@@ -225,7 +225,7 @@ func (f *DeleteCommentDataFlow) prepareCommentInfo() error {
 			userErr = err
 			return
 		}
-		f.UserRaw = *users[0]
+		f.UserRaw = users[0]
 	}()
 	wg.Wait()
 	if commentErr != nil {
@@ -239,9 +239,9 @@ func (f *DeleteCommentDataFlow) prepareCommentInfo() error {
 
 //打包评论信息和用户信息返回
 func (f *DeleteCommentDataFlow) packCommentInfo() error {
-	comment := model.Comment{
+	comment := &model.Comment{
 		Id: f.CommentRaw.Id,
-		User: model.User{
+		User: &model.User{
 			Id:            f.UserRaw.Id,
 			Name:          f.UserRaw.Name,
 			FollowCount:   f.UserRaw.FollowCount,
@@ -256,7 +256,7 @@ func (f *DeleteCommentDataFlow) packCommentInfo() error {
 }
 
 //评论列表信息流，包括鉴权，获取一系列评论信息，获取一系列用户信息，获取一系列关注信息，打包返回
-func CommentListData(token string, videoId int64) ([]model.Comment, error) {
+func CommentListData(token string, videoId int64) ([]*model.Comment, error) {
 	return NewCommentListDataFlow(token, videoId).Do()
 }
 
@@ -270,15 +270,15 @@ func NewCommentListDataFlow(token string, videoId int64) *CommentListDataFlow {
 type CommentListDataFlow struct {
 	Token       string
 	VideoId     int64
-	CommentList []model.Comment
+	CommentList []*model.Comment
 
 	CurrentId   int64
-	Comments    []model.CommentRaw
+	Comments    []*model.CommentRaw
 	UserMap     map[int64]*model.UserRaw
-	RelationMap map[int64]model.RelationRaw
+	RelationMap map[int64]*model.RelationRaw
 }
 
-func (f *CommentListDataFlow) Do() ([]model.Comment, error) {
+func (f *CommentListDataFlow) Do() ([]*model.Comment, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func (f *CommentListDataFlow) prepareCommentInfo() error {
 
 //打包评论信息返回
 func (f *CommentListDataFlow) packCommentInfo() error {
-	commentList := make([]model.Comment, 0)
+	commentList := make([]*model.Comment, 0)
 	for _, comment := range f.Comments {
 		commentUser, ok := f.UserMap[comment.UserId]
 		if !ok {
@@ -377,9 +377,9 @@ func (f *CommentListDataFlow) packCommentInfo() error {
 			}
 		}
 
-		commentList = append(commentList, model.Comment{
+		commentList = append(commentList, &model.Comment{
 			Id: comment.Id,
-			User: model.User{
+			User: &model.User{
 				Id:            commentUser.Id,
 				Name:          commentUser.Name,
 				FollowCount:   commentUser.FollowCount,

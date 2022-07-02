@@ -35,7 +35,7 @@ type PublishUserVideoDataFlow struct {
 	Gin   *gin.Context
 
 	CurrentId int64
-	VideoData model.VideoRaw
+	VideoData *model.VideoRaw
 }
 
 func (f *PublishUserVideoDataFlow) Do() error {
@@ -76,7 +76,7 @@ func (f *PublishUserVideoDataFlow) publishVideo() error {
 	//将本地视频上传到oss同时将视频信息上传到mysql
 	object := "video/" + finalName
 
-	video := model.VideoRaw{
+	video := &model.VideoRaw{
 		Id:         time.Now().Unix(),
 		UserId:     f.CurrentId,
 		Title:      f.Title,
@@ -118,7 +118,7 @@ func (f *PublishUserVideoDataFlow) publishVideo() error {
 }
 
 //查询用户视频列表流，包括鉴权操作，通过repository层获取需要的各种信息（包括视频，用户，点赞，关注信息），将所有信息转换成视频列表。
-func QueryUserVideoList(token string, userId int64) ([]model.Video, error) {
+func QueryUserVideoList(token string, userId int64) ([]*model.Video, error) {
 	return NewQueryUserVideoListFlow(token, userId).Do()
 }
 
@@ -132,16 +132,16 @@ func NewQueryUserVideoListFlow(token string, userId int64) *QueryUserVideoListFl
 type QueryUserVideoListFlow struct {
 	Token     string
 	UserId    int64
-	VideoList []model.Video
+	VideoList []*model.Video
 
 	CurrentId   int64
 	VideoData   []*model.VideoRaw
 	UserMap     map[int64]*model.UserRaw
 	FavoriteMap map[int64]*model.FavoriteRaw
-	RelationMap map[int64]model.RelationRaw
+	RelationMap map[int64]*model.RelationRaw
 }
 
-func (f *QueryUserVideoListFlow) Do() ([]model.Video, error) {
+func (f *QueryUserVideoListFlow) Do() ([]*model.Video, error) {
 	if err := f.checkToken(); err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (f *QueryUserVideoListFlow) prepareVideoInfo() error {
 }
 
 func (f *QueryUserVideoListFlow) packVideoInfo() error {
-	videoList := make([]model.Video, 0)
+	videoList := make([]*model.Video, 0)
 	for _, video := range f.VideoData {
 		videoUser, ok := f.UserMap[video.UserId]
 		if !ok {
@@ -252,9 +252,9 @@ func (f *QueryUserVideoListFlow) packVideoInfo() error {
 				isFollow = true
 			}
 		}
-		videoList = append(videoList, model.Video{
+		videoList = append(videoList, &model.Video{
 			Id: video.Id,
-			Author: model.User{
+			Author: &model.User{
 				Id:            videoUser.Id,
 				Name:          videoUser.Name,
 				FollowCount:   videoUser.FollowCount,
