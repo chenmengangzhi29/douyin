@@ -3,6 +3,7 @@ package service
 import (
 	"douyin/model"
 	"douyin/util/logger"
+	"fmt"
 	"os"
 	"testing"
 	"time"
@@ -12,6 +13,7 @@ var File *os.File
 
 func TestMain(m *testing.M) {
 	if err := logger.Init(); err != nil {
+		fmt.Printf("logger error")
 		os.Exit(1)
 	}
 
@@ -20,7 +22,7 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 
-	path := "../public/girl.mp4"
+	path := model.Path + "/douyin/public/girl.mp4"
 	file, err := os.Open(path)
 	if err != nil {
 		logger.Errorf("open local file %v fail", path)

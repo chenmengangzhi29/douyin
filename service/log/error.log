@@ -1,2 +1,6 @@
-2022-07-02T20:01:38.653+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
-2022-07-02T20:01:39.013+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T21:38:32.244+0800	ERROR	logger/log.go:89	load ini config fail: open ./model/app.ini: no such file or directory
+2022-07-02T21:38:32.244+0800	ERROR	logger/log.go:89	model fail
+2022-07-02T21:39:58.224+0800	ERROR	logger/log.go:89	load ini config fail: open douyin/model/app.ini: no such file or directory
+2022-07-02T21:39:58.224+0800	ERROR	logger/log.go:89	model fail
+2022-07-02T22:44:01.193+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-02T22:44:01.689+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found

@@ -1,10 +1,10 @@
 package repository
 
 import (
-	"bytes"
 	"douyin/model"
 	"douyin/util/logger"
 	"errors"
+	"os"
 	"sync"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
@@ -56,20 +56,27 @@ func (*VideoDao) QueryVideoByUserId(userId int64) ([]*model.VideoRaw, error) {
 	return videos, nil
 }
 
-// //将视频保存到本地文件夹中
-// func (*VideoDao) PublishVideoToPublic(video *multipart.FileHeader, saveFile string, c *gin.Context) error {
-// 	if err := c.SaveUploadedFile(video, saveFile); err != nil {
-// 		logger.Error("PublishVideoToPublic error " + err.Error())
-// 		return err
-// 	}
-// 	return nil
-// }
-
-//将视频上传到Oss
-func (*VideoDao) PublishVideoToOss(objectKey string, video *bytes.Reader) error {
-	err := model.Bucket.PutObject(objectKey, video)
+//将视频保存到本地文件夹中
+func (*VideoDao) PublishVideoToPublic(video []byte, filePath string) error {
+	file, err := os.Create(filePath)
 	if err != nil {
-		logger.Error("PublishVideoToOss error " + err.Error())
+		logger.Errorf("create %v fail, %v", filePath, err.Error())
+		return err
+	}
+	defer file.Close()
+	_, err = file.Write(video)
+	if err != nil {
+		logger.Errorf("write file fail, %v", err.Error())
+		return err
+	}
+	return nil
+}
+
+//分片将视频上传到Oss
+func (*VideoDao) PublishVideoToOss(objectKey string, filePath string) error {
+	err := model.Bucket.UploadFile(objectKey, filePath, 1024*1024, oss.Routines(3))
+	if err != nil {
+		logger.Errorf("publish %v to Oss fail, %v ", filePath, err.Error())
 		return err
 	}
 	return nil

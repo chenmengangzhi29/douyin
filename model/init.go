@@ -3,6 +3,8 @@ package model
 import (
 	"douyin/util/logger"
 	"fmt"
+	"os"
+	"strings"
 
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"gopkg.in/ini.v1"
@@ -14,17 +16,22 @@ var DB *gorm.DB
 var Bucket *oss.Bucket
 var err error
 var Config *ini.File
+var Path string
 
 //连接MySQL和OSS
 func Init() error {
+	//算出绝对路径，防止service层测试时路径错误
+	dir, err := os.Getwd()
+	if err != nil {
+		logger.Errorf("Getwd error, %v", err.Error())
+		return err
+	}
+	Path = strings.Split(dir, "/douyin")[0]
 	//读取.ini里面的数据库配置
-	var iniErr error
-	Config, iniErr = ini.Load("./model/app.ini")
-	//测试使用
-	// Config, iniErr = ini.Load("../model/app.ini")
-	if iniErr != nil {
-		logger.Error("load ini config fail: ", iniErr)
-		return iniErr
+	Config, err = ini.Load(Path + "/douyin/model/app.ini")
+	if err != nil {
+		logger.Error("load ini config fail: ", err)
+		return err
 	}
 
 	ip := Config.Section("mysql").Key("ip").String()
