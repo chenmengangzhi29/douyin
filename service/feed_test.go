@@ -30,7 +30,7 @@ func TestMain(m *testing.M) {
 		panic(err)
 	}
 
-	path := model.Path + "/douyin/public/girl.mp4"
+	path := model.Path + "/public/girl.mp4"
 	file, err := os.Open(path)
 	if err != nil {
 		logger.Errorf("open local file %v fail", path)
