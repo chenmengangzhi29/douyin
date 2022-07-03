@@ -1,0 +1,53 @@
+
+name: CI
+
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+            host port: 127.0.0.1:3306
+            character set server: utf8mb4
+            mysql version: 5.6.14
+            mysql root password: root 
+            mysql database: douyin
+            mysql user: mysql
+            mysql password: mysql
+            
+      - name: Setup Ossutil
+        uses: manyuanrong/setup-ossutil@v2.0
+        with:
+          endpoint: oss-cn-shenzhen.aliyuncs.com
+          access-key-id: oss 
+          access-key-secret: oss
+          bucket: dousheng1
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test
+        run: go test -v ./...
+
