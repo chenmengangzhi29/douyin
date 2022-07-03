@@ -27,7 +27,6 @@ jobs:
         with:
             host port: 3306
             character set server: utf8mb4
-            mysql root password: root 
             mysql database: douyin
             mysql user: mysql
             mysql password: mysql
