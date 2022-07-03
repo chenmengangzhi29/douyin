@@ -26,7 +26,7 @@ func Init() error {
 		logger.Errorf("Getwd error, %v", err.Error())
 		return err
 	}
-	Path = strings.Split(dir, "/douyin")[0]
+	Path = strings.Split(dir, "/service")[0]
 	//读取.ini里面的数据库配置
 	Config, err = ini.Load(Path + "/douyin/model/app.ini")
 	if err != nil {
