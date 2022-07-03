@@ -3,7 +3,6 @@ package service
 import (
 	"douyin/model"
 	"douyin/util/logger"
-	"fmt"
 	"os"
 	"testing"
 	"time"
@@ -14,7 +13,7 @@ var File *os.File
 func TestMain(m *testing.M) {
 	if err := logger.Init(); err != nil {
 		panic(err)
-		os.Exit(1)
+// 		os.Exit(1)
 	}
 
 	if err := model.Init(); err != nil {
