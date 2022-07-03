@@ -19,8 +19,8 @@ jobs:
     
     env:
       DB_DATABASE: douyin
-      DB_USER: mysql
-      DB_PASSWORD: mysql
+      DB_USER: root
+      DB_PASSWORD: root
       
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
