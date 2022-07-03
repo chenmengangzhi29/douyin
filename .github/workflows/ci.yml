@@ -30,7 +30,7 @@ jobs:
              mysql -uroot -p
              root
              create user 'mysql' identified with mysql_native_password by 'mysql';
-             grant select,insert,delete,update,create,drop on *.* to 'mysql'@'localhost' identified by 'mysql';
+             grant all privileges on *.* to 'mysql';
              flush privileges;
              create database douyin charset=utf8;
              quit
