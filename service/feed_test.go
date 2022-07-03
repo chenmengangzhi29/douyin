@@ -18,14 +18,16 @@ func TestMain(m *testing.M) {
 
 	if err := model.Init(); err != nil {
 		logger.Error("model fail")
-		os.Exit(1)
+		panic(err)
+// 		os.Exit(1)
 	}
 
 	path := model.Path + "/douyin/public/girl.mp4"
 	file, err := os.Open(path)
 	if err != nil {
 		logger.Errorf("open local file %v fail", path)
-		os.Exit(1)
+		panic(err)
+// 		os.Exit(1)
 	}
 	defer file.Close()
 	File = file
