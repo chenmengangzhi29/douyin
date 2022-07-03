@@ -16,23 +16,29 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql
+        ports:
+        - 3306/tcp
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-      - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-            host port: 3306
-            container port: 3306
-            character set server: utf8mb4
-            collation server: utf8mb4_general_ci
-            mysql root password: mysql
-            mysql database: douyin
-            mysql user: mysql
-            mysql password: mysql
+#       - name: Setup MySQL
+#         uses: mirromutth/mysql-action@v1.1
+#         with:
+#             host port: 3306
+#             container port: 3306
+#             character set server: utf8mb4
+#             collation server: utf8mb4_general_ci
+#             mysql root password: mysql
+#             mysql database: douyin
+#             mysql user: mysql
+#             mysql password: mysql
 
       - name: Setup Ossutil
         uses: manyuanrong/setup-ossutil@v2.0
