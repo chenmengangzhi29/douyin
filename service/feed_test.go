@@ -12,23 +12,29 @@ var File *os.File
 
 func TestMain(m *testing.M) {
 	if err := logger.Init(); err != nil {
-		os.Exit(1)
+		panic(err)
 	}
 
 	if err := model.ConfigInit(); err != nil {
-		os.Exit(2)
+		logger.Errorf("config init fail, %v", err)
+		panic(err)
 	}
 
 	if err := model.MysqlInit(); err != nil {
-		logger.Error("mysql init fail")
-		os.Exit(3)
+		logger.Error("mysql init fail %v", err)
+		panic(err)
+	}
+
+	if err := model.OssInit(); err != nil {
+		logger.Errorf("oss init fail %v", err)
+		panic(err)
 	}
 
 	path := model.Path + "/douyin/public/girl.mp4"
 	file, err := os.Open(path)
 	if err != nil {
 		logger.Errorf("open local file %v fail", path)
-		os.Exit(4)
+		panic(err)
 	}
 	defer file.Close()
 	File = file
