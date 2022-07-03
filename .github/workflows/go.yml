@@ -10,6 +10,14 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        Host: "127.0.0.1"
+        Port: 3306
+        User: "mysql"
+        Password: "mysql"
+        DBName: "douyin"
+
     steps:
     - uses: actions/checkout@v3
 
