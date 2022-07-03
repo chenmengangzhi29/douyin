@@ -40,14 +40,14 @@ func ConfigInit() error {
 
 func MysqlInit() error {
 
-// 	ip := Config.Section("mysql").Key("ip").String()
+	ip := Config.Section("mysql").Key("ip").String()
 	port := Config.Section("mysql").Key("port").String()
 	user := Config.Section("mysql").Key("user").String()
 	password := Config.Section("mysql").Key("password").String()
 	database := Config.Section("mysql").Key("database").String()
 
 	// 打开数据库
-	dsn := fmt.Sprintf("%v:%v@tcp(%:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local", user, password, port, database)
+	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local", user, password, ip, port, database)
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		QueryFields: true, //打印sql
 		//SkipDefaultTransaction: true, //禁用事务
