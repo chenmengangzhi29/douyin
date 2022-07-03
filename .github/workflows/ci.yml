@@ -17,16 +17,21 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     
-    services:
-      mysql:
-        image: mysql
-        ports:
-        - 3306/tcp
-
+    env:
+      DB_DATABASE: douyin
+      DB_USER: mysql
+      DB_PASSWORD: mysql
+      
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+      
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+
       
 #       - name: Setup MySQL
 #         uses: mirromutth/mysql-action@v1.1
