@@ -40,7 +40,7 @@ func ConfigInit() error {
 
 func MysqlInit() error {
 
-	ip := Config.Section("mysql").Key("ip").String()
+// 	ip := Config.Section("mysql").Key("ip").String()
 	port := Config.Section("mysql").Key("port").String()
 	user := Config.Section("mysql").Key("user").String()
 	password := Config.Section("mysql").Key("password").String()
