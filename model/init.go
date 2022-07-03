@@ -47,7 +47,7 @@ func MysqlInit() error {
 	database := Config.Section("mysql").Key("database").String()
 
 	// 打开数据库
-	dsn := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local", user, password, ip, port, database)
+	dsn := fmt.Sprintf("%v:%v@tcp(%:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local", user, password, port, database)
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{
 		QueryFields: true, //打印sql
 		//SkipDefaultTransaction: true, //禁用事务
