@@ -25,7 +25,7 @@ jobs:
       - name: Setup MySQL
         uses: mirromutth/mysql-action@v1.1
         with:
-            host port: 127.0.0.1:3306
+            host port: localhost:3306
             character set server: utf8mb4
             mysql root password: root 
             mysql database: douyin
