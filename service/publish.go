@@ -72,7 +72,7 @@ func (f *PublishUserVideoDataFlow) publishVideo() error {
 	fileName := strconv.Itoa(int(id)) + ".mp4"
 
 	//将视频保存到本地文件夹
-	filePath := model.Path + "/douyin/public/" + fileName
+	filePath := model.Path + "/public/" + fileName
 	err := repository.NewVideoDaoInstance().PublishVideoToPublic(video, filePath)
 	if err != nil {
 		return err

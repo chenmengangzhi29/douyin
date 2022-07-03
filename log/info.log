@@ -1,0 +1,42 @@
+2022-07-03T19:43:29.080+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T19:43:29.104+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T19:43:29.106+0800	INFO	logger/log.go:73	init router success
+2022-07-03T19:44:11.880+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T19:44:11.902+0800	INFO	logger/log.go:73	0xc0000102a8
+2022-07-03T19:44:12.226+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T19:44:12.229+0800	INFO	logger/log.go:73	0xc000010458
+2022-07-03T19:44:14.364+0800	INFO	logger/log.go:73	/feed/
+2022-07-03T19:44:14.366+0800	INFO	logger/log.go:73	0xc0000a4fe0
+2022-07-03T19:44:27.063+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:27.074+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848667.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848667.mp4: no such file or directory
+2022-07-03T19:44:27.074+0800	INFO	logger/log.go:73	0xc0000a4030
+2022-07-03T19:44:33.555+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:33.558+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848673.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848673.mp4: no such file or directory
+2022-07-03T19:44:33.558+0800	INFO	logger/log.go:73	0xc000010050
+2022-07-03T19:44:36.341+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:36.344+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848676.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848676.mp4: no such file or directory
+2022-07-03T19:44:36.345+0800	INFO	logger/log.go:73	0xc000010058
+2022-07-03T19:44:38.802+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:38.805+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848678.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848678.mp4: no such file or directory
+2022-07-03T19:44:38.805+0800	INFO	logger/log.go:73	0xc000010058
+2022-07-03T19:44:41.188+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:41.191+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848681.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848681.mp4: no such file or directory
+2022-07-03T19:44:41.192+0800	INFO	logger/log.go:73	0xc0000a4038
+2022-07-03T19:44:43.963+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:43.966+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848683.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848683.mp4: no such file or directory
+2022-07-03T19:44:43.966+0800	INFO	logger/log.go:73	0xc0000a4050
+2022-07-03T19:44:46.726+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:46.729+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848686.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848686.mp4: no such file or directory
+2022-07-03T19:44:46.729+0800	INFO	logger/log.go:73	0xc0000a4048
+2022-07-03T19:44:49.312+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:49.315+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848689.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848689.mp4: no such file or directory
+2022-07-03T19:44:49.315+0800	INFO	logger/log.go:73	0xc0000a4050
+2022-07-03T19:44:52.318+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:44:52.323+0800	ERROR	logger/log.go:93	create /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848692.mp4 fail, open /home/xueqin/Qinxun2/src/douyin/douyin/public/1656848692.mp4: no such file or directory
+2022-07-03T19:44:52.324+0800	INFO	logger/log.go:73	0xc0000a4050
+2022-07-03T19:46:52.620+0800	INFO	logger/log.go:32	logger init success
+2022-07-03T19:46:52.633+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-03T19:46:52.640+0800	INFO	logger/log.go:73	init router success
+2022-07-03T19:46:57.010+0800	INFO	logger/log.go:73	publish video
+2022-07-03T19:46:57.334+0800	ERROR	logger/log.go:93	publish /home/xueqin/Qinxun2/src/douyin/public/1656848817.mp4 to Oss fail, oss: service returned error: StatusCode=403, ErrorCode=InvalidAccessKeyId, ErrorMessage="The OSS Access Key Id you provided does not exist in our records.", RequestId=62C181B1B98BDD38304FB09D 
+2022-07-03T19:46:57.334+0800	INFO	logger/log.go:73	0xc000010040
