@@ -45,7 +45,7 @@ jobs:
         with:
           go-version: 1.18
           
-      - run: systemctl status mysql    
+      - run: sudo systemctl restart mysql  
       - run: mysql -u mysql -p
       - run: mysql
       
