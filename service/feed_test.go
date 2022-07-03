@@ -13,7 +13,7 @@ var File *os.File
 
 func TestMain(m *testing.M) {
 	if err := logger.Init(); err != nil {
-		fmt.Printf("logger error")
+		panic(err)
 		os.Exit(1)
 	}
 
