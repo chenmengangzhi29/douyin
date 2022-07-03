@@ -45,8 +45,9 @@ jobs:
         with:
           go-version: 1.18
           
-      - name: Access MySQL
-        run: mysql -h 127.0.0.1 --port 3306 -u mysql -p
+      - run: mysql -h 127.0.0.1 --port 3306 -u mysql -p
+      - run: mysql
+      
 
       - name: Build
         run: go build -v ./...
