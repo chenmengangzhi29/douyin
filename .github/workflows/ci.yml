@@ -23,20 +23,30 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       
-
-
       
       - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-            host port: 3306
-            container port: 53306
-            character set server: utf8mb4
-            collation server: utf8mb4_general_ci
-            mysql root password: mysql
-            mysql database: douyin
-            mysql user: mysql
-            mysql password: mysql
+        run: docker run -p 3306:63306 -e MYSQL_ROOT_PASSWORD=root --name mysqldb -d mysql:5.6
+             docker exec -it mysqldb bash
+             mysql -uroot -p
+             root
+             create user 'mysql' identified with mysql_native_password by 'mysql';
+             grant all privileges on *.* to 'mysql';
+             flush privileges;
+             create database douyin charset=utf8
+             quit
+             exit
+
+#       - name: Setup MySQL
+#         uses: mirromutth/mysql-action@v1.1
+#         with:
+#             host port: 3306
+#             container port: 53306
+#             character set server: utf8mb4
+#             collation server: utf8mb4_general_ci
+#             mysql root password: mysql
+#             mysql database: douyin
+#             mysql user: mysql
+#             mysql password: mysql
 
       - name: Setup Ossutil
         uses: manyuanrong/setup-ossutil@v2.0
