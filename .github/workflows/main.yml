@@ -38,7 +38,6 @@ jobs:
           endpoint: oss-cn-shenzhen.aliyuncs.com
           access-key-id: oss 
           access-key-secret: oss
-          bucket: dousheng1
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
