@@ -2,6 +2,7 @@ package model
 
 import (
 	"douyin/util/logger"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -19,20 +20,25 @@ var Config *ini.File
 var Path string
 
 //连接MySQL和OSS
-func Init() error {
+func ConfigInit() error {
 	//算出绝对路径，防止service层测试时路径错误
 	dir, err := os.Getwd()
 	if err != nil {
-		logger.Errorf("Getwd error, %v", err.Error())
-		return err
+		logger.Error("Getwd error, %v", err.Error())
+		return errors.New("Getwd")
 	}
-	Path = strings.Split(dir, "/douyin")[0]
+	Path = strings.Split(dir, "/service")[0]
 	//读取.ini里面的数据库配置
-	Config, err = ini.Load(Path + "/douyin/model/app.ini")
+	Config, err = ini.Load(Path + "/model/app.ini")
 	if err != nil {
-		logger.Error("load ini config fail: ", err)
-		return err
+		panic(err.Error())
+		// logger.Error("load ini config fail: ", err)
+		// return errors.New("ini")
 	}
+	return nil
+}
+
+func MysqlInit() error {
 
 	ip := Config.Section("mysql").Key("ip").String()
 	port := Config.Section("mysql").Key("port").String()
@@ -51,7 +57,10 @@ func Init() error {
 		logger.Error("open mysql fail ", err)
 		return err
 	}
+	return nil
+}
 
+func OssInit() error {
 	//打开oss的Bucket
 	endpoint := Config.Section("oss").Key("endpoint").String()
 	accesskeyid := Config.Section("oss").Key("accessKeyId").String()
