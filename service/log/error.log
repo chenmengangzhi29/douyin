@@ -1,0 +1,3 @@
+2022-07-03T22:59:51.340+0800	ERROR	logger/log.go:93	open local file /home/xueqin/Qinxun2/src/douyin/douyin/public/girl.mp4 fail
+2022-07-03T23:01:16.299+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
+2022-07-03T23:01:16.301+0800	ERROR	logger/log.go:89	QueryUserIdByToken token not found record not found
