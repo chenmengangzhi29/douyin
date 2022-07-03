@@ -44,9 +44,6 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.18
-           
-      - run: mysql -u mysql -p
-             mysql
       
 
       - name: Build
