@@ -1,3 +1,0 @@
-2022-07-03T23:03:55.441+0800	INFO	logger/log.go:32	logger init success
-2022-07-03T23:03:55.445+0800	INFO	logger/log.go:73	open mysql and oss success
-2022-07-03T23:03:55.447+0800	INFO	logger/log.go:73	init router success

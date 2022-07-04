@@ -4,7 +4,7 @@
 
 2.初始化MySql数据库
 ```Shell
-mysql -u mysql -p mysql -D douyin < ./model/example.sql
+mysql -u mysql -p < ./model/example.sql
 ```
 
 3.启动程序
@@ -31,7 +31,7 @@ public
 
 model/example.sql
 自动创建数据库
-mysql –u用户名 –p密码 –D数据库<【sql脚本文件路径全名】<br>
+mysql –u用户名 –p <【sql脚本文件路径全名】<br>
 
 model/app.ini
 通过修改相关信息，自动打开数据库<br>
