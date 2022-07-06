@@ -1,0 +1,18 @@
+2022-07-04T21:12:38.773+0800	INFO	logger/log.go:32	logger init success
+2022-07-04T21:12:38.776+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-04T21:12:38.776+0800	INFO	logger/log.go:73	init router success
+2022-07-04T21:13:23.674+0800	INFO	logger/log.go:73	publish video
+2022-07-04T21:13:23.714+0800	ERROR	logger/log.go:93	publish /root/ByteDance/src/douyin/public/1656940403.mp4 to Oss fail, oss: service returned error: StatusCode=403, ErrorCode=InvalidAccessKeyId, ErrorMessage="The OSS Access Key Id you provided does not exist in our records.", RequestId=62C2E7731A832136307424B4 
+2022-07-04T21:13:23.714+0800	INFO	logger/log.go:73	0xc000406050
+2022-07-04T21:13:26.964+0800	INFO	logger/log.go:73	publish video
+2022-07-04T21:13:26.971+0800	ERROR	logger/log.go:93	publish /root/ByteDance/src/douyin/public/1656940406.mp4 to Oss fail, oss: service returned error: StatusCode=403, ErrorCode=InvalidAccessKeyId, ErrorMessage="The OSS Access Key Id you provided does not exist in our records.", RequestId=62C2E7761A832136304032B4 
+2022-07-04T21:13:26.971+0800	INFO	logger/log.go:73	0xc0004ca018
+2022-07-04T21:14:49.569+0800	INFO	logger/log.go:32	logger init success
+2022-07-04T21:14:49.571+0800	INFO	logger/log.go:73	open mysql and oss success
+2022-07-04T21:14:49.571+0800	INFO	logger/log.go:73	init router success
+2022-07-04T21:14:55.574+0800	INFO	logger/log.go:73	publish video
+2022-07-04T21:14:58.126+0800	INFO	logger/log.go:73	0xc0001a0028
+2022-07-04T21:15:23.461+0800	INFO	logger/log.go:73	publish video
+2022-07-04T21:15:25.688+0800	INFO	logger/log.go:73	0xc00047e018
+2022-07-04T21:15:28.382+0800	INFO	logger/log.go:73	/feed/
+2022-07-04T21:15:28.386+0800	INFO	logger/log.go:73	0xc00047e0a8
