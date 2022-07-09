@@ -5,15 +5,6 @@ import (
 	"fmt"
 )
 
-const (
-	SuccessCode             = 0
-	ServiceErrCode          = 10001
-	ParamErrCode            = 10002
-	LoginErrCode            = 10003
-	UserNotExistErrCode     = 10004
-	UserAlreadyExistErrCode = 10005
-)
-
 type ErrNo struct {
 	ErrCode int64
 	ErrMsg  string
@@ -31,15 +22,6 @@ func (e ErrNo) WithMessage(msg string) ErrNo {
 	e.ErrMsg = msg
 	return e
 }
-
-var (
-	Success             = NewErrNo(SuccessCode, "Success")
-	ServiceErr          = NewErrNo(ServiceErrCode, "Service is unable to start successfully")
-	ParamErr            = NewErrNo(ParamErrCode, "Wrong Parameter has been given")
-	LoginErr            = NewErrNo(LoginErrCode, "Wrong username or password")
-	UserNotExistErr     = NewErrNo(UserNotExistErrCode, "User does not exists")
-	UserAlreadyExistErr = NewErrNo(UserAlreadyExistErrCode, "User already exists")
-)
 
 // ConvertErr convert error to Errno
 func ConvertErr(err error) ErrNo {
