@@ -1,4 +1,4 @@
-package constant
+package constants
 
 const (
 	//数据库表名
@@ -12,13 +12,13 @@ const (
 	IdentiryKey = "id"
 
 	//服务名
-	ApiServiceName      = "apiService"
-	FeedServiceName     = "feedService"
-	PublishServiceName  = "publishService"
-	UserServiceName     = "userService"
-	FavoriteServiceName = "favoriteService"
-	CommentServiceName  = "commentService"
-	RelationServiceName = "relationService"
+	ApiServiceName      = "api"
+	FeedServiceName     = "feed"
+	PublishServiceName  = "publish"
+	UserServiceName     = "user"
+	FavoriteServiceName = "favorite"
+	CommentServiceName  = "comment"
+	RelationServiceName = "relation"
 
 	MySQLDefaultDSN = "gorm:gorm@tcp(localhost:9910)/gorm?charset=utf8&parseTime=True&loc=local"
 	EtcdAddress     = "127.0.0.1:2379"

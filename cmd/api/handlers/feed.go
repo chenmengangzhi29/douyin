@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/chenmengangzhi29/douyin/kitex_gen/feed"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +26,8 @@ func Feed(c *gin.Context) {
 
 	FeedVar.Token = token
 	FeedVar.LatestTime = latestTime
+
+	req := &feed.FeedRequest{LatestTime: FeedVar.LatestTime, Token: FeedVar.Token}
 
 	c.JSON(http.StatusOK, feedResponse)
 }
