@@ -16,16 +16,20 @@ message Video {
     
 }
 
-message feed_request {
+message FeedRequest {
 	optional int64 latest_time = 1;//可选参数，限制返回视频的最新投稿时间戳，精确到秒，不填表示当前时间
 	optional string token = 2;//可选参数，登陆用户设置
 }
 
-message feed_response {
+message FeedResponse {
 	required int32 status_code = 1;//状态码，0-成功，其他值-失败
 	optional string status_msg = 2;//返回状态描述
 	repeated Video video_list = 3;//视频列表
 	optional int64 next_time = 4;//本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
+}
+
+service FeedService {
+	rpc Feed (FeedRequest) returns (FeedResponse) {}
 }
 
 
