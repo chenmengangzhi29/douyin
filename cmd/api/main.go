@@ -8,14 +8,14 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/chenmengangzhi29/douyin/cmd/api/handlers"
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
-	"github.com/chenmengangzhi29/douyin/pkg/constant"
+	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/logger"
 	"github.com/chenmengangzhi29/douyin/pkg/tracer"
 	"github.com/gin-gonic/gin"
 )
 
 func Init() {
-	tracer.InitJaeger(constant.ApiServiceName)
+	tracer.InitJaeger(constants.ApiServiceName)
 	rpc.InitRPC()
 }
 
@@ -23,13 +23,13 @@ func main() {
 	Init()
 	r := gin.New()
 	authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
-		Key:        []byte(constant.SecretKey),
+		Key:        []byte(constants.SecretKey),
 		Timeout:    time.Hour,
 		MaxRefresh: time.Hour,
 		PayloadFunc: func(data interface{}) jwt.MapClaims {
 			if v, ok := data.(int64); ok {
 				return jwt.MapClaims{
-					constant.IdentiryKey: v,
+					constants.IdentiryKey: v,
 				}
 			}
 			return jwt.MapClaims{}
@@ -87,7 +87,7 @@ func main() {
 	relation.GET("/follow/list/", handlers.FollowList)
 	relation.GET("/follower/list/", handlers.FollowerList)
 
-	if err := http.ListenAndServe(constant.ApiAddress, r); err != nil {
+	if err := http.ListenAndServe(constants.ApiAddress, r); err != nil {
 		logger.Fatal(err)
 	}
 }

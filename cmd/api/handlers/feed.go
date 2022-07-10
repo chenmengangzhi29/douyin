@@ -1,10 +1,14 @@
 package handlers
 
 import (
-	"net/http"
+	"context"
 	"strconv"
 	"time"
 
+	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
+	"github.com/chenmengangzhi29/douyin/kitex_gen/feed"
+	"github.com/chenmengangzhi29/douyin/pkg/constants"
+	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,5 +30,11 @@ func Feed(c *gin.Context) {
 	FeedVar.Token = token
 	FeedVar.LatestTime = latestTime
 
-	c.JSON(http.StatusOK, feedResponse)
+	req := &feed.FeedRequest{LatestTime: FeedVar.LatestTime, Token: FeedVar.Token}
+	video, nextTime, err := rpc.Feed(context.Background(), req)
+	if err != nil {
+		SendResponse(c, err, nil)
+		return
+	}
+	SendResponse(c, errno.Success, map[string]interface{}{constants.VideoList: video, constants.NextTime: nextTime})
 }
