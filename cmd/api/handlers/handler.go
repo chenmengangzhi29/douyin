@@ -7,12 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Response struct {
-	Code    int64       `json:"code"`
-	Message string      `json:"message"`
-	Data    interface{} `json:"data"`
-}
-
 // SendResponse pack response
 func SendResponse(c *gin.Context, err error, data interface{}) {
 	Err := errno.ConvertErr(err)
@@ -21,6 +15,17 @@ func SendResponse(c *gin.Context, err error, data interface{}) {
 		Message: Err.ErrMsg,
 		Data:    data,
 	})
+}
+
+type Response struct {
+	Code    int64       `json:"code"`
+	Message string      `json:"message"`
+	Data    interface{} `json:"data"`
+}
+
+type FeedRequest struct {
+	Token      string `json:"token" form:"token"`
+	LatestTime int64  `json:"latest_time" form:"latest_time"`
 }
 
 type UserLoginParam struct {

@@ -1,0 +1,49 @@
+syntax = "proto3";
+package user;
+option go_package = "user";
+
+message User {
+    required int64 id = 1;//用户id
+    required string name = 2;//用户名称
+    optional int64 follow_count = 3;//关注总数
+    optional int64 follower_count = 4;//粉丝总数
+    required bool is_follow = 5;//true-已关注,false-未关注
+}
+
+message user_register_request {
+    required string username = 1;//注册用户名，最长32个字符
+    required string password = 2;//密码，最长32个字符
+}
+
+message user_register_response {
+    required int32 status_code = 1;//状态码，0-成功，其他值-失败
+    optional string status_msg = 2;//返回状态描述
+    required int64 user_id = 3;//用户id
+    required string token = 4;//用户鉴权token
+}
+
+message user_login_request {
+    required string username = 1; //登录用户名
+    required string password = 2;//登录密码
+}
+
+message user_login_response {
+    required int32 status_code = 1;//状态码，0-成功，其他值-失败
+    optional string status_msg = 2;//返回状态描述
+    required int64 user_id = 3;//用户id
+    required string token = 4;//用户鉴权token
+}
+
+message user_info_request {
+    required int64 user_id = 1;//用户id
+    required string token = 2;//用户鉴权token
+}
+
+message user_info_response {
+    required int32 status_code = 1;//状态码，0-成功，其他值-失败
+    optional string status_msg = 2;//返回状态描述
+    required User user = 3;//用户信息
+}
+
+
+

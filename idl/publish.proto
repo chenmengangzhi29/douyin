@@ -1,0 +1,29 @@
+syntax = "proto3";
+package publish;
+option go_package = "publish";
+
+import "feed.proto";
+
+message publish_action_request {
+    required string token = 1;//用户鉴权
+    required bytes data = 2;//视频数据
+    required string title = 3;//视频标题
+}
+
+message publish_action_response {
+    required int32 status_code = 1;//状态码，0-成功，其他值-失败
+    optional string status_msg = 2;//返回状态描述
+}
+
+
+message publish_list_request {
+    required int64 user_id = 1;//用户id
+    required string token = 2;//用户鉴权token
+}
+
+message publish_list_response {
+    required int32 status_code = 1;//状态码，0-成功，其他值-失败
+    optional string status_msg = 2;//返回状态描述
+    repeated Video video_list = 3;//用户发布的视频列表
+}
+
