@@ -18,7 +18,7 @@ func SendResponse(c *gin.Context, err error, data interface{}) {
 }
 
 type Response struct {
-	Code    int64       `json:"code"`
+	Code    int32       `json:"code"`
 	Message string      `json:"message"`
 	Data    interface{} `json:"data"`
 }
