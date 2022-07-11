@@ -2,6 +2,12 @@ syntax = "proto3";
 package feed;
 option go_package = "feed";
 
+message BaseResp {
+	int32 status_code = 1;//状态码
+	string status_message = 2;//状态描述
+	int64 service_time = 3;//服务时间
+}
+
 message User {
 	int64 id = 1;//用户id
 	string name = 2;//用户名称
@@ -28,10 +34,9 @@ message FeedRequest {
 }
 
 message FeedResponse {
-	int32 status_code = 1;//状态码，0-成功，其他值-失败
-	string status_msg = 2;//返回状态描述
-	repeated Video video_list = 3;//视频列表
-	int64 next_time = 4;//本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
+	BaseResp base_resp = 1;
+	repeated Video video_list = 2;//视频列表
+	int64 next_time = 3;//本次返回的视频中，发布最早的时间，作为下次请求时的latest_time
 }
 
 service FeedService {

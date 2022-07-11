@@ -46,8 +46,8 @@ func Feed(ctx context.Context, req *feed.FeedRequest) ([]*feed.Video, int64, err
 	if err != nil {
 		return nil, 0, err
 	}
-	if resp.StatusCode != 0 {
-		return nil, 0, errno.NewErrNo(resp.StatusCode, resp.StatusMsg)
+	if resp.BaseResp.StatusCode != 0 {
+		return nil, 0, errno.NewErrNo(resp.BaseResp.StatusCode, resp.BaseResp.StatusMessage)
 	}
 	return resp.VideoList, resp.NextTime, nil
 }

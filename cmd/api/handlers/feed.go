@@ -16,7 +16,7 @@ func Feed(c *gin.Context) {
 	var FeedVar FeedRequest
 
 	token := c.DefaultQuery("token", "")
-	defaultTime := time.Now().Unix()
+	defaultTime := time.Now().UnixMilli()
 	defaultTimeStr := strconv.Itoa(int(defaultTime))
 	latestTimeStr := c.DefaultQuery("latest_time", defaultTimeStr)
 
