@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 
-	"github.com/chenmengangzhi29/douyin/cmd/feed/pack"
 	"github.com/chenmengangzhi29/douyin/cmd/feed/service"
+	"github.com/chenmengangzhi29/douyin/dal/pack"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/feed"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 )

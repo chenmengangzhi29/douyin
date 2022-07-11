@@ -3,8 +3,7 @@ package main
 import (
 	"net"
 
-	"github.com/chenmengangzhi29/douyin/cmd/feed/dal"
-	"github.com/chenmengangzhi29/douyin/cmd/feed/rpc"
+	"github.com/chenmengangzhi29/douyin/dal"
 	feed "github.com/chenmengangzhi29/douyin/kitex_gen/feed/feedservice"
 	"github.com/chenmengangzhi29/douyin/pkg/bound"
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
@@ -20,7 +19,6 @@ import (
 
 func Init() {
 	tracer2.InitJaeger(constants.FeedServiceName)
-	rpc.InitRPC()
 	dal.Init()
 }
 
