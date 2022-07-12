@@ -69,7 +69,7 @@ func PublishList(c *gin.Context) {
 
 	videoList, err := rpc.QueryVideoList(context.Background(), &publish.PublishListRequest{
 		Token:  token,
-		userId: userId,
+		UserId: userId,
 	})
 	if err != nil {
 		SendResponse(c, errno.ConvertErr(err), nil)

@@ -17,6 +17,9 @@ const (
 	//response字段名
 	VideoList = "video_list"
 	NextTime  = "next_time"
+	UserId    = "user_id"
+	Token     = "token"
+	User      = "user"
 
 	//rpc服务名
 	ApiServiceName      = "api"

@@ -39,7 +39,7 @@ func (s *PublishServiceImpl) PublishList(ctx context.Context, req *publish.Publi
 		return resp, nil
 	}
 
-	videoList, err := service.NewPublishService(ctx).PublishList(req)
+	videoList, err := service.NewPublishListService(ctx).PublishList(req)
 	if err != nil {
 		resp.BaseResp = pack.BuildPublishBaseResp(err)
 		return resp, nil

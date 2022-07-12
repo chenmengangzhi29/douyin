@@ -8,12 +8,14 @@ const (
 	//General incoming parameter error
 	ParamErrCode = 10101
 	//User-related incoming parameter error
-	LoginErrCode            = 10202
-	UserNotExistErrCode     = 10203
-	UserAlreadyExistErrCode = 10204
-	TokenExpiredErrCode     = 10205
-	TokenValidationErrCode  = 10206
-	TokenInvalidErrCode     = 10207
+	LoginErrCode              = 10202
+	UserNotExistErrCode       = 10203
+	UserAlreadyExistErrCode   = 10204
+	TokenExpiredErrCode       = 10205
+	TokenValidationErrCode    = 10206
+	TokenInvalidErrCode       = 10207
+	UserNameValidationErrCode = 10208
+	PasswordValidationErrCode = 10209
 	//Video-related incoming parameter error
 	VideoDataGetErrCode  = 10301
 	VideoDataCopyErrCode = 10302
@@ -27,12 +29,14 @@ var (
 	//General incoming parameter error
 	ParamErr = NewErrNo(ParamErrCode, "Wrong Parameter has been given")
 	//User-related incoming parameter error
-	LoginErr            = NewErrNo(LoginErrCode, "Wrong username or password")
-	UserNotExistErr     = NewErrNo(UserNotExistErrCode, "User does not exists")
-	UserAlreadyExistErr = NewErrNo(UserAlreadyExistErrCode, "User already exists")
-	TokenExpiredErr     = NewErrNo(TokenExpiredErrCode, "Token has been expired")
-	TokenValidationErr  = NewErrNo(TokenInvalidErrCode, "Token is not active yet")
-	TokenInvalidErr     = NewErrNo(TokenInvalidErrCode, "Token Invalid")
+	LoginErr              = NewErrNo(LoginErrCode, "Wrong username or password")
+	UserNotExistErr       = NewErrNo(UserNotExistErrCode, "User does not exists")
+	UserAlreadyExistErr   = NewErrNo(UserAlreadyExistErrCode, "User already exists")
+	TokenExpiredErr       = NewErrNo(TokenExpiredErrCode, "Token has been expired")
+	TokenValidationErr    = NewErrNo(TokenInvalidErrCode, "Token is not active yet")
+	TokenInvalidErr       = NewErrNo(TokenInvalidErrCode, "Token Invalid")
+	UserNameValidationErr = NewErrNo(UserNameValidationErrCode, "Username is invalid")
+	PasswordValidationErr = NewErrNo(PasswordValidationErrCode, "Password is invalid")
 	//Video-related incoming parameter error
 	VideoDataGetErr  = NewErrNo(VideoDataGetErrCode, "Could not get video data")
 	VideoDataCopyErr = NewErrNo(VideoDataCopyErrCode, "Could not copy video data")
