@@ -17,16 +17,16 @@ func (s *FeedServiceImpl) Feed(ctx context.Context, req *feed.FeedRequest) (resp
 	resp = new(feed.FeedResponse)
 
 	if req.LatestTime <= 0 {
-		resp.BaseResp = pack.BuildBaseResp(errno.ParamErr)
+		resp.BaseResp = pack.BuildFeedBaseResp(errno.ParamErr)
 		return resp, nil
 	}
 
 	videos, nextTime, err := service.NewFeedService(ctx).Feed(req)
 	if err != nil {
-		resp.BaseResp = pack.BuildBaseResp(err)
+		resp.BaseResp = pack.BuildFeedBaseResp(err)
 		return resp, nil
 	}
-	resp.BaseResp = pack.BuildBaseResp(errno.Success)
+	resp.BaseResp = pack.BuildFeedBaseResp(errno.Success)
 	resp.VideoList = videos
 	resp.NextTime = nextTime
 	return resp, nil

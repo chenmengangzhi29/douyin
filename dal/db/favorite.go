@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/chenmengangzhi29/douyin/model"
+	"github.com/chenmengangzhi29/douyin/pkg/logger"
 	"gorm.io/gorm"
 )
 
@@ -23,6 +24,7 @@ func QueryFavoriteByIds(ctx context.Context, currentId int64, videoIds []int64) 
 	var favorites []*FavoriteRaw
 	err := model.DB.WithContext(ctx).Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
 	if err != nil {
+		logger.Error("quert favorite record fail " + err.Error())
 		return nil, err
 	}
 	favoriteMap := make(map[int64]*FavoriteRaw)
