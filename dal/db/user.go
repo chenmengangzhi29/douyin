@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 
+	"github.com/chenmengangzhi29/douyin/pkg/logger"
 	"gorm.io/gorm"
 )
 
@@ -24,6 +25,7 @@ func QueryUserByIds(ctx context.Context, userIds []int64) ([]*UserRaw, error) {
 	var users []*UserRaw
 	err := DB.WithContext(ctx).Where("id in (?)", userIds).Find(&users).Error
 	if err != nil {
+		logger.Error("query user by ids fail " + err.Error())
 		return nil, err
 	}
 	return users, nil

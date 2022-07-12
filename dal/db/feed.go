@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
+	"github.com/chenmengangzhi29/douyin/pkg/logger"
 	"gorm.io/gorm"
 )
 
@@ -30,6 +31,7 @@ func QueryVideoByLatestTime(ctx context.Context, latestTime int64) ([]*VideoRaw,
 	time := time.UnixMilli(latestTime)
 	err := DB.WithContext(ctx).Limit(30).Order("update_time desc").Where("update_time < ?", time).Find(&videos).Error
 	if err != nil {
+		logger.Error("QueryVideoByLatestTime find video error " + err.Error())
 		return videos, err
 	}
 	return videos, nil
