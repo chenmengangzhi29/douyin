@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"errors"
 	"sync"
 
@@ -10,8 +11,17 @@ import (
 	"github.com/chenmengangzhi29/douyin/pkg/jwt"
 )
 
+type PublishListService struct {
+	ctx context.Context
+}
+
+// NewPublishService new PublishService
+func NewPublishListService(ctx context.Context) *PublishListService {
+	return &PublishListService{ctx: ctx}
+}
+
 // PublishList get publish list by userid
-func (s *PublishService) PublishList(req *publish.PublishListRequest) ([]*publish.Video, error) {
+func (s *PublishListService) PublishList(req *publish.PublishListRequest) ([]*publish.Video, error) {
 	currentId, err := s.checkToken(req.Token)
 	if err != nil {
 		return nil, err
@@ -25,7 +35,7 @@ func (s *PublishService) PublishList(req *publish.PublishListRequest) ([]*publis
 	videoIds := make([]int64, 0)
 	userIds := []int64{req.UserId}
 	for _, video := range videoData {
-		videoIds = append(videoIds, video.Id)
+		videoIds = append(videoIds, int64(video.ID))
 	}
 
 	users, err := db.QueryUserByIds(s.ctx, userIds)
@@ -76,12 +86,12 @@ func (s *PublishService) PublishList(req *publish.PublishListRequest) ([]*publis
 		}
 	}
 
-	videoList := pack.VideoInfo(currentId, videoData, userMap, favoriteMap, relationMap)
+	videoList := pack.PublishInfo(currentId, videoData, userMap, favoriteMap, relationMap)
 	return videoList, nil
 }
 
 //checkToken get userId by token
-func (s *PublishService) checkToken(token string) (int64, error) {
+func (s *PublishListService) checkToken(token string) (int64, error) {
 	if token == "" {
 		return -1, nil
 	}

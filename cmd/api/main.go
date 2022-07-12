@@ -8,7 +8,9 @@ import (
 	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/chenmengangzhi29/douyin/cmd/api/handlers"
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
+	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
+	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/chenmengangzhi29/douyin/pkg/logger"
 	"github.com/chenmengangzhi29/douyin/pkg/tracer"
 	"github.com/gin-gonic/gin"
@@ -42,7 +44,12 @@ func main() {
 			if len(loginVar.Username) == 0 || len(loginVar.Password) == 0 {
 				return "", jwt.ErrMissingLoginValues
 			}
-			return rpc.CheckUser(context.Background(), &userService.CheckUserRequest{Username: loginVar.Username, Password: loginVar.Password})
+			return rpc.CheckUser(context.Background(), &user.CheckUserRequest{Username: loginVar.Username, Password: loginVar.Password})
+		},
+		LoginResponse: func(c *gin.Context, code int, message string, time time.Time) {
+			claims := jwt.ExtractClaims(c)
+			userId := int64(claims[constants.IdentiryKey].(float64))
+			handlers.SendResponse(c, errno.Success, map[string]interface{}{constants.UserId: userId, constants.Token: message})
 		},
 		TokenLookup:   "header: Authorization, query: token, cookie: jwt",
 		TokenHeadName: "Bearer",

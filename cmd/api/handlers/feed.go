@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Feed get video feed data
 func Feed(c *gin.Context) {
 	var FeedVar FeedRequest
 
