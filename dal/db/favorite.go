@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 
-	"github.com/chenmengangzhi29/douyin/model"
 	"github.com/chenmengangzhi29/douyin/pkg/logger"
 	"gorm.io/gorm"
 )
@@ -22,7 +21,7 @@ func (FavoriteRaw) TableName() string {
 //根据当前用户id和视频id获取点赞信息
 func QueryFavoriteByIds(ctx context.Context, currentId int64, videoIds []int64) (map[int64]*FavoriteRaw, error) {
 	var favorites []*FavoriteRaw
-	err := model.DB.WithContext(ctx).Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
+	err := DB.WithContext(ctx).Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
 	if err != nil {
 		logger.Error("quert favorite record fail " + err.Error())
 		return nil, err
