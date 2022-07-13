@@ -21,6 +21,8 @@ const (
 	VideoDataCopyErrCode = 10302
 	//Comment-related incoming parameter error
 	CommentTextErrCode = 10401
+	//Relation-related incoming parameter error
+	ActionTypeErrCode = 10501
 )
 
 var (
@@ -44,4 +46,6 @@ var (
 	VideoDataCopyErr = NewErrNo(VideoDataCopyErrCode, "Could not copy video data")
 	//Comment-related incoming parameter error
 	CommentTextErr = NewErrNo(CommentTextErrCode, "Comment text too long")
+	//Relation-related incoming parameter error
+	ActionTypeErr = NewErrNo(ActionTypeErrCode, "Action type is invalid")
 )

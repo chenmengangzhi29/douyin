@@ -8,6 +8,7 @@ import (
 	"github.com/chenmengangzhi29/douyin/kitex_gen/favorite"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/feed"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/publish"
+	"github.com/chenmengangzhi29/douyin/kitex_gen/relation"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 )
@@ -105,4 +106,23 @@ func BuilCommentBaseResp(err error) *comment.BaseResp {
 
 func commentbaseResp(err errno.ErrNo) *comment.BaseResp {
 	return &comment.BaseResp{StatusCode: err.ErrCode, StatusMessage: err.ErrMsg, ServiceTime: time.Now().Unix()}
+}
+
+//BuildRelationBaseResp build relation baseResp from error
+func BuilRelationBaseResp(err error) *relation.BaseResp {
+	if err == nil {
+		return relationbaseResp(errno.Success)
+	}
+
+	e := errno.ErrNo{}
+	if errors.As(err, &e) {
+		return relationbaseResp(e)
+	}
+
+	s := errno.ServiceErr.WithMessage(err.Error())
+	return relationbaseResp(s)
+}
+
+func relationbaseResp(err errno.ErrNo) *relation.BaseResp {
+	return &relation.BaseResp{StatusCode: err.ErrCode, StatusMessage: err.ErrMsg, ServiceTime: time.Now().Unix()}
 }
