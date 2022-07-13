@@ -7,45 +7,60 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/dal/db"
 	"github.com/chenmengangzhi29/douyin/dal/pack"
-	"github.com/chenmengangzhi29/douyin/kitex_gen/publish"
+	"github.com/chenmengangzhi29/douyin/kitex_gen/favorite"
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/jwt"
 )
 
-type PublishListService struct {
+type FavoriteListService struct {
 	ctx context.Context
 }
 
-// NewPublishService new PublishService
-func NewPublishListService(ctx context.Context) *PublishListService {
-	return &PublishListService{ctx: ctx}
+// NewFavoriteListService new FavoriteListService
+func NewFavoriteListService(ctx context.Context) *FavoriteListService {
+	return &FavoriteListService{ctx: ctx}
 }
 
-// PublishList get publish list by userid
-func (s *PublishListService) PublishList(req *publish.PublishListRequest) ([]*publish.Video, error) {
+// FavoriteList get video information that users like
+func (s *FavoriteListService) FavoriteList(req *favorite.FavoriteListRequest) ([]*favorite.Video, error) {
+	//获取用户id
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
 	currentId, err := Jwt.CheckToken(req.Token)
 	if err != nil {
 		return nil, err
 	}
 
-	videoData, err := db.QueryVideoByUserId(s.ctx, req.UserId)
+	//检查用户是否存在
+	user, err := db.QueryUserByIds(s.ctx, []int64{req.UserId})
+	if err != nil {
+		return nil, err
+	}
+	if len(user) == 0 {
+		return nil, errors.New("user not exist")
+	}
+
+	//获取目标用户的点赞视频id号
+	videoIds, err := db.QueryFavoriteById(s.ctx, req.UserId)
 	if err != nil {
 		return nil, err
 	}
 
-	videoIds := make([]int64, 0)
-	userIds := []int64{req.UserId}
-	for _, video := range videoData {
-		videoIds = append(videoIds, int64(video.ID))
+	//获取点赞视频的信息
+	videoData, err := db.QueryVideoByVideoIds(s.ctx, videoIds)
+	if err != nil {
+		return nil, err
 	}
 
+	//获取点赞视频的用户id号
+	userIds := make([]int64, 0)
+	for _, video := range videoData {
+		userIds = append(userIds, video.UserId)
+	}
+
+	//获取点赞视频的用户信息
 	users, err := db.QueryUserByIds(s.ctx, userIds)
 	if err != nil {
 		return nil, err
-	}
-	if len(users) == 0 {
-		return nil, errors.New("user not exist")
 	}
 	userMap := make(map[int64]*db.UserRaw)
 	for _, user := range users {
@@ -54,6 +69,7 @@ func (s *PublishListService) PublishList(req *publish.PublishListRequest) ([]*pu
 
 	var favoriteMap map[int64]*db.FavoriteRaw
 	var relationMap map[int64]*db.RelationRaw
+	//if user not logged in
 	if currentId == -1 {
 		favoriteMap = nil
 		relationMap = nil
@@ -86,8 +102,10 @@ func (s *PublishListService) PublishList(req *publish.PublishListRequest) ([]*pu
 		if relationErr != nil {
 			return nil, relationErr
 		}
+
 	}
 
-	videoList := pack.PublishInfo(currentId, videoData, userMap, favoriteMap, relationMap)
+	videoList := pack.VideoList(currentId, videoData, userMap, favoriteMap, relationMap)
 	return videoList, nil
+
 }

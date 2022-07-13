@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-RUN_NAME="user"
+RUN_NAME="comment"
 
 mkdir -p output/bin
 cp script/* output/

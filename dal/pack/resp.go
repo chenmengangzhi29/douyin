@@ -4,6 +4,8 @@ import (
 	"errors"
 	"time"
 
+	"github.com/chenmengangzhi29/douyin/kitex_gen/comment"
+	"github.com/chenmengangzhi29/douyin/kitex_gen/favorite"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/feed"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/publish"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
@@ -65,4 +67,42 @@ func BuildUserBaseResp(err error) *user.BaseResp {
 
 func userbaseResp(err errno.ErrNo) *user.BaseResp {
 	return &user.BaseResp{StatusCode: err.ErrCode, StatusMessage: err.ErrMsg, ServiceTime: time.Now().Unix()}
+}
+
+//BuildFavoriteBaseResp build favorite baseResp from error
+func BuildFavoriteBaseResp(err error) *favorite.BaseResp {
+	if err == nil {
+		return favoritebaseResp(errno.Success)
+	}
+
+	e := errno.ErrNo{}
+	if errors.As(err, &e) {
+		return favoritebaseResp(e)
+	}
+
+	s := errno.ServiceErr.WithMessage(err.Error())
+	return favoritebaseResp(s)
+}
+
+func favoritebaseResp(err errno.ErrNo) *favorite.BaseResp {
+	return &favorite.BaseResp{StatusCode: err.ErrCode, StatusMessage: err.ErrMsg, ServiceTime: time.Now().Unix()}
+}
+
+//BuildCommentBaseResp build comment baseResp from error
+func BuilCommentBaseResp(err error) *comment.BaseResp {
+	if err == nil {
+		return commentbaseResp(errno.Success)
+	}
+
+	e := errno.ErrNo{}
+	if errors.As(err, &e) {
+		return commentbaseResp(e)
+	}
+
+	s := errno.ServiceErr.WithMessage(err.Error())
+	return commentbaseResp(s)
+}
+
+func commentbaseResp(err errno.ErrNo) *comment.BaseResp {
+	return &comment.BaseResp{StatusCode: err.ErrCode, StatusMessage: err.ErrMsg, ServiceTime: time.Now().Unix()}
 }
