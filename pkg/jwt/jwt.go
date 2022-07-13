@@ -59,3 +59,15 @@ func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 	}
 	return nil, ErrTokenInvalid
 }
+
+//checkToken get userId by token
+func (j *JWT) CheckToken(token string) (int64, error) {
+	if token == "" {
+		return -1, nil
+	}
+	claim, err := j.ParseToken(token)
+	if err != nil {
+		return 0, ErrTokenInvalid
+	}
+	return claim.Id, nil
+}

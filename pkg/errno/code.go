@@ -19,6 +19,8 @@ const (
 	//Video-related incoming parameter error
 	VideoDataGetErrCode  = 10301
 	VideoDataCopyErrCode = 10302
+	//Comment-related incoming parameter error
+	CommentTextErrCode = 10401
 )
 
 var (
@@ -40,4 +42,6 @@ var (
 	//Video-related incoming parameter error
 	VideoDataGetErr  = NewErrNo(VideoDataGetErrCode, "Could not get video data")
 	VideoDataCopyErr = NewErrNo(VideoDataCopyErrCode, "Could not copy video data")
+	//Comment-related incoming parameter error
+	CommentTextErr = NewErrNo(CommentTextErrCode, "Comment text too long")
 )

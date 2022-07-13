@@ -7,6 +7,7 @@ import (
 	"github.com/chenmengangzhi29/douyin/dal/db"
 	"github.com/chenmengangzhi29/douyin/dal/pack"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
+	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/jwt"
 )
 
@@ -22,7 +23,8 @@ func NewUserInfoService(ctx context.Context) *UserInfoService {
 }
 
 func (s *UserInfoService) UserInfo(req *user.UserInfoRequest) (*user.User, error) {
-	currentId, err := s.checkToken(req.Token)
+	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
+	currentId, err := Jwt.CheckToken(req.Token)
 	if err != nil {
 		return nil, err
 	}
@@ -48,17 +50,4 @@ func (s *UserInfoService) UserInfo(req *user.UserInfoRequest) (*user.User, error
 
 	userInfo := pack.UserInfo(user, isFollow)
 	return userInfo, nil
-}
-
-//checkToken get userId by token
-func (s *UserInfoService) checkToken(token string) (int64, error) {
-	if token == "" {
-		return -1, nil
-	}
-	var Jwt *jwt.JWT
-	claim, err := Jwt.ParseToken(token)
-	if err != nil {
-		return 0, jwt.ErrTokenInvalid
-	}
-	return claim.Id, nil
 }
