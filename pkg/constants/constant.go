@@ -23,6 +23,7 @@ const (
 	Comment     = "comment"
 	CommentList = "comment_list"
 	TimeFormat  = "2006-01-02 15:04:05"
+	UserList    = "user_list"
 
 	//rpc服务名
 	ApiServiceName      = "api"
