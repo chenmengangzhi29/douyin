@@ -22,12 +22,14 @@ func NewCommentListService(ctx context.Context) *CommentListService {
 
 // CommentList get comment list info
 func (s *CommentListService) CommentList(req *comment.CommentListRequest) ([]*comment.Comment, error) {
+	//获取当前用户id号
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
 	currentId, err := Jwt.CheckToken(req.Token)
 	if err != nil {
 		return nil, err
 	}
 
+	//验证视频Id是否存在
 	videos, err := db.QueryVideoByVideoIds(s.ctx, []int64{req.VideoId})
 	if err != nil {
 		return nil, err

@@ -1,6 +1,9 @@
 package logger
 
 import (
+	"os"
+	"strings"
+
 	"github.com/natefinch/lumberjack"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -19,8 +22,14 @@ func Init() error {
 		return lvl >= zapcore.ErrorLevel
 	})
 
-	infoWriteSyncer := getWriter("./log/info.log")
-	errorWriteSyncer := getWriter("./log/error.log")
+	//算出绝对路径，防止service层测试时路径错误
+	dir, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	path := strings.Split(dir, "/service")[0]
+	infoWriteSyncer := getWriter(path + "/output/log/info.log")
+	errorWriteSyncer := getWriter(path + "/output/log/error.log")
 	encoder := getEncoder()
 	core := zapcore.NewTee(
 		zapcore.NewCore(encoder, infoWriteSyncer, infoLevel),

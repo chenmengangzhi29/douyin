@@ -84,7 +84,7 @@ func QueryCommentByCommentIds(ctx context.Context, commentIds []int64) ([]*Comme
 //通过视频id号倒序返回一组评论信息
 func QueryCommentByVideoId(ctx context.Context, videoId int64) ([]*CommentRaw, error) {
 	var comments []*CommentRaw
-	err := DB.WithContext(ctx).Table("comment").Order("create_date desc").Where("video_id = ?", videoId).Find(&comments).Error
+	err := DB.WithContext(ctx).Table("comment").Order("updated_at desc").Where("video_id = ?", videoId).Find(&comments).Error
 	if err != nil {
 		logger.Error("query comment by video id fail " + err.Error())
 		return nil, err

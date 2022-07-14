@@ -40,6 +40,10 @@ func (s *UserInfoService) UserInfo(req *user.UserInfoRequest) (*user.User, error
 	user := users[0]
 
 	relationMap, err := db.QueryRelationByIds(s.ctx, currentId, userIds)
+	if err != nil {
+		return nil, err
+	}
+
 	var isFollow bool
 	_, ok := relationMap[req.UserId]
 	if ok {

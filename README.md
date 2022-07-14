@@ -1,42 +1,71 @@
 # douyin
-## 一.代码运行<br>
-1.更改model/app.ini配置文件
 
-2.初始化MySql数据库
-```Shell
-mysql -u mysql -p < ./model/example.sql
+## Quick Start
+
+### 1.Change Configuration Information
+Change constants/constant.go address config
+
+### 2.Setup Basic Dependence
+```shell
+docker-compose up
 ```
 
-3.启动程序
-```Shell
-go run main.go
+### 3.Run Feed RPC Server
+```shell
+cd cmd/feed
+sh build.sh
+sh output/bootstrap.sh
 ```
 
-## 二.文件说明<br>
+### 4.Run Publish RPC Server
+```shell
+cd cmd/publish
+sh build.sh
+sh output/bootstrap.sh
+```
 
-main.go 
-加载路由，初始化路由，将路由器连接到 http.Server并开始侦听和服务 HTTP 请求<br>
+### 5.Run User RPC Server
+```shell
+cd cmd/user
+sh build.sh
+sh output/bootstrap.sh
+```
 
-routers
-存放路由相关配置<br>
+### 6.Run Favorite RPC Server
+```shell
+cd cmd/favorite
+sh build.sh
+sh output/bootstrap.sh
+```
 
-controller
-存放具体实现代码<br>
+### 7.Run Comment RPC Server
+```shell
+cd cmd/comment
+sh build.sh
+sh output/bootstrap.sh
+```
 
-models
-存放数据库配置，共享结构和工具<br>
+### 8.Run Relation RPC Server
+```shell
+cd cmd/relation
+sh build.sh
+sh output/bootstrap.sh
+```
 
-public
-存放本地视频文件<br>
+### 9.Run API Server
+```shell
+cd cmd/api
+chmod +x run.sh
+./run.sh
+```
 
-model/example.sql
-自动创建数据库
-mysql –u用户名 –p <【sql脚本文件路径全名】<br>
+### 10.Jaeger 
 
-model/app.ini
-通过修改相关信息，自动打开数据库<br>
+visit `http://127.0.0.1:16686/` on  browser.
 
-## 三、接口文档<br>
+
+## Apifox Interface Document
+
 https://www.apifox.cn/apidoc/shared-2a880467-5d93-4621-b152-a27bc722058c
 
 
