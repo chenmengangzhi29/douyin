@@ -1,36 +1,41 @@
 package service
 
 import (
-	"douyin/model"
-	"douyin/util/logger"
+	"context"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/chenmengangzhi29/douyin/dal/db"
+	"github.com/chenmengangzhi29/douyin/kitex_gen/feed"
+	"github.com/chenmengangzhi29/douyin/pkg/constants"
+	"github.com/chenmengangzhi29/douyin/pkg/jwt"
+	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/chenmengangzhi29/douyin/pkg/oss"
 )
 
 var File *os.File
+var Token string
 
 func TestMain(m *testing.M) {
-	if err := logger.Init(); err != nil {
+	err := logger.Init()
+	if err != nil {
 		panic(err)
 	}
 
-	if err := model.ConfigInit(); err != nil {
-		logger.Errorf("config init fail, %v", err)
+	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
+	Token, err = Jwt.CreateToken(jwt.CustomClaims{
+		Id: int64(1),
+	})
+	if err != nil {
+		logger.Errorf("create token fail, %v", err.Error())
 		panic(err)
 	}
 
-	if err := model.MysqlInit(); err != nil {
-		logger.Error("mysql init fail %v", err)
-		panic(err)
-	}
+	db.Init()
+	oss.Init()
 
-	if err := model.OssInit(); err != nil {
-		logger.Errorf("oss init fail %v", err)
-		panic(err)
-	}
-
-	path := model.Path + "/public/girl.mp4"
+	path := oss.Path + "/public/girl.mp4"
 	file, err := os.Open(path)
 	if err != nil {
 		logger.Errorf("open local file %v fail", path)
@@ -42,7 +47,7 @@ func TestMain(m *testing.M) {
 	m.Run()
 }
 
-func TestQueryVideoData(t *testing.T) {
+func TestFeed(t *testing.T) {
 	type args struct {
 		latestTime int64
 		token      string
@@ -64,7 +69,7 @@ func TestQueryVideoData(t *testing.T) {
 			name: "测试视频流的默认token",
 			args: args{
 				latestTime: time.Now().Unix(),
-				token:      "defaultToken",
+				token:      "",
 			},
 			wantErr: false,
 		},
@@ -72,7 +77,7 @@ func TestQueryVideoData(t *testing.T) {
 			name: "测试视频流的正常token",
 			args: args{
 				latestTime: time.Now().Unix(),
-				token:      "JerryJerry123",
+				token:      Token,
 			},
 			wantErr: false,
 		},
@@ -80,9 +85,9 @@ func TestQueryVideoData(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, _, err := QueryVideoData(tt.args.latestTime, tt.args.token)
+			_, _, err := NewFeedService(context.Background()).Feed(&feed.FeedRequest{LatestTime: tt.args.latestTime, Token: tt.args.token})
 			if (err != nil) != tt.wantErr {
-				t.Errorf("QueryVideoData() error = %v, wantErr %v", err, tt.wantErr)
+				t.Errorf("Feed() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
 			logger.Info(tt.name + " success")
