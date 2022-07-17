@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/chenmengangzhi29/douyin/kitex_gen/comment"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func TestCommentList(t *testing.T) {
@@ -43,8 +43,8 @@ func TestCommentList(t *testing.T) {
 				t.Errorf("CommentList() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(commentList)
-			logger.Info(tt.name + " success")
+			klog.Info(commentList)
+			klog.Info(tt.name + " success")
 		})
 	}
 }

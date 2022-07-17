@@ -23,10 +23,7 @@ func NewFeedService(ctx context.Context) *FeedService {
 // Feed multiple get list of video info
 func (s *FeedService) Feed(req *feed.FeedRequest) ([]*feed.Video, int64, error) {
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
-	currentId, err := Jwt.CheckToken(req.Token)
-	if err != nil {
-		return nil, 0, err
-	}
+	currentId, _ := Jwt.CheckToken(req.Token)
 
 	//get video info
 	videoData, err := db.QueryVideoByLatestTime(s.ctx, req.LatestTime)

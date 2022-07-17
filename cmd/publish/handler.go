@@ -16,7 +16,7 @@ type PublishServiceImpl struct{}
 func (s *PublishServiceImpl) PublishAction(ctx context.Context, req *publish.PublishActionRequest) (resp *publish.PublishActionResponse, err error) {
 	resp = new(publish.PublishActionResponse)
 
-	if req.UserId <= 0 || len(req.Title) == 0 || req.Data == nil {
+	if len(req.Token) == 0 || len(req.Title) == 0 || req.Data == nil {
 		resp.BaseResp = pack.BuildPublishBaseResp(errno.ParamErr)
 		return resp, nil
 	}

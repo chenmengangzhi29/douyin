@@ -77,7 +77,7 @@ type FeedArgs struct {
 
 func (p *FeedArgs) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetReq() {
-		return out, fmt.Errorf("no req in FeedArgs")
+		return out, fmt.Errorf("No req in FeedArgs")
 	}
 	return proto.Marshal(p.Req)
 }
@@ -112,7 +112,7 @@ var FeedResult_Success_DEFAULT *feed.FeedResponse
 
 func (p *FeedResult) Marshal(out []byte) ([]byte, error) {
 	if !p.IsSetSuccess() {
-		return out, fmt.Errorf("no req in FeedResult")
+		return out, fmt.Errorf("No req in FeedResult")
 	}
 	return proto.Marshal(p.Success)
 }

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/chenmengangzhi29/douyin/kitex_gen/favorite"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func TestFavoriteList(t *testing.T) {
@@ -43,8 +43,8 @@ func TestFavoriteList(t *testing.T) {
 				t.Errorf("FavoriteList() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(tt.name + " success")
-			logger.Info(videoList)
+			klog.Info(tt.name + " success")
+			klog.Info(videoList)
 		})
 	}
 }

@@ -6,10 +6,8 @@ import (
 	"io"
 	"strconv"
 
-	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/publish"
-	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
@@ -17,44 +15,43 @@ import (
 //Publish upload video datas
 func Publish(c *gin.Context) {
 	title := c.PostForm("title")
-	claims := jwt.ExtractClaims(c)
-	userId := int64(claims[constants.IdentiryKey].(float64))
+	token := c.PostForm("token")
 
 	data, _, err := c.Request.FormFile("data")
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 	defer data.Close()
 
 	if data == nil {
-		SendResponse(c, errno.VideoDataGetErr, nil)
+		SendResponse(c, errno.VideoDataGetErr)
 		return
 	}
 
 	if length := len(title); length <= 0 || length > 128 {
-		SendResponse(c, errno.ParamErr, nil)
+		SendResponse(c, errno.ParamErr)
 		return
 	}
 
 	//处理视频数据
 	buf := bytes.NewBuffer(nil)
 	if _, err := io.Copy(buf, data); err != nil {
-		SendResponse(c, errno.VideoDataCopyErr, nil)
+		SendResponse(c, errno.VideoDataCopyErr)
 		return
 	}
 	video := buf.Bytes()
 
 	err = rpc.PublishVideoData(context.Background(), &publish.PublishActionRequest{
-		UserId: userId,
-		Title:  title, Data: video,
+		Token: token,
+		Title: title, Data: video,
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 
-	SendResponse(c, errno.Success, nil)
+	SendResponse(c, errno.Success)
 }
 
 //PublishList get publish list
@@ -64,7 +61,7 @@ func PublishList(c *gin.Context) {
 
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 	}
 
 	videoList, err := rpc.QueryVideoList(context.Background(), &publish.PublishListRequest{
@@ -72,9 +69,9 @@ func PublishList(c *gin.Context) {
 		UserId: userId,
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 
-	SendResponse(c, errno.Success, map[string]interface{}{constants.VideoList: videoList})
+	SendVideoListResponse(c, errno.Success, videoList)
 }

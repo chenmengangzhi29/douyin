@@ -11,27 +11,23 @@ import (
 	"github.com/chenmengangzhi29/douyin/kitex_gen/comment"
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/jwt"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
 	"github.com/chenmengangzhi29/douyin/pkg/oss"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 var File []byte
 var Token string
 
 func TestMain(m *testing.M) {
-	err := logger.Init()
-	if err != nil {
-		panic(err)
-	}
-
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
-	Token, err = Jwt.CreateToken(jwt.CustomClaims{
+	token, err := Jwt.CreateToken(jwt.CustomClaims{
 		Id: int64(1),
 	})
 	if err != nil {
-		logger.Errorf("create token fail, %v", err.Error())
+		klog.Errorf("create token fail, %v", err.Error())
 		panic(err)
 	}
+	Token = token
 
 	db.Init()
 	oss.Init()
@@ -39,7 +35,7 @@ func TestMain(m *testing.M) {
 	path := oss.Path + "/public/girl.mp4"
 	file, err := os.Open(path)
 	if err != nil {
-		logger.Errorf("open local file %v fail", path)
+		klog.Errorf("open local file %v fail", path)
 		panic(err)
 	}
 	defer file.Close()
@@ -91,8 +87,8 @@ func TestCreateComment(t *testing.T) {
 				t.Errorf("CreateComment() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(comment)
-			logger.Info(tt.name + " success")
+			klog.Info(comment)
+			klog.Info(tt.name + " success")
 		})
 	}
 }

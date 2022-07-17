@@ -29,7 +29,7 @@ message Video {
 }
 
 message publish_action_request {
-    int64 user_id = 1;//用户id
+    string token = 1;//用户鉴权
     string title = 2;//视频标题
     bytes data = 3;//视频数据
 }

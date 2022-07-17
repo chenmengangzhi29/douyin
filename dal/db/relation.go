@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"gorm.io/gorm"
 )
 
@@ -23,7 +23,7 @@ func QueryRelationByIds(ctx context.Context, currentId int64, userIds []int64) (
 	var relations []*RelationRaw
 	err := DB.WithContext(ctx).Where("user_id = ? AND to_user_id IN ?", currentId, userIds).Find(&relations).Error
 	if err != nil {
-		logger.Error("query relation by ids " + err.Error())
+		klog.Error("query relation by ids " + err.Error())
 		return nil, err
 	}
 	relationMap := make(map[int64]*RelationRaw)
@@ -42,19 +42,19 @@ func Create(ctx context.Context, currentId int64, toUserId int64) error {
 	DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("user").Where("id = ?", currentId).Update("follow_count", gorm.Expr("follow_count + ?", 1)).Error
 		if err != nil {
-			logger.Error("add user follow_count fail " + err.Error())
+			klog.Error("add user follow_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("user").Where("id = ?", toUserId).Update("follower_count", gorm.Expr("follower_count + ?", 1)).Error
 		if err != nil {
-			logger.Error("add user follower_count fail " + err.Error())
+			klog.Error("add user follower_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("relation").Create(&relationRaw).Error
 		if err != nil {
-			logger.Error("create relation record fail " + err.Error())
+			klog.Error("create relation record fail " + err.Error())
 			return err
 		}
 
@@ -69,19 +69,19 @@ func Delete(ctx context.Context, currentId int64, toUserId int64) error {
 	DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("user").Where("id = ?", currentId).Update("follow_count", gorm.Expr("follow_count - ?", 1)).Error
 		if err != nil {
-			logger.Error("sub user follow_count fail " + err.Error())
+			klog.Error("sub user follow_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("user").Where("id = ?", toUserId).Update("follower_count", gorm.Expr("follower_count - ?", 1)).Error
 		if err != nil {
-			logger.Error("sub user follower_count fail " + err.Error())
+			klog.Error("sub user follower_count fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("relation").Where("user_id = ? AND to_user_id = ?", currentId, toUserId).Delete(&relationRaw).Error
 		if err != nil {
-			logger.Error("delete relation record fali " + err.Error())
+			klog.Error("delete relation record fali " + err.Error())
 			return err
 		}
 		return nil
@@ -94,7 +94,7 @@ func QueryFollowById(ctx context.Context, userId int64) ([]*RelationRaw, error) 
 	var relations []*RelationRaw
 	err := DB.WithContext(ctx).Table("relation").Where("user_id = ?", userId).Find(&relations).Error
 	if err != nil {
-		logger.Error("query follow by id fail " + err.Error())
+		klog.Error("query follow by id fail " + err.Error())
 		return nil, err
 	}
 	return relations, nil
@@ -105,7 +105,7 @@ func QueryFollowerById(ctx context.Context, userId int64) ([]*RelationRaw, error
 	var relations []*RelationRaw
 	err := DB.WithContext(ctx).Table("relation").Where("to_user_id = ?", userId).Find(&relations).Error
 	if err != nil {
-		logger.Error("query follower by id fail " + err.Error())
+		klog.Error("query follower by id fail " + err.Error())
 		return nil, err
 	}
 	return relations, nil

@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"gorm.io/gorm"
 )
 
@@ -23,7 +23,7 @@ func QueryFavoriteByIds(ctx context.Context, currentId int64, videoIds []int64) 
 	var favorites []*FavoriteRaw
 	err := DB.WithContext(ctx).Where("user_id = ? AND video_id IN ?", currentId, videoIds).Find(&favorites).Error
 	if err != nil {
-		logger.Error("quert favorite record fail " + err.Error())
+		klog.Error("quert favorite record fail " + err.Error())
 		return nil, err
 	}
 	favoriteMap := make(map[int64]*FavoriteRaw)
@@ -38,13 +38,13 @@ func CreateFavorite(ctx context.Context, favorite *FavoriteRaw, videoId int64) e
 	DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count + ?", 1)).Error
 		if err != nil {
-			logger.Error("AddFavoriteCount error " + err.Error())
+			klog.Error("AddFavoriteCount error " + err.Error())
 			return err
 		}
 
 		err = tx.Table("favorite").Create(favorite).Error
 		if err != nil {
-			logger.Error("create favorite record fail " + err.Error())
+			klog.Error("create favorite record fail " + err.Error())
 			return err
 		}
 
@@ -59,13 +59,13 @@ func DeleteFavorite(ctx context.Context, currentId int64, videoId int64) error {
 		var favorite *FavoriteRaw
 		err := tx.Table("favorite").Where("user_id = ? AND video_id = ?", currentId, videoId).Delete(&favorite).Error
 		if err != nil {
-			logger.Error("delete favorite record fail " + err.Error())
+			klog.Error("delete favorite record fail " + err.Error())
 			return err
 		}
 
 		err = tx.Table("video").Where("id = ?", videoId).Update("favorite_count", gorm.Expr("favorite_count - ?", 1)).Error
 		if err != nil {
-			logger.Error("SubFavoriteCount error " + err.Error())
+			klog.Error("SubFavoriteCount error " + err.Error())
 			return err
 		}
 		return nil
@@ -78,7 +78,7 @@ func QueryFavoriteById(ctx context.Context, userId int64) ([]int64, error) {
 	var favorites []*FavoriteRaw
 	err := DB.WithContext(ctx).Table("favorite").Where("user_id = ?", userId).Find(&favorites).Error
 	if err != nil {
-		logger.Error("query favorite record fail " + err.Error())
+		klog.Error("query favorite record fail " + err.Error())
 		return nil, err
 	}
 	videoIds := make([]int64, 0)

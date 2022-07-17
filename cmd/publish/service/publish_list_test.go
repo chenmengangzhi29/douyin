@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/chenmengangzhi29/douyin/kitex_gen/publish"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func TestPublishList(t *testing.T) {
@@ -59,8 +59,8 @@ func TestPublishList(t *testing.T) {
 				t.Errorf("PublishList() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(tt.name + " success")
-			logger.Info(videoList)
+			klog.Info(tt.name + " success")
+			klog.Info(videoList)
 		})
 	}
 }

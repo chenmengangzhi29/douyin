@@ -67,7 +67,7 @@ func (j *JWT) CheckToken(token string) (int64, error) {
 	}
 	claim, err := j.ParseToken(token)
 	if err != nil {
-		return 0, ErrTokenInvalid
+		return -1, ErrTokenInvalid
 	}
 	return claim.Id, nil
 }

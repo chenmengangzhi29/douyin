@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"gorm.io/gorm"
 )
 
@@ -31,7 +31,7 @@ func QueryVideoByLatestTime(ctx context.Context, latestTime int64) ([]*VideoRaw,
 	time := time.UnixMilli(latestTime)
 	err := DB.WithContext(ctx).Limit(30).Order("update_time desc").Where("update_time < ?", time).Find(&videos).Error
 	if err != nil {
-		logger.Error("QueryVideoByLatestTime find video error " + err.Error())
+		klog.Error("QueryVideoByLatestTime find video error " + err.Error())
 		return videos, err
 	}
 	return videos, nil
@@ -42,7 +42,7 @@ func QueryVideoByVideoIds(ctx context.Context, videoIds []int64) ([]*VideoRaw, e
 	var videos []*VideoRaw
 	err := DB.WithContext(ctx).Where("id in (?)", videoIds).Find(&videos).Error
 	if err != nil {
-		logger.Error("QueryVideoByVideoIds error " + err.Error())
+		klog.Error("QueryVideoByVideoIds error " + err.Error())
 		return nil, err
 	}
 	return videos, nil

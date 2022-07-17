@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/chenmengangzhi29/douyin/kitex_gen/relation"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func TestFollowList(t *testing.T) {
@@ -43,7 +43,7 @@ func TestFollowList(t *testing.T) {
 				t.Errorf("FollowList() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(tt.name + " success")
+			klog.Info(tt.name + " success")
 		})
 	}
 }

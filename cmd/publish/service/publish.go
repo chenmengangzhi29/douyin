@@ -12,8 +12,10 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/dal/db"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/publish"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/chenmengangzhi29/douyin/pkg/constants"
+	"github.com/chenmengangzhi29/douyin/pkg/jwt"
 	"github.com/chenmengangzhi29/douyin/pkg/oss"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/disintegration/imaging"
 	ffmpeg "github.com/u2takey/ffmpeg-go"
 )
@@ -31,14 +33,18 @@ func NewPublishService(ctx context.Context) *PublishService {
 func (s *PublishService) Publish(req *publish.PublishActionRequest) error {
 	video := req.Data
 	title := req.Title
-	currentId := req.UserId
+	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
+	currentId, err := Jwt.CheckToken(req.Token)
+	if err != nil {
+		return err
+	}
 
 	id := time.Now().Unix()
 	fileName := strconv.Itoa(int(id)) + ".mp4"
 
 	//将视频保存到本地文件夹
 	filePath := oss.Path + "/public/" + fileName
-	err := oss.PublishVideoToPublic(video, filePath)
+	err = oss.PublishVideoToPublic(video, filePath)
 	if err != nil {
 		return err
 	}
@@ -105,13 +111,13 @@ func getSnapshot(videoUrl string) ([]byte, error) {
 		WithOutput(buffer, os.Stdout).
 		Run()
 	if err != nil {
-		logger.Fatal("生成缩略图失败 ", err)
+		klog.Fatal("生成缩略图失败 ", err)
 		return nil, err
 	}
 
 	img, err := imaging.Decode(buffer)
 	if err != nil {
-		logger.Fatal("生成缩略图失败 ", err)
+		klog.Fatal("生成缩略图失败 ", err)
 		return nil, err
 	}
 

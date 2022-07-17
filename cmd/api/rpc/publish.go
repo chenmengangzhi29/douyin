@@ -25,11 +25,10 @@ func initPublishRpc() {
 
 	c, err := publishservice.NewClient(
 		constants.PublishServiceName,
-		client.WithMiddleware(middleware.CommonMiddleware),
 		client.WithInstanceMW(middleware.ClientMiddleware),
 		client.WithMuxConnection(1),
-		client.WithRPCTimeout(3*time.Second),
-		client.WithConnectTimeout(50*time.Millisecond),
+		client.WithRPCTimeout(10*time.Second),
+		client.WithConnectTimeout(10000*time.Millisecond),
 		client.WithFailureRetry(retry.NewFailurePolicy()),
 		client.WithSuite(trace.NewDefaultClientSuite()),
 		client.WithResolver(r),

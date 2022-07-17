@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func TestCheckUser(t *testing.T) {
@@ -43,7 +43,7 @@ func TestCheckUser(t *testing.T) {
 				t.Errorf("CheckUser() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(tt.name + " success")
+			klog.Info(tt.name + " success")
 		})
 	}
 }
