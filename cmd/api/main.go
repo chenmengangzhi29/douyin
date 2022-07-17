@@ -11,8 +11,9 @@ import (
 	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	JWT "github.com/chenmengangzhi29/douyin/pkg/jwt"
 	"github.com/chenmengangzhi29/douyin/pkg/tracer"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"github.com/gin-gonic/gin"
 )
 
@@ -47,9 +48,12 @@ func main() {
 			return rpc.CheckUser(context.Background(), &user.CheckUserRequest{Username: loginVar.Username, Password: loginVar.Password})
 		},
 		LoginResponse: func(c *gin.Context, code int, message string, time time.Time) {
-			claims := jwt.ExtractClaims(c)
-			userId := int64(claims[constants.IdentiryKey].(float64))
-			handlers.SendResponse(c, errno.Success, map[string]interface{}{constants.UserId: userId, constants.Token: message})
+			Jwt := JWT.NewJWT([]byte(constants.SecretKey))
+			userId, err := Jwt.CheckToken(message)
+			if err != nil {
+				panic(err)
+			}
+			handlers.SendUserResponse(c, errno.Success, userId, message)
 		},
 		TokenLookup:   "header: Authorization, query: token, cookie: jwt",
 		TokenHeadName: "Bearer",
@@ -57,20 +61,13 @@ func main() {
 	})
 
 	if err != nil {
-		logger.Fatal("JWT Error:" + err.Error())
+		klog.Fatal("JWT Error:" + err.Error())
 	}
-
-	r.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
-		claims := jwt.ExtractClaims(c)
-		logger.Infof("NoRoute claims: %#v\n", claims)
-		c.JSON(404, gin.H{"code": "PAGE_NOT_FOUND", "message": "Page not found"})
-	})
 
 	douyin := r.Group("/douyin")
 	douyin.GET("/feed/", handlers.Feed)
 
 	publish := douyin.Group("/publish")
-	publish.Use(authMiddleware.MiddlewareFunc())
 	publish.POST("/action/", handlers.Publish)
 	publish.GET("/list/", handlers.PublishList)
 
@@ -80,12 +77,10 @@ func main() {
 	user.POST("/login/", authMiddleware.LoginHandler)
 
 	favorite := douyin.Group("/favorite")
-	favorite.Use(authMiddleware.MiddlewareFunc())
 	favorite.POST("/action/", handlers.FavoriteAction)
 	favorite.GET("/list/", handlers.FavoriteList)
 
 	comment := douyin.Group("/comment")
-	comment.Use(authMiddleware.MiddlewareFunc())
 	comment.POST("/action/", handlers.CommentAction)
 	comment.GET("/list/", handlers.CommentList)
 
@@ -95,6 +90,6 @@ func main() {
 	relation.GET("/follower/list/", handlers.FollowerList)
 
 	if err := http.ListenAndServe(constants.ApiAddress, r); err != nil {
-		logger.Fatal(err)
+		klog.Fatal(err)
 	}
 }

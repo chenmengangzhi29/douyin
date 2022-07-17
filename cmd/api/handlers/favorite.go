@@ -6,7 +6,6 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/favorite"
-	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
@@ -19,13 +18,13 @@ func FavoriteAction(c *gin.Context) {
 
 	videoId, err := strconv.ParseInt(videoIdStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 
 	actionType, err := strconv.ParseInt(actionTypeStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 
@@ -33,11 +32,11 @@ func FavoriteAction(c *gin.Context) {
 		Token: token, VideoId: videoId, ActionType: int32(actionType),
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 
-	SendResponse(c, errno.Success, nil)
+	SendResponse(c, errno.Success)
 }
 
 //FavoriteList get favorite list info
@@ -47,7 +46,7 @@ func FavoriteList(c *gin.Context) {
 
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 
@@ -55,9 +54,9 @@ func FavoriteList(c *gin.Context) {
 		Token: token, UserId: userId,
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
 
-	SendResponse(c, errno.Success, map[string]interface{}{constants.VideoList: videoList})
+	SendFavoriteListResponse(c, errno.Success, videoList)
 }

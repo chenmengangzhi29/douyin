@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"gorm.io/gorm"
 )
 
@@ -24,17 +24,17 @@ func CreateComment(ctx context.Context, comment *CommentRaw) error {
 	DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("comment").Create(&comment).Error
 		if err != nil {
-			logger.Error("create comment fail " + err.Error())
+			klog.Error("create comment fail " + err.Error())
 			return err
 		}
 		err = tx.Table("video").Where("id = ?", comment.VideoId).Update("comment_count", gorm.Expr("comment_count + ?", 1)).Error
 		if err != nil {
-			logger.Error("AddCommentCount error " + err.Error())
+			klog.Error("AddCommentCount error " + err.Error())
 			return err
 		}
 		err = tx.Table("comment").First(&comment).Error
 		if err != nil {
-			logger.Errorf("find comment %v fail, %v", comment, err.Error())
+			klog.Errorf("find comment %v fail, %v", comment, err.Error())
 			return err
 		}
 		return nil
@@ -48,21 +48,21 @@ func DeleteComment(ctx context.Context, commentId int64) (*CommentRaw, error) {
 	DB.WithContext(ctx).Transaction(func(tx *gorm.DB) error {
 		err := tx.Table("comment").Where("id = ?", commentId).First(&commentRaw).Error
 		if err == gorm.ErrRecordNotFound {
-			logger.Errorf("not find comment %v, %v", commentRaw, err.Error())
+			klog.Errorf("not find comment %v, %v", commentRaw, err.Error())
 			return err
 		}
 		if err != nil {
-			logger.Errorf("find comment %v fail, %v", commentRaw, err.Error())
+			klog.Errorf("find comment %v fail, %v", commentRaw, err.Error())
 			return err
 		}
 		err = tx.Table("comment").Where("id = ?", commentId).Delete(&CommentRaw{}).Error
 		if err != nil {
-			logger.Error("delete comment fail " + err.Error())
+			klog.Error("delete comment fail " + err.Error())
 			return err
 		}
 		err = tx.Table("video").Where("id = ?", commentRaw.VideoId).Update("comment_count", gorm.Expr("comment_count - ?", 1)).Error
 		if err != nil {
-			logger.Error("AddCommentCount error " + err.Error())
+			klog.Error("AddCommentCount error " + err.Error())
 			return err
 		}
 		return nil
@@ -75,7 +75,7 @@ func QueryCommentByCommentIds(ctx context.Context, commentIds []int64) ([]*Comme
 	var comments []*CommentRaw
 	err := DB.WithContext(ctx).Table("comment").Where("id In ?", commentIds).Find(&comments).Error
 	if err != nil {
-		logger.Error("query comment by comment id fail " + err.Error())
+		klog.Error("query comment by comment id fail " + err.Error())
 		return nil, err
 	}
 	return comments, nil
@@ -86,7 +86,7 @@ func QueryCommentByVideoId(ctx context.Context, videoId int64) ([]*CommentRaw, e
 	var comments []*CommentRaw
 	err := DB.WithContext(ctx).Table("comment").Order("updated_at desc").Where("video_id = ?", videoId).Find(&comments).Error
 	if err != nil {
-		logger.Error("query comment by video id fail " + err.Error())
+		klog.Error("query comment by video id fail " + err.Error())
 		return nil, err
 	}
 	return comments, nil

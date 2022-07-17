@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/chenmengangzhi29/douyin/kitex_gen/comment"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 func TestDeleteComment(t *testing.T) {
@@ -54,7 +54,7 @@ func TestDeleteComment(t *testing.T) {
 				t.Errorf("DeleteComment() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(tt.name + " success")
+			klog.Info(tt.name + " success")
 		})
 	}
 }

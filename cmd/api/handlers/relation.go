@@ -6,7 +6,6 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/relation"
-	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
@@ -18,33 +17,33 @@ func RelationAction(c *gin.Context) {
 	actionTypeStr := c.Query("action_type")
 
 	if len(token) == 0 {
-		SendResponse(c, errno.ParamErr, nil)
+		SendResponse(c, errno.ParamErr)
 		return
 	}
 
 	toUserId, err := strconv.ParseInt(toUserIdStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 
 	actionType, err := strconv.ParseInt(actionTypeStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 	if actionType != 1 && actionType != 2 {
-		SendResponse(c, errno.ActionTypeErr, nil)
+		SendResponse(c, errno.ActionTypeErr)
 		return
 	}
 
 	req := &relation.RelationActionRequest{Token: token, ToUserId: toUserId, ActionType: int32(actionType)}
 	err = rpc.RelationAction(context.Background(), req)
 	if err != nil {
-		SendResponse(c, err, nil)
+		SendResponse(c, err)
 		return
 	}
-	SendResponse(c, errno.Success, nil)
+	SendResponse(c, errno.Success)
 }
 
 // Followlist get user follow list info
@@ -53,23 +52,23 @@ func FollowList(c *gin.Context) {
 	userIdStr := c.Query("user_id")
 
 	if len(token) == 0 {
-		SendResponse(c, errno.ParamErr, nil)
+		SendResponse(c, errno.ParamErr)
 		return
 	}
 
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 
 	req := &relation.FollowListRequest{Token: token, UserId: userId}
 	userList, err := rpc.FollowList(context.Background(), req)
 	if err != nil {
-		SendResponse(c, err, nil)
+		SendResponse(c, err)
 		return
 	}
-	SendResponse(c, errno.Success, map[string]interface{}{constants.UserList: userList})
+	SendRelationListResponse(c, errno.Success, userList)
 }
 
 // FollowerList get user follower list info
@@ -78,21 +77,21 @@ func FollowerList(c *gin.Context) {
 	userIdStr := c.Query("user_id")
 
 	if len(token) == 0 {
-		SendResponse(c, errno.ParamErr, nil)
+		SendResponse(c, errno.ParamErr)
 		return
 	}
 
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 
 	req := &relation.FollowerListRequest{Token: token, UserId: userId}
 	userList, err := rpc.FollowerList(context.Background(), req)
 	if err != nil {
-		SendResponse(c, err, nil)
+		SendResponse(c, err)
 		return
 	}
-	SendResponse(c, errno.Success, map[string]interface{}{constants.UserList: userList})
+	SendRelationListResponse(c, errno.Success, userList)
 }

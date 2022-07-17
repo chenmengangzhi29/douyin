@@ -7,14 +7,12 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/feed"
-	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
 
 //Feed get video feed data
 func Feed(c *gin.Context) {
-	var FeedVar FeedRequest
 
 	token := c.DefaultQuery("token", "")
 	defaultTime := time.Now().UnixMilli()
@@ -24,18 +22,15 @@ func Feed(c *gin.Context) {
 	//处理传入参数
 	latestTime, err := strconv.ParseInt(latestTimeStr, 10, 64)
 	if err != nil {
-		SendResponse(c, err, nil)
+		SendResponse(c, err)
 		return
 	}
 
-	FeedVar.Token = token
-	FeedVar.LatestTime = latestTime
-
-	req := &feed.FeedRequest{LatestTime: FeedVar.LatestTime, Token: FeedVar.Token}
+	req := &feed.FeedRequest{LatestTime: latestTime, Token: token}
 	video, nextTime, err := rpc.Feed(context.Background(), req)
 	if err != nil {
-		SendResponse(c, err, nil)
+		SendResponse(c, err)
 		return
 	}
-	SendResponse(c, errno.Success, map[string]interface{}{constants.VideoList: video, constants.NextTime: nextTime})
+	SendFeedResponse(c, errno.Success, video, nextTime)
 }

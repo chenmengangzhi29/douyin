@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 	"gorm.io/gorm"
 )
 
@@ -25,7 +25,7 @@ func QueryUserByIds(ctx context.Context, userIds []int64) ([]*UserRaw, error) {
 	var users []*UserRaw
 	err := DB.WithContext(ctx).Where("id in (?)", userIds).Find(&users).Error
 	if err != nil {
-		logger.Error("query user by ids fail " + err.Error())
+		klog.Error("query user by ids fail " + err.Error())
 		return nil, err
 	}
 	return users, nil
@@ -36,7 +36,7 @@ func QueryUserByName(ctx context.Context, userName string) ([]*UserRaw, error) {
 	var users []*UserRaw
 	err := DB.WithContext(ctx).Where("name = ?", userName).Find(&users).Error
 	if err != nil {
-		logger.Error("query user by name fail " + err.Error())
+		klog.Error("query user by name fail " + err.Error())
 		return nil, err
 	}
 	return users, nil
@@ -52,7 +52,7 @@ func UploadUserData(ctx context.Context, username string, password string) (int6
 	}
 	err := DB.WithContext(ctx).Create(&user).Error
 	if err != nil {
-		logger.Error("upload user data fail " + err.Error())
+		klog.Error("upload user data fail " + err.Error())
 		return 0, err
 	}
 	return int64(user.ID), nil

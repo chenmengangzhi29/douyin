@@ -6,7 +6,6 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
-	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
@@ -17,12 +16,12 @@ func Register(c *gin.Context) {
 	password := c.Query("password")
 
 	if len := len(username); len <= 0 || len > 32 {
-		SendResponse(c, errno.UserNameValidationErr, nil)
+		SendResponse(c, errno.UserNameValidationErr)
 		return
 	}
 
 	if len := len(password); len <= 0 || len > 32 {
-		SendResponse(c, errno.PasswordValidationErr, nil)
+		SendResponse(c, errno.PasswordValidationErr)
 		return
 	}
 
@@ -31,10 +30,10 @@ func Register(c *gin.Context) {
 		Password: password,
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 		return
 	}
-	SendResponse(c, errno.Success, map[string]interface{}{constants.Token: token, constants.UserId: userId})
+	SendUserResponse(c, errno.Success, userId, token)
 }
 
 // UserInfo get user info
@@ -44,7 +43,7 @@ func UserInfo(c *gin.Context) {
 
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)
 	if err != nil {
-		SendResponse(c, errno.ParamParseErr, nil)
+		SendResponse(c, errno.ParamParseErr)
 		return
 	}
 
@@ -53,7 +52,7 @@ func UserInfo(c *gin.Context) {
 		Token:  token,
 	})
 	if err != nil {
-		SendResponse(c, errno.ConvertErr(err), nil)
+		SendResponse(c, errno.ConvertErr(err))
 	}
-	SendResponse(c, errno.Success, map[string]interface{}{constants.User: user})
+	SendUserInfoResponse(c, errno.Success, user)
 }

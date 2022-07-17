@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/chenmengangzhi29/douyin/kitex_gen/user"
-	"github.com/chenmengangzhi29/douyin/pkg/logger"
+	"github.com/cloudwego/kitex/pkg/klog"
 )
 
 //测试用户信息
@@ -44,8 +44,8 @@ func TestUserInfo(t *testing.T) {
 				t.Errorf("UserInfo() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			logger.Info(user)
-			logger.Info(tt.name + " success")
+			klog.Info(user)
+			klog.Info(tt.name + " success")
 		})
 	}
 }
