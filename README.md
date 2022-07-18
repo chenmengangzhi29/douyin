@@ -1,12 +1,23 @@
 # 极简版抖音服务端
 
+[![Go](https://img.shields.io/github/go-mod/go-version/gohugoio/hugo)](https://go.dev/)
+[![Kitex](https://img.shields.io/badge/Kitex-v0.3.0-green)](https://github.com/cloudwego/kitex)
+[![Gin](https://img.shields.io/badge/Gin-v1.7.7-brightgreen)](https://github.com/gin-gonic/gin)
+[![Gorm](https://img.shields.io/badge/Gorm-v1.23.5-blue)](https://gorm.io/)
+[![MySQL](https://img.shields.io/badge/MySQL-v1.3.3-red)](https://github.com/go-gorm/mysql)
+[![OSS](https://img.shields.io/badge/OSS-v2.2.4-orange)](https://github.com/aliyun/aliyun-oss-go-sdk)
+[![ETCD](https://img.shields.io/badge/ETCD-v0.0.0-lightgrey)](https://github.com/kitex-contrib/registry-etcd)
+[![Jaeger](https://img.shields.io/badge/Jaeger-v2.30.0-blue)](https://github.com/jaegertracing/jaeger-client-go)
+[![JWT](https://img.shields.io/badge/JWT-v3.2.2-green)](https://github.com/golang-jwt/jwt)
+[![ffmpeg](https://img.shields.io/badge/ffmpeg-v0.4.1-orange)](https://github.com/u2takey/ffmpeg-go)
+
 ## 一、介绍
 
 - 1.基于RPC框架**Kitex**、HTTP框架**Gin**、ORM框架**GORM**的极简版抖音服务端项目
 - 2.代码采用api层、service层、dal层三层结构
 - 3.使用Kitex构建RPC微服务，Gin构建HTTP服务
 - 4.GORM操作MySQL数据库，防止SQL注入，使用事务保证数据一致性，完整性
-- 5.使用**ETCD**进行服务注册、服务发现，Jarger进行链路追踪
+- 5.使用**ETCD**进行服务注册、服务发现，**Jarger**进行链路追踪
 - 6.使用**MySQL**数据库进行数据存储，并建立索引
 - 7.使用**OSS**进行视频对象存储，分片上传视频
 - 8.使用**JWT**鉴权，**MD5**密码加密，**ffmpeg**获取视频第一帧当作视频封面
