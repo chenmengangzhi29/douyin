@@ -24,7 +24,7 @@ func TestDeleteComment(t *testing.T) {
 			args: args{
 				token:     Token,
 				videoId:   1,
-				commentId: 3,
+				commentId: 5,
 			},
 			wantErr: false,
 		},

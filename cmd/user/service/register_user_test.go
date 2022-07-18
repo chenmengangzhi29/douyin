@@ -64,8 +64,8 @@ func TestRegisterUser(t *testing.T) {
 		{
 			name: "测试注册不存在的用户",
 			args: args{
-				username: "xiangjiang",
-				password: "xiaojiang",
+				username: "hhh",
+				password: "hhh123",
 			},
 			wantErr: false,
 		},
