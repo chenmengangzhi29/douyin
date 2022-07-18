@@ -55,14 +55,6 @@ func TestFeed(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "测试视频流的不存在token",
-			args: args{
-				latestTime: time.Now().Unix(),
-				token:      "feedTest",
-			},
-			wantErr: true,
-		},
-		{
 			name: "测试视频流的默认token",
 			args: args{
 				latestTime: time.Now().Unix(),

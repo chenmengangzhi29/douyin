@@ -6,7 +6,7 @@ import (
 	"github.com/chenmengangzhi29/douyin/pkg/constants"
 )
 
-//打包成可以直接返回的评论信息
+// 打包成可以直接返回的评论信息
 func CommentInfo(commentRaw *db.CommentRaw, user *db.UserRaw) *comment.Comment {
 	comment := &comment.Comment{
 		Id: int64(commentRaw.ID),

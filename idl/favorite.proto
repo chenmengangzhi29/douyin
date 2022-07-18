@@ -2,8 +2,6 @@ syntax = "proto3";
 package favorite;
 option go_package = "favorite";
 
-import "feed.proto";
-
 message BaseResp {
 	int32 status_code = 1;//状态码
 	string status_message = 2;//状态描述

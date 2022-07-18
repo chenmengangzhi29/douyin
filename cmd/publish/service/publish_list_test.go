@@ -19,14 +19,6 @@ func TestPublishList(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name: "测试视频列表的不正确token",
-			args: args{
-				token:  "unToken",
-				userId: 1,
-			},
-			wantErr: true,
-		},
-		{
 			name: "测试视频列表的默认token",
 			args: args{
 				token:  "",

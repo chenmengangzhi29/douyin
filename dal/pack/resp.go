@@ -13,7 +13,7 @@ import (
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 )
 
-//BuildFeedBaseResp build feed baseResp from error
+// BuildFeedBaseResp build feed baseResp from error
 func BuildFeedBaseResp(err error) *feed.BaseResp {
 	if err == nil {
 		return feedbaseResp(errno.Success)
