@@ -25,11 +25,11 @@
 
 ## 二、调用关系图
 
-<img src="publish/服务调用关系截图.jpg" width="2850"  alt=""/>
+<img src="https://github.com/chenmengangzhi29/douyin/blob/main/public/%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB%E6%88%AA%E5%9B%BE.jpg" width="2850"  alt=""/>
 
 ## 三、数据库ER图
 
-<img src="publish/微服务数据库图.jpg" width="2850"  alt=""/>
+<img src="https://github.com/chenmengangzhi29/douyin/blob/main/public/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9B%BE.jpg" width="2850"  alt=""/>
 
 ## 四、文件目录结构
 
