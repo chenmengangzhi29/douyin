@@ -22,10 +22,11 @@ func NewFavoriteActionService(ctx context.Context) *FavoriteActionService {
 // FavoriteAction implement the like and unlike operations
 func (s *FavoriteActionService) FavoriteAction(req *favorite.FavoriteActionRequest) error {
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
-	currentId, err := Jwt.CheckToken(req.Token)
+	claim, err := Jwt.ParseToken(req.Token)
 	if err != nil {
 		return err
 	}
+	currentId := claim.Id
 
 	videos, err := db.QueryVideoByVideoIds(s.ctx, []int64{req.VideoId})
 	if err != nil {
