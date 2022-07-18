@@ -34,7 +34,7 @@ func (s *RelationServiceImpl) RelationAction(ctx context.Context, req *relation.
 func (s *RelationServiceImpl) FollowList(ctx context.Context, req *relation.FollowListRequest) (resp *relation.FollowListResponse, err error) {
 	resp = new(relation.FollowListResponse)
 
-	if len(req.Token) == 0 || req.UserId == 0 {
+	if req.UserId == 0 {
 		resp.BaseResp = pack.BuilRelationBaseResp(errno.ParamErr)
 		return resp, nil
 	}
@@ -53,7 +53,7 @@ func (s *RelationServiceImpl) FollowList(ctx context.Context, req *relation.Foll
 func (s *RelationServiceImpl) FollowerList(ctx context.Context, req *relation.FollowerListRequest) (resp *relation.FollowerListResponse, err error) {
 	resp = new(relation.FollowerListResponse)
 
-	if len(req.Token) == 0 || req.UserId == 0 {
+	if req.UserId == 0 {
 		resp.BaseResp = pack.BuilRelationBaseResp(errno.ParamErr)
 		return resp, nil
 	}

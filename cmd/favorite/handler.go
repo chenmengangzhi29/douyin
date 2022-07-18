@@ -34,7 +34,7 @@ func (s *FavoriteServiceImpl) FavoriteAction(ctx context.Context, req *favorite.
 func (s *FavoriteServiceImpl) FavoriteList(ctx context.Context, req *favorite.FavoriteListRequest) (resp *favorite.FavoriteListResponse, err error) {
 	resp = new(favorite.FavoriteListResponse)
 
-	if req.UserId == 0 || len(req.Token) == 0 {
+	if req.UserId == 0 {
 		resp.BaseResp = pack.BuildFavoriteBaseResp(errno.ParamErr)
 		return resp, nil
 	}

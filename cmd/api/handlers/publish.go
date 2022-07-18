@@ -24,11 +24,6 @@ func Publish(c *gin.Context) {
 	}
 	defer data.Close()
 
-	if data == nil {
-		SendResponse(c, errno.VideoDataGetErr)
-		return
-	}
-
 	if length := len(title); length <= 0 || length > 128 {
 		SendResponse(c, errno.ParamErr)
 		return

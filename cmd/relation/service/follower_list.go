@@ -23,10 +23,7 @@ func NewFollowerListService(ctx context.Context) *FollowerListService {
 // FollowerList get user follower list info
 func (s *FollowerListService) FollowerList(req *relation.FollowerListRequest) ([]*relation.User, error) {
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
-	currentId, err := Jwt.CheckToken(req.Token)
-	if err != nil {
-		return nil, err
-	}
+	currentId, _ := Jwt.CheckToken(req.Token)
 
 	user, err := db.QueryUserByIds(s.ctx, []int64{req.UserId})
 	if err != nil {

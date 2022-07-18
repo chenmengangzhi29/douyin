@@ -24,10 +24,7 @@ func NewPublishListService(ctx context.Context) *PublishListService {
 // PublishList get publish list by userid
 func (s *PublishListService) PublishList(req *publish.PublishListRequest) ([]*publish.Video, error) {
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
-	currentId, err := Jwt.CheckToken(req.Token)
-	if err != nil {
-		return nil, err
-	}
+	currentId, _ := Jwt.CheckToken(req.Token)
 
 	videoData, err := db.QueryVideoByUserId(s.ctx, req.UserId)
 	if err != nil {
