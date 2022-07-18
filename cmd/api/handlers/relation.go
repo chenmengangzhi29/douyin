@@ -51,11 +51,6 @@ func FollowList(c *gin.Context) {
 	token := c.Query("token")
 	userIdStr := c.Query("user_id")
 
-	if len(token) == 0 {
-		SendResponse(c, errno.ParamErr)
-		return
-	}
-
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)
 	if err != nil {
 		SendResponse(c, errno.ParamParseErr)
@@ -75,11 +70,6 @@ func FollowList(c *gin.Context) {
 func FollowerList(c *gin.Context) {
 	token := c.Query("token")
 	userIdStr := c.Query("user_id")
-
-	if len(token) == 0 {
-		SendResponse(c, errno.ParamErr)
-		return
-	}
 
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)
 	if err != nil {

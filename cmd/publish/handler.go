@@ -34,7 +34,7 @@ func (s *PublishServiceImpl) PublishAction(ctx context.Context, req *publish.Pub
 func (s *PublishServiceImpl) PublishList(ctx context.Context, req *publish.PublishListRequest) (resp *publish.PublishListResponse, err error) {
 	resp = new(publish.PublishListResponse)
 
-	if req.UserId <= 0 || len(req.Token) == 0 {
+	if req.UserId <= 0 {
 		resp.BaseResp = pack.BuildPublishBaseResp(errno.ParamErr)
 		return resp, nil
 	}

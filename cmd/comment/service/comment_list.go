@@ -24,10 +24,7 @@ func NewCommentListService(ctx context.Context) *CommentListService {
 func (s *CommentListService) CommentList(req *comment.CommentListRequest) ([]*comment.Comment, error) {
 	//获取当前用户id号
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
-	currentId, err := Jwt.CheckToken(req.Token)
-	if err != nil {
-		return nil, err
-	}
+	currentId, _ := Jwt.CheckToken(req.Token)
 
 	//验证视频Id是否存在
 	videos, err := db.QueryVideoByVideoIds(s.ctx, []int64{req.VideoId})

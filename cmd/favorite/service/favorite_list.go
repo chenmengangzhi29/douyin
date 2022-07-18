@@ -25,10 +25,7 @@ func NewFavoriteListService(ctx context.Context) *FavoriteListService {
 func (s *FavoriteListService) FavoriteList(req *favorite.FavoriteListRequest) ([]*favorite.Video, error) {
 	//获取用户id
 	Jwt := jwt.NewJWT([]byte(constants.SecretKey))
-	currentId, err := Jwt.CheckToken(req.Token)
-	if err != nil {
-		return nil, err
-	}
+	currentId, _ := Jwt.CheckToken(req.Token)
 
 	//检查用户是否存在
 	user, err := db.QueryUserByIds(s.ctx, []int64{req.UserId})
