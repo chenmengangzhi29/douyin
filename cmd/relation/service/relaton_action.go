@@ -42,14 +42,14 @@ func (s *RelationActionService) RelationAction(req *relation.RelationActionReque
 		return errors.New("toUserId not exist")
 	}
 
-	if req.ActionType == 1 {
+	if req.ActionType == constants.Follow {
 		err := db.Create(s.ctx, currentId, req.ToUserId)
 		if err != nil {
 			return err
 		}
 		return nil
 	}
-	if req.ActionType == 2 {
+	if req.ActionType == constants.UnFollow {
 		err := db.Delete(s.ctx, currentId, req.ToUserId)
 		if err != nil {
 			return err

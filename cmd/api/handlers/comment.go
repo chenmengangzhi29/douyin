@@ -7,6 +7,7 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/comment"
+	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +30,7 @@ func CommentAction(c *gin.Context) {
 		return
 	}
 
-	if actionType == 1 {
+	if actionType == constants.AddComment {
 		commentText := c.Query("comment_text")
 
 		if len := utf8.RuneCountInString(commentText); len > 20 {
@@ -45,7 +46,7 @@ func CommentAction(c *gin.Context) {
 		}
 		SendCommentActionResponse(c, errno.Success, comment)
 
-	} else if actionType == 2 {
+	} else if actionType == constants.DelComment {
 		commentIdStr := c.Query("comment_id")
 
 		commentId, err := strconv.ParseInt(commentIdStr, 10, 64)

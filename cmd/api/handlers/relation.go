@@ -6,6 +6,7 @@ import (
 
 	"github.com/chenmengangzhi29/douyin/cmd/api/rpc"
 	"github.com/chenmengangzhi29/douyin/kitex_gen/relation"
+	"github.com/chenmengangzhi29/douyin/pkg/constants"
 	"github.com/chenmengangzhi29/douyin/pkg/errno"
 	"github.com/gin-gonic/gin"
 )
@@ -32,7 +33,7 @@ func RelationAction(c *gin.Context) {
 		SendResponse(c, errno.ParamParseErr)
 		return
 	}
-	if actionType != 1 && actionType != 2 {
+	if actionType != constants.Follow && actionType != constants.UnFollow {
 		SendResponse(c, errno.ActionTypeErr)
 		return
 	}

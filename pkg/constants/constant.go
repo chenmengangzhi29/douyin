@@ -14,8 +14,8 @@ const (
 	CommentAddress     = "127.0.0.1:8085"                                                           //Comment服务地址
 	RelationAddress    = "127.0.0.1:8086"                                                           //Relation服务地址
 	OssEndPoint        = "oss-cn-shenzhen.aliyuncs.com"                                             //Oss
-	OssAccessKeyId     = "LTAI5tBEXHda2WnqzEsisUZ1"
-	OssAccessKeySecret = "s1qIEffe02LV9XEHPGGYTVTbDi42Gb"
+	OssAccessKeyId     = "oss"
+	OssAccessKeySecret = "oss"
 	OssBucket          = "dousheng1"
 
 	//数据库表名
@@ -31,6 +31,16 @@ const (
 
 	//时间字段格式
 	TimeFormat = "2006-01-02 15:04:05"
+
+	//favorite actiontype,1是点赞，2是取消点赞
+	Like   = 1
+	Unlike = 2
+	//comment actiontype,1是增加评论，2是删除评论
+	AddComment = 1
+	DelComment = 2
+	//relation actiontypr,1是关注，2是取消关注
+	Follow   = 1
+	UnFollow = 2
 
 	//rpc服务名
 	ApiServiceName      = "api"
