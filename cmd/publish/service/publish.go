@@ -65,7 +65,7 @@ func (s *PublishService) Publish(req *publish.PublishActionRequest) error {
 
 	//获取封面
 	coverName := strconv.Itoa(int(id)) + ".jpg"
-	coverData, err := getSnapshot(videoUrl)
+	coverData, err := getSnapshot(filePath)
 	if err != nil {
 		return err
 	}
@@ -103,9 +103,9 @@ func (s *PublishService) Publish(req *publish.PublishActionRequest) error {
 	return nil
 }
 
-func getSnapshot(videoUrl string) ([]byte, error) {
+func getSnapshot(filePath string) ([]byte, error) {
 	buffer := bytes.NewBuffer(nil)
-	err := ffmpeg.Input(videoUrl).
+	err := ffmpeg.Input(filePath).
 		Filter("select", ffmpeg.Args{fmt.Sprintf("gte(n,%d)", 1)}).
 		Output("pipe:", ffmpeg.KwArgs{"vframes": 1, "format": "image2", "vcodec": "mjpeg"}).
 		WithOutput(buffer, os.Stdout).
